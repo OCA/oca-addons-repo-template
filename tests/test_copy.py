@@ -61,3 +61,15 @@ def test_bootstrap(tmp_path: Path, odoo_version: float, cloned_template: Path):
     )
     assert "# Test repo" in readme
     assert data["repo_description"] in readme
+    # Assert no stuff specific for this repo is found
+    garbage = (
+        "setup.cfg",
+        "tests",
+        "vendor",
+        "copier.yml",
+        ".gitmodules",
+        "poetry.lock",
+        "pyproject.toml",
+    )
+    for file_ in garbage:
+        assert not (tmp_path / file_).exists()

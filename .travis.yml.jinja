@@ -1,7 +1,8 @@
 language: python
 cache:
   directories:
-    - $HOME/.cache
+    - $HOME/.cache/pip
+    - $HOME/.cache/pre-commit
 
 python:
   {#- Pin the lowest supported version for each Odoo release #}
@@ -57,16 +58,19 @@ jobs:
     {#- If all modules can get along, we test and generate .pot all at once #}
     - stage: test
       env:
-        - TESTS="1" ODOO_REPO="odoo/odoo" MAKEPOT="1"
+        - TESTS=1 ODOO_REPO="odoo/odoo" MAKEPOT="1"
     - stage: test
       env:
-        - TESTS="1" ODOO_REPO="OCA/OCB"
+        - TESTS=1 ODOO_REPO="OCA/OCB"
     {%- endif %}
 env:
   global:
     - VERSION="{{ odoo_version }}" TESTS="0" LINT_CHECK="0" MAKEPOT="0"
     {%- if include_wkhtmltopdf %}
     - WKHTMLTOPDF_VERSION="0.12.5"
+    {%- endif %}
+    {%- if dependency_installation_mode == "PIP" %}
+    - MQT_DEP=PIP
     {%- endif %}
 
 install:
