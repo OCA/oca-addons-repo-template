@@ -1,0 +1,57 @@
+name: test
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        odoo-version:
+          - 13.0
+    steps:
+      # Prepare environment
+      - uses: actions/checkout@v1
+      - name: Install python
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Generate cache key PY
+        run:
+          echo "::set-env name=PY::${{ runner.os }} $(python -VV | sha256sum | cut -d' '
+          -f1) ${{ hashFiles('pyproject.toml') }} ${{ hashFiles('poetry.lock') }}"
+      - uses: actions/cache@v1
+        with:
+          path: .venv
+          key: venv ${{ env.PY }}
+      - uses: actions/cache@v1
+        with:
+          path: ~/.cache
+          key: pre-commit ${{ env.PY }} ${{ hashFiles('.pre-commit-config.yaml') }}
+      - run: pip install pipx
+      - name: Generate cache key PIPX
+        run: echo "::set-env name=PIPX::$(pipx --version | sha256sum | cut -d' ' -f1)"
+      - uses: actions/cache@v1
+        with:
+          path: ~/.local/pipx/venvs
+          key: pipx ${{ env.PY }} ${{ env.PIPX }}
+      - uses: actions/cache@v1
+        with:
+          path: ~/.local/bin
+          key: local-bin ${{ env.PY }} ${{ env.PIPX }}
+      - name: Patch $PATH
+        run: echo "::set-env name=PATH::$HOME/.local/bin:$PATH"
+      - run: pipx install poetry
+      - run: poetry install
+
+      # Let tests issue git commits
+      - run: git config --global user.name CI
+      - run: git config --global user.email CI@GITHUB
+
+      # Run all tests
+      - run: poetry run pytest --color yes
+        env:
+          SELECTED_ODOO_VERSIONS: ${{ matrix.odoo-version }}
