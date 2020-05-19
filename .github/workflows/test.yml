@@ -1,0 +1,48 @@
+name: test
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+  release:
+    types: [created]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        odoo-version:
+          - 13.0
+    steps:
+      # Prepare environment
+      - uses: actions/checkout@v1
+      - name: Install python
+        uses: actions/setup-python@v1
+      - name: Patch $PATH
+        run: echo "::set-env name=PATH::$HOME/.local/bin:$PATH"
+      - run: pip install pipx
+      - run: pipx install poetry
+      - name: Generate cache key PY
+        run:
+          echo "::set-env name=PY::${{ runner.os }} python -VV | sha256sum) $(pipx
+          --version | sha256sum) $(poetry --version | sha256sum) ${{
+          hashFiles('pyproject.toml') }} ${{ hashFiles('poetry.lock') }}"
+      - uses: actions/cache@v1
+        with:
+          path: ~/.cache
+          key: cache ${{ env.PY }}
+      - uses: actions/cache@v1
+        with:
+          path: ~/.local
+          key: local ${{ env.PY }}
+      - run: poetry install
+
+      # Let tests issue git commits
+      - run: git config --global user.name CI
+      - run: git config --global user.email CI@GITHUB
+
+      # Run all tests
+      - run: poetry run pytest --color yes
+        env:
+          SELECTED_ODOO_VERSIONS: ${{ matrix.odoo-version }}
