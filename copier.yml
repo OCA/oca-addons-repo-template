@@ -1,0 +1,93 @@
+# Configure jinja2 defaults to make syntax highlighters happy
+_templates_suffix: .jinja
+_envops:
+  block_end_string: "%}"
+  block_start_string: "{%"
+  comment_end_string: "#}"
+  comment_start_string: "{#"
+  keep_trailing_newline: true
+  variable_end_string: "}}"
+  variable_start_string: "{{"
+
+# Other Copier configurations
+_exclude:
+  - /.git
+  - /.github
+  - /.gitmodules
+  - /**.pyc
+  - /**.pyo
+  - /copier.yml
+  - /poetry.lock
+  - /pyproject.toml
+  - /setup.cfg
+  - /tests
+  - /vendor
+
+odoo_version:
+  type: float
+  default: 13.0
+  choices:
+    - 13.0
+  help: Which Odoo version are we deploying in this branch?
+
+repo_slug:
+  type: str
+  help:
+    What's the repo slug? If you are creating https://github.com/OCA/server-tools, then
+    write "server-tools" here.
+
+repo_name:
+  type: str
+  help:
+    Tell me the project name. It's supposed to be human-readable. So, server-tools
+    project could be named like "Tools for server environment(s)"
+
+repo_description:
+  type: str
+  help: Please write a short description about what this repo is about.
+
+travis_apt_sources:
+  type: yaml
+  default: []
+  help: >
+    If you need to activate extra apt sources in Travis, this is the place. It must be a
+    YAML list with aliases listed here:
+    https://github.com/travis-ci/apt-source-safelist/blob/master/ubuntu.json.
+
+    Example: [heroku, mono]
+
+travis_apt_packages:
+  type: yaml
+  default: []
+  help: >
+    Do you need extra apt packages in Travis? Add them here as a YAML list.
+
+    Example: [docker, vim]
+
+dependency_installation_mode:
+  default: OCA
+  type: str
+  choices:
+    - OCA
+    - PIP
+  help:
+    Choose how to install module dependencies. Right now, "PIP" mode is experimental.
+
+rebel_module_groups:
+  type: yaml
+  default: []
+  help: >
+    Are there in this repo modules that don't get along with their friends? If so, list
+    them here (YAML format) and they will be tested in separate jobs.
+
+    Beware, if rebel modules should stay separated in groups, you should join them with
+    commas, which could be misinterpreted by YAML.
+
+    Example: ["rebel_module_1,rebel_module_2", even_more_rebel_module]
+
+include_wkhtmltopdf:
+  type: bool
+  default: no
+  help:
+    Do you need to install wkhtmltopdf? Usually only needed if you're going to test PDF
+    report generation.

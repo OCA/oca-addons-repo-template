@@ -1,0 +1,86 @@
+language: python
+cache:
+  directories:
+    - $HOME/.cache/pip
+    - $HOME/.cache/pre-commit
+
+python:
+  {#- Pin the lowest supported version for each Odoo release #}
+  - "3.6"
+
+addons:
+  {#- Pin the lowest supported version for each Odoo release #}
+  postgresql: "9.6"
+  apt:
+    {%- if travis_apt_sources %}
+    sources:
+      {%- for source in travis_apt_sources %}
+      - {{ source|tojson }}
+      {%- endfor %}
+    {%- endif %}
+    packages:
+      - expect-dev # provides unbuffer utility
+      {%- for package in travis_apt_packages %}
+      - {{ package|tojson }}
+      {%- endfor %}
+
+stages:
+  - linting
+  - test
+
+jobs:
+  include:
+    - stage: linting
+      name: "pre-commit"
+      install: pip install pre-commit
+      script: pre-commit run --all --show-diff-on-failure --verbose --color always
+      after_success:
+      before_install:
+    {%- if rebel_module_groups %}
+    {#- If there are rebel modules, we need separated test jobs and .pot generations #}
+    {%- for group in rebel_module_groups %}
+    # Test separately: {{ group }}
+    - stage: test
+      env:
+        - TESTS=1 ODOO_REPO="odoo/odoo" MAKEPOT=1 INCLUDE="{{ group }}"
+    - stage: test
+      env:
+        - TESTS=1 ODOO_REPO="OCA/OCB" INCLUDE="{{ group }}"
+    {%- endfor %}
+    # Test all other addons together
+    - stage: test
+      env:
+        - TESTS=1 ODOO_REPO="odoo/odoo" EXCLUDE="{{ rebel_module_groups|join(',') }}"
+    - stage: test
+      env:
+        - TESTS=1 ODOO_REPO="OCA/OCB" EXCLUDE="{{ rebel_module_groups|join(',') }}"
+    {%- else %}
+    {#- If all modules can get along, we test and generate .pot all at once #}
+    - stage: test
+      env:
+        - TESTS=1 ODOO_REPO="odoo/odoo" MAKEPOT="1"
+    - stage: test
+      env:
+        - TESTS=1 ODOO_REPO="OCA/OCB"
+    {%- endif %}
+env:
+  global:
+    - VERSION="{{ odoo_version }}" TESTS="0" LINT_CHECK="0" MAKEPOT="0"
+    {%- if include_wkhtmltopdf %}
+    - WKHTMLTOPDF_VERSION="0.12.5"
+    {%- endif %}
+    {%- if dependency_installation_mode == "PIP" %}
+    - MQT_DEP=PIP
+    {%- endif %}
+
+install:
+  - git clone --depth=1 https://github.com/OCA/maintainer-quality-tools.git
+    ${HOME}/maintainer-quality-tools
+  - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
+  - travis_install_nightly
+
+script:
+  - travis_run_tests
+
+after_success:
+  - travis_after_tests_success
