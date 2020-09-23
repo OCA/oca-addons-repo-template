@@ -59,6 +59,11 @@ def test_bootstrap(tmp_path: Path, odoo_version: float, cloned_template: Path):
         f"[![codecov](https://codecov.io/gh/OCA/{REPO_SLUG}/branch/{odoo_version}/graph/badge.svg)](https://codecov.io/gh/OCA/{REPO_SLUG})"  # noqa: B950
         in readme
     )
+    odoo_version_tr = str(odoo_version).replace(".", "-")
+    assert (
+        f"[![Translation Status](https://translation.odoo-community.org/widgets/{REPO_SLUG}-{odoo_version_tr}/-/svg-badge.svg)](https://translation.odoo-community.org/engage/{REPO_SLUG}-{odoo_version_tr}/?utm_source=widget)"  # noqa: B950
+        in readme
+    )
     assert "# Test repo" in readme
     assert data["repo_description"] in readme
     # Assert no stuff specific for this repo is found
