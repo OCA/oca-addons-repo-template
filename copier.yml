@@ -28,6 +28,7 @@ odoo_version:
   default: 13.0
   choices:
     - 13.0
+    - 14.0
   help: Which Odoo version are we deploying in this branch?
 
 repo_slug:
