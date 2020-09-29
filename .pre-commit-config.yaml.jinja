@@ -19,7 +19,7 @@
 
 {#- Older versions that differ a lot have their own hardcoded templates for readability #}
 {%- if odoo_version < 14 %}
-  {%- import "version-specific/%s/.pre-commit-config.yaml" % odoo_version %}
+  {%- include "version-specific/%s/.pre-commit-config.yaml" % odoo_version %}
 
 {#- Newer versions without hacks are rendered here directly #}
 {%- else %}
