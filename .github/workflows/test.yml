@@ -14,6 +14,7 @@ jobs:
       matrix:
         odoo-version:
           - 13.0
+          - 14.0
     steps:
       # Prepare environment
       - uses: actions/checkout@v1

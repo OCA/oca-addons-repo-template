@@ -22,12 +22,14 @@ _exclude:
   - /setup.cfg
   - /tests
   - /vendor
+  - /version-specific
 
 odoo_version:
   type: float
-  default: 13.0
+  default: 14.0
   choices:
     - 13.0
+    - 14.0
   help: Which Odoo version are we deploying in this branch?
 
 repo_slug:
