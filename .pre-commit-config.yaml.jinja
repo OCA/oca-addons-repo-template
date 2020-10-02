@@ -2,6 +2,7 @@
 {%- set repo_rev = namespace() %}
 
 {%- if odoo_version >= 14 %}
+  {%- set repo_rev.autoflake = "v1.4" %}
   {%- set repo_rev.black = "20.8b1" %}
   {%- set repo_rev.eslint = "v7.8.1" %}
   {%- set repo_rev.flake8 = "3.8.3" %}
@@ -47,6 +48,11 @@ repos:
         entry: found forbidden files; remove them
         language: fail
         files: "\\.rej$"
+  - repo: https://github.com/myint/autoflake
+    rev: {{ repo_rev.autoflake }}
+    hooks:
+      - id: autoflake
+        args: ["-i", "--ignore-init-module-imports"]
   - repo: https://github.com/psf/black
     rev: {{ repo_rev.black }}
     hooks:
