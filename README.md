@@ -58,6 +58,7 @@ Go read [our contribution guideline](CONTRIBUTING.md).
 This template allows to bootstrap and update addon repositories for these Odoo versions:
 
 - 13.0
+- 14.0
 
 Future versions will be added as they are released. Past versions could be added as long
 as they don't break existing branches.
