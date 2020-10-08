@@ -17,26 +17,25 @@ jobs:
           - 14.0
     steps:
       # Prepare environment
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2.3.3
       - name: Install python
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2
       - name: Patch $PATH
         run: echo "::set-env name=PATH::$HOME/.local/bin:$PATH"
       - run: pip install pipx
       - run: pipx install poetry
-      - name: Generate cache key PY
-        run:
-          echo "::set-env name=PY::${{ runner.os }} python -VV | sha256sum) $(pipx
-          --version | sha256sum) $(poetry --version | sha256sum) ${{
-          hashFiles('pyproject.toml') }} ${{ hashFiles('poetry.lock') }}"
-      - uses: actions/cache@v1
+      - uses: actions/cache@v2.1.1
         with:
-          path: ~/.cache
-          key: cache ${{ env.PY }}
-      - uses: actions/cache@v1
-        with:
-          path: ~/.local
-          key: local ${{ env.PY }}
+          path: |
+            ~/.cache
+            ~/.local
+          # HACK https://github.com/actions/cache/issues/2#issuecomment-673493515
+          # If you need to "clear" cache, just update the `CACHE_DATE` secret,
+          # putting current date (and time, if needed)
+          key: >-
+            cache ${{ secrets.CACHE_DATE }} ${{ env.PY }} ${{ runner.os }} $(python -VV
+            | sha256sum) $(pipx --version | sha256sum) $(poetry --version | sha256sum)
+            ${{ hashFiles('pyproject.toml') }} ${{ hashFiles('poetry.lock') }}
       - run: poetry install
 
       # Let tests issue git commits
