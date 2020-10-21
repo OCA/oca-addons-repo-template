@@ -19,6 +19,7 @@ _exclude:
   - /copier.yml
   - /poetry.lock
   - /pyproject.toml
+  - /pytest.ini
   - /setup.cfg
   - /tests
   - /vendor
