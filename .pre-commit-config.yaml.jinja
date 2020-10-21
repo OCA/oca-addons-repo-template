@@ -52,10 +52,12 @@ repos:
         language: fail
         files: "\\.rej$"
   - repo: https://github.com/oca/maintainer-tools
-    rev: fd75d80
+    rev: 1b5c7ad
     hooks:
       # update the NOT INSTALLABLE ADDONS section above
       - id: oca-update-pre-commit-excluded-addons
+      - id: oca-fix-manifest-website
+        args: ["https://github.com/OCA/{{ repo_slug }}"]
   - repo: https://github.com/myint/autoflake
     rev: {{ repo_rev.autoflake }}
     hooks:
