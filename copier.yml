@@ -76,6 +76,13 @@ dependency_installation_mode:
   help:
     Choose how to install module dependencies. Right now, "PIP" mode is experimental.
 
+generate_requirements_txt:
+  default: yes
+  type: bool
+  help:
+    Generate requirements.txt from addons manifests and optional overrides in setup.py
+    files.
+
 rebel_module_groups:
   type: yaml
   default: []
