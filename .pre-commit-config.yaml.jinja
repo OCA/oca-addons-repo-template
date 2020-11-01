@@ -67,12 +67,13 @@ repos:
     rev: {{ repo_rev.black }}
     hooks:
       - id: black
-  - repo: https://github.com/prettier/prettier
-    rev: {{ repo_rev.prettier }}
+  - repo: https://github.com/prettier/pre-commit
+    rev: v{{ repo_rev.prettier }}
     hooks:
       - id: prettier
         name: prettier + plugin-xml
         additional_dependencies:
+          - "prettier@{{ repo_rev.prettier }}"
           - "@prettier/plugin-xml@{{ repo_rev.prettier_xml }}"
         args:
           - --plugin=@prettier/plugin-xml
