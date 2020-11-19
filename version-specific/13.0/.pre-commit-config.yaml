@@ -23,15 +23,10 @@ repos:
     rev: 19.10b0
     hooks:
       - id: black
-  - repo: https://github.com/prettier/pre-commit
-    rev: "v1.19.1"
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v1.19.1
     hooks:
       - id: prettier
-  # TODO Avoid awebdeveloper/pre-commit-prettier if possible
-  # HACK https://github.com/prettier/prettier/issues/7407
-  - repo: https://github.com/awebdeveloper/pre-commit-prettier
-    rev: v0.0.1
-    hooks:
       - id: prettier
         name: prettier xml plugin
         additional_dependencies:
