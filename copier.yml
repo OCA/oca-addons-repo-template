@@ -12,7 +12,8 @@ _envops:
 # Other Copier configurations
 _exclude:
   - /.git
-  - /.github
+  - /.github/workflows/lint.yml
+  - /.github/workflows/test.yml
   - /.gitmodules
   - /**.pyc
   - /**.pyo
