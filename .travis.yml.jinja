@@ -30,12 +30,6 @@ stages:
 
 jobs:
   include:
-    - stage: linting
-      name: "pre-commit"
-      install: pip install pre-commit
-      script: pre-commit run --all --show-diff-on-failure --verbose --color always
-      after_success:
-      before_install:
     {%- if rebel_module_groups %}
     {#- If there are rebel modules, we need separated test jobs and .pot generations #}
     {%- for group in rebel_module_groups %}
