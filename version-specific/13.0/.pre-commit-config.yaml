@@ -14,6 +14,15 @@ default_language_version:
   python: python3
   node: "14.13.0"
 repos:
+  - repo: local
+    hooks:
+      # These files are most likely copier diff rejection junks; if found,
+      # review them manually, fix the problem (if needed) and remove them
+      - id: forbidden-files
+        name: forbidden files
+        entry: found forbidden files; remove them
+        language: fail
+        files: "\\.rej$"
   - repo: https://github.com/myint/autoflake
     rev: v1.4
     hooks:
