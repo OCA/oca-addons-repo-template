@@ -114,10 +114,14 @@ repos:
     hooks:
       - id: pylint
         name: pylint with optional checks
-        args: ["--rcfile=.pylintrc", "--exit-zero"]
+        args:
+          - --rcfile=.pylintrc
+          - --exit-zero
         verbose: true
-        additional_dependencies: ["pylint-odoo==3.5.0"]
+        additional_dependencies: &pylint_deps
+          - pylint-odoo==3.5.0
       - id: pylint
         name: pylint with mandatory checks
-        args: ["--rcfile=.pylintrc-mandatory"]
-        additional_dependencies: ["pylint-odoo==3.5.0"]
+        args:
+          - --rcfile=.pylintrc-mandatory
+        additional_dependencies: *pylint_deps
