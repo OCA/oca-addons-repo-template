@@ -83,6 +83,20 @@ repos:
       - id: check-xml
       - id: mixed-line-ending
         args: ["--fix=lf"]
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v1.26.2
+    hooks:
+      - id: pyupgrade
+  - repo: https://github.com/pre-commit/mirrors-isort
+    rev: v4.3.21
+    hooks:
+      - id: isort
+        name: isort except __init__.py
+        exclude: /__init__\.py$
+  - repo: https://github.com/acsone/setuptools-odoo
+    rev: 2.5.2
+    hooks:
+      - id: setuptools-odoo-make-default
   - repo: https://gitlab.com/pycqa/flake8
     rev: 3.7.9
     hooks:
@@ -107,17 +121,3 @@ repos:
         name: pylint with mandatory checks
         args: ["--rcfile=.pylintrc-mandatory"]
         additional_dependencies: ["pylint-odoo==3.5.0"]
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v1.26.2
-    hooks:
-      - id: pyupgrade
-  - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v4.3.21
-    hooks:
-      - id: isort
-        name: isort except __init__.py
-        exclude: /__init__\.py$
-  - repo: https://github.com/acsone/setuptools-odoo
-    rev: 2.5.2
-    hooks:
-      - id: setuptools-odoo-make-default
