@@ -72,6 +72,9 @@ repos:
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v{{ repo_rev.prettier }}
     hooks:
+      # first prettier hook without plugin-xml, on all supported files
+      - id: prettier
+      # second prettier hook with plugin-xml, on xml files only
       - id: prettier
         name: prettier + plugin-xml
         additional_dependencies:
@@ -79,6 +82,7 @@ repos:
           - "@prettier/plugin-xml@{{ repo_rev.prettier_xml }}"
         args:
           - --plugin=@prettier/plugin-xml
+        files: \.xml$
   - repo: https://github.com/pre-commit/mirrors-eslint
     rev: {{ repo_rev.eslint }}
     hooks:
