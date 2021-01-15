@@ -114,6 +114,7 @@ repos:
     rev: {{ repo_rev.pyupgrade }}
     hooks:
       - id: pyupgrade
+        args: ["--keep-percent-format"]
   - repo: https://github.com/PyCQA/isort
     rev: {{ repo_rev.isort }}
     hooks:
