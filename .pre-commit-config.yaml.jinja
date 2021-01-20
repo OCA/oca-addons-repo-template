@@ -76,6 +76,7 @@ repos:
         name: prettier (with plugin-xml)
         additional_dependencies:
           - "prettier@{{ repo_rev.prettier }}"
+          - "@xml-tools/parser@1.0.2"
           - "@prettier/plugin-xml@{{ repo_rev.prettier_xml }}"
         args:
           - --plugin=@prettier/plugin-xml
