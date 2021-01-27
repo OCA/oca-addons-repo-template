@@ -47,12 +47,12 @@ repos:
     rev: v1.19.1
     hooks:
       - id: prettier
-      - id: prettier
-        name: prettier xml plugin
+        name: prettier (with plugin-xml)
+        entry: prettier --write --list-different
         additional_dependencies:
           - "prettier@1.19.1"
           - "@prettier/plugin-xml@0.7.2"
-        files: \.xml$
+        files: \.(css|htm|html|js|json|jsx|less|md|scss|toml|ts|xml|yaml|yml)$
   - repo: https://github.com/pre-commit/mirrors-eslint
     rev: v6.8.0
     hooks:
