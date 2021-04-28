@@ -139,13 +139,7 @@ repos:
     rev: {{ repo_rev.flake8 }}
     hooks:
       - id: flake8
-        name: flake8 except __init__.py
-        exclude: /__init__\.py$
-        additional_dependencies: ["flake8-bugbear=={{ repo_rev.flake8_bugbear }}"]
-      - id: flake8
-        name: flake8 only __init__.py
-        args: ["--extend-ignore=F401"] # ignore unused imports in __init__.py
-        files: /__init__\.py$
+        name: flake8
         additional_dependencies: ["flake8-bugbear=={{ repo_rev.flake8_bugbear }}"]
   - repo: https://github.com/PyCQA/pylint
     rev: {{ repo_rev.pylint }}
