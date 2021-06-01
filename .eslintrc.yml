@@ -14,6 +14,7 @@ globals:
   moment: readonly
   odoo: readonly
   openerp: readonly
+  owl: readonly
   Promise: readonly
 
 # Styling is handled by Prettier, so we only need to enable AST rules;
