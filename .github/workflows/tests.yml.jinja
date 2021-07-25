@@ -33,10 +33,27 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        {%- if rebel_module_groups %}
+        include:
+        {%- for group in rebel_module_groups %}
+          - container: {{ IMAGES["odoo"][odoo_version] }}
+            include: "{{ group }}"
+            makepot: "true"
+          - container: {{ IMAGES["ocb"][odoo_version] }}
+            include: "{{ group }}"
+        {%- endfor %}
+          - container: {{ IMAGES["odoo"][odoo_version] }}
+            exclude: "{{ rebel_module_groups|join(',') }}"
+            makepot: "true"
+          - container: {{ IMAGES["ocb"][odoo_version] }}
+            exclude: "{{ rebel_module_groups|join(',') }}"
+        {%- else %}
+        {#- If all modules can get along, we test and generate .pot all at once #}
         include:
           - container: {{ IMAGES["odoo"][odoo_version] }}
             makepot: "true"
           - container: {{ IMAGES["ocb"][odoo_version] }}
+        {%- endif %}
     services:
       postgres:
         image: postgres:9.6
@@ -46,6 +63,11 @@ jobs:
           POSTGRES_DB: odoo
         ports:
           - 5432:5432
+    {%- if rebel_module_groups %}
+    env:
+      INCLUDE: "{% raw %}${{ matrix.include }}{% endraw %}"
+      EXCLUDE: "{% raw %}${{ matrix.exclude }}{% endraw %}"
+    {%- endif %}
     steps:
       - uses: actions/checkout@v2
         with:
