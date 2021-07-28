@@ -43,7 +43,7 @@ jobs:
     # Test all other addons together
     - stage: test
       env:
-        - TESTS=1 ODOO_REPO="odoo/odoo" EXCLUDE="{{ rebel_module_groups|join(',') }}"
+        - TESTS=1 ODOO_REPO="odoo/odoo" MAKEPOT=1 EXCLUDE="{{ rebel_module_groups|join(',') }}"
     - stage: test
       env:
         - TESTS=1 ODOO_REPO="OCA/OCB" EXCLUDE="{{ rebel_module_groups|join(',') }}"
