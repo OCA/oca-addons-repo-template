@@ -1,5 +1,6 @@
 # Configure jinja2 defaults to make syntax highlighters happy
 _templates_suffix: .jinja
+_subdirectory: src
 _envops:
   block_end_string: "%}"
   block_start_string: "{%"
@@ -8,23 +9,6 @@ _envops:
   keep_trailing_newline: true
   variable_end_string: "}}"
   variable_start_string: "{{"
-
-# Other Copier configurations
-_exclude:
-  - /.git
-  - /.github/workflows/lint.yml
-  - /.github/workflows/test.yml
-  - /.gitmodules
-  - /**.pyc
-  - /**.pyo
-  - /copier.yml
-  - /poetry.lock
-  - /pyproject.toml
-  - /pytest.ini
-  - /setup.cfg
-  - /tests
-  - /vendor
-  - /version-specific
 
 odoo_version:
   type: float

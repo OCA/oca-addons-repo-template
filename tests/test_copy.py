@@ -45,6 +45,11 @@ def test_bootstrap(tmp_path: Path, odoo_version: float, cloned_template: Path):
     assert contributing.is_file()
     license_ = (tmp_path / "LICENSE").read_text()
     assert "GNU AFFERO GENERAL PUBLIC LICENSE" in license_
+    # Workflows for the subprojects are copied
+    assert (tmp_path / ".github" / "workflows" / "pre-commit.yml").is_file()
+    assert (tmp_path / ".github" / "workflows" / "stale.yml").is_file()
+    # Workflows for the template itself are not copied
+    assert not (tmp_path / ".github" / "workflows" / "lint.yml").is_file()
     # Assert badges in readme; this is testing the repo_id macro
     readme = (tmp_path / "README.md").read_text()
     assert (
@@ -71,6 +76,7 @@ def test_bootstrap(tmp_path: Path, odoo_version: float, cloned_template: Path):
         "setup.cfg",
         "tests",
         "vendor",
+        "version-specific",
         "copier.yml",
         ".gitmodules",
         "poetry.lock",
