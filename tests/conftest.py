@@ -48,5 +48,5 @@ def cloned_template(tmp_path_factory):
                         "--message=dirty changes",
                         "--no-verify",
                     )
-            git("tag", "--force", "test")
+            git("tag", "--force", "v999999999.999999999.999999999")
         yield dirty_template_clone
