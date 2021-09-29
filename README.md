@@ -26,7 +26,7 @@ pipx install copier
 pipx install pre-commit
 pipx ensurepath
 # Clone this template and answer its questions
-copier copy https://github.com/OCA/oca-addons-repo-template.git some-repo
+copier copy https://github.com/open-synergy/ssi-addons-repo-template.git some-repo
 # Commit that
 cd some-repo
 git add .
@@ -57,6 +57,7 @@ Go read [our contribution guideline](CONTRIBUTING.md).
 
 This template allows to bootstrap and update addon repositories for these Odoo versions:
 
+- 8.0
 - 13.0
 - 14.0
 
