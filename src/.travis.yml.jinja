@@ -6,7 +6,16 @@ cache:
 
 python:
   {#- Pin the lowest supported version for each Odoo release #}
+  {%- if odoo_version >= 14 %}
   - "3.6"
+  {%- endif %}
+  {%- if odoo_version < 14 %}
+  - "2.7"
+  {%- endif %}
+
+{%- if odoo_version < 14 %}
+dist: trusty
+{%- endif %}
 
 addons:
   {#- Pin the lowest supported version for each Odoo release #}
