@@ -21,6 +21,7 @@ jobs:
         odoo-version:
           - 13.0
           - 14.0
+          - 15.0
     steps:
       # Prepare environment
       - uses: actions/checkout@v2.3.3
@@ -44,7 +45,6 @@ jobs:
             cache ${{ secrets.CACHE_DATE }} ${{ env.PY }} ${{ runner.os }} ${{
             hashFiles('pyproject.toml') }} ${{ hashFiles('poetry.lock') }}
       - run: poetry install
-
       # Let tests issue git commits
       - run: git config --global user.name CI
       - run: git config --global user.email CI@GITHUB

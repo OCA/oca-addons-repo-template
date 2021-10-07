@@ -46,6 +46,7 @@ def cloned_template(tmp_path_factory):
                         "commit",
                         "--author=Test<test@test>",
                         "--message=dirty changes",
+                        "--no-gpg-sign",
                         "--no-verify",
                     )
             git("tag", "--force", "v999999999.999999999.999999999")

@@ -12,10 +12,11 @@ _envops:
 
 odoo_version:
   type: float
-  default: 14.0
+  default: 15.0
   choices:
     - 13.0
     - 14.0
+    - 15.0
   help: Which Odoo version are we deploying in this branch?
 
 repo_slug:
