@@ -1,13 +1,15 @@
 {#- This namespace holds repo versions #}
 {%- set repo_rev = namespace() %}
 
-{%- if odoo_version >= 14 %}
+{%- if odoo_version < 15 %}
   {%- set repo_rev.autoflake = "v1.4" %}
   {%- set repo_rev.black = "20.8b1" %}
   {%- set repo_rev.eslint = "v7.8.1" %}
   {%- set repo_rev.flake8 = "3.8.3" %}
   {%- set repo_rev.flake8_bugbear = "20.1.4" %}
   {%- set repo_rev.isort = "5.5.1" %}
+  {%- set repo_rev.maintainer_tools = "ab1d7f6" %}
+  {%- set repo_rev.nodejs = "14.13.0" %}
   {%- set repo_rev.pre_commit_hooks = "v3.2.0" %}
   {%- set repo_rev.prettier = "2.1.2" %}
   {%- set repo_rev.prettier_xml = "0.12.0" %}
@@ -16,6 +18,22 @@
   {%- set repo_rev.pylint_odoo = "3.5.0" %}
   {%- set repo_rev.pyupgrade = "v2.7.2" %}
   {%- set repo_rev.setuptools_odoo = "2.6.0" %}
+{%- else %}
+  {%- set repo_rev.autoflake = "v1.4" %}
+  {%- set repo_rev.black = "21.9b0" %}
+  {%- set repo_rev.eslint = "v7.32.0" %}
+  {%- set repo_rev.flake8 = "3.9.2" %}
+  {%- set repo_rev.flake8_bugbear = "21.9.2" %}
+  {%- set repo_rev.isort = "5.9.3" %}
+  {%- set repo_rev.maintainer_tools = "dfba427ba03900b69e0a7f2c65890dc48921d36a" %}
+  {%- set repo_rev.nodejs = "14.18.0" %}
+  {%- set repo_rev.pre_commit_hooks = "v4.0.1" %}
+  {%- set repo_rev.prettier = "2.4.1" %}
+  {%- set repo_rev.prettier_xml = "1.1.0" %}
+  {%- set repo_rev.pylint = "v2.11.1" %}
+  {%- set repo_rev.pylint_odoo = "5.0.4" %}
+  {%- set repo_rev.pyupgrade = "v2.29.0" %}
+  {%- set repo_rev.setuptools_odoo = "2.7.1" %}
 {%- endif %}
 
 {#- Older versions that differ a lot have their own hardcoded templates for readability #}
@@ -42,7 +60,7 @@ exclude: |
   (LICENSE.*|COPYING.*)
 default_language_version:
   python: python3
-  node: "14.13.0"
+  node: "{{ repo_rev.nodejs }}"
 repos:
   - repo: local
     hooks:
@@ -54,7 +72,7 @@ repos:
         language: fail
         files: "\\.rej$"
   - repo: https://github.com/oca/maintainer-tools
-    rev: ab1d7f6
+    rev: {{ repo_rev.maintainer_tools }}
     hooks:
       # update the NOT INSTALLABLE ADDONS section above
       - id: oca-update-pre-commit-excluded-addons
