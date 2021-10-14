@@ -1,0 +1,92 @@
+name: test Odoo addons
+
+on:
+  pull_request:
+    branches:
+      - "{{ odoo_version }}*"
+  push:
+    branches:
+      - "{{ odoo_version }}*"
+
+{%
+set IMAGES = {
+  "odoo": {
+    15.0: "ghcr.io/oca/oca-ci/py3.8-odoo15.0:latest",
+    14.0: "ghcr.io/oca/oca-ci/py3.6-odoo14.0:latest",
+    13.0: "ghcr.io/oca/oca-ci/py3.6-odoo13.0:latest",
+    12.0: "ghcr.io/oca/oca-ci/py3.6-odoo12.0:latest",
+    11.0: "ghcr.io/oca/oca-ci/py3.5-odoo11.0:latest",
+    10.0: "ghcr.io/oca/oca-ci/py2.7-odoo10.0:latest",
+  },
+  "ocb": {
+    15.0: "ghcr.io/oca/oca-ci/py3.8-ocb15.0:latest",
+    14.0: "ghcr.io/oca/oca-ci/py3.6-ocb14.0:latest",
+    13.0: "ghcr.io/oca/oca-ci/py3.6-ocb13.0:latest",
+    12.0: "ghcr.io/oca/oca-ci/py3.6-ocb12.0:latest",
+    11.0: "ghcr.io/oca/oca-ci/py3.5-ocb11.0:latest",
+    10.0: "ghcr.io/oca/oca-ci/py2.7-ocb10.0:latest",
+  }
+}
+-%}
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: {% raw %}${{ matrix.container }}{% endraw %}
+    strategy:
+      fail-fast: false
+      matrix:
+        {%- if rebel_module_groups %}
+        include:
+        {%- for group in rebel_module_groups %}
+          - container: {{ IMAGES["odoo"][odoo_version] }}
+            include: "{{ group }}"
+            makepot: "true"
+          - container: {{ IMAGES["ocb"][odoo_version] }}
+            include: "{{ group }}"
+        {%- endfor %}
+          - container: {{ IMAGES["odoo"][odoo_version] }}
+            exclude: "{{ rebel_module_groups|join(',') }}"
+            makepot: "true"
+          - container: {{ IMAGES["ocb"][odoo_version] }}
+            exclude: "{{ rebel_module_groups|join(',') }}"
+        {%- else %}
+        {#- If all modules can get along, we test and generate .pot all at once #}
+        include:
+          - container: {{ IMAGES["odoo"][odoo_version] }}
+            makepot: "true"
+          - container: {{ IMAGES["ocb"][odoo_version] }}
+        {%- endif %}
+    services:
+      postgres:
+        image: postgres:9.6
+        env:
+          POSTGRES_USER: odoo
+          POSTGRES_PASSWORD: odoo
+          POSTGRES_DB: odoo
+        ports:
+          - 5432:5432
+    {%- if rebel_module_groups %}
+    env:
+      INCLUDE: "{% raw %}${{ matrix.include }}{% endraw %}"
+      EXCLUDE: "{% raw %}${{ matrix.exclude }}{% endraw %}"
+    {%- endif %}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Install addons and dependencies
+        run: oca_install_addons
+      - name: Check licenses
+        run: manifestoo -d . check-licenses
+      - name: Check development status
+        run: manifestoo -d . check-dev-status --default-dev-status=Beta
+      - name: Initialize test db
+        run: oca_init_test_database
+      - name: Run tests
+        run: oca_run_tests
+      - uses: codecov/codecov-action@v1
+      {% raw -%}
+      - name: Update .pot files
+        run: oca_export_and_push_pot https://x-access-token:${{ secrets.GIT_PUSH_TOKEN }}@github.com/${{ github.repository }}
+        if: ${{ matrix.makepot == 'true' && github.event_name == 'push' && github.repository_owner == 'OCA' }}
+      {%- endraw %}
