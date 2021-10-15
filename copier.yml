@@ -35,6 +35,14 @@ repo_description:
   type: str
   help: Please write a short description about what this repo is about.
 
+ci:
+  type: str
+  default: Travis
+  choices:
+    - Travis
+    - GitHub
+  help: Which CI system to use ?
+
 travis_apt_sources:
   type: yaml
   default: []
