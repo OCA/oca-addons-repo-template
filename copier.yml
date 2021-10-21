@@ -10,6 +10,11 @@ _envops:
   variable_end_string: "}}"
   variable_start_string: "{{"
 
+_tasks:
+  # HACK: https://github.com/copier-org/copier/issues/461
+  - if [ {{ ci }} == "Github" ]; then rm -f -- .travis.yml; elif [ {{ ci }} == "Travis"
+    ]; then rm -f -- .t2d.yml; fi
+
 odoo_version:
   type: float
   default: 15.0
