@@ -12,8 +12,7 @@ _envops:
 
 _tasks:
   # HACK: https://github.com/copier-org/copier/issues/461
-  - if [ {{ ci }} == "Github" ]; then rm -f -- .travis.yml; elif [ {{ ci }} == "Travis"
-    ]; then rm -f -- .t2d.yml; fi
+  - rm -f {% if ci != "Travis" %}.travis.yml{% endif %} {% if ci != "GitHub" %}.t2d.yml{% endif %}
 
 odoo_version:
   type: float
