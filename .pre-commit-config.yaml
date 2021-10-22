@@ -7,7 +7,6 @@ repos:
     rev: v2.4.1
     hooks:
       - id: prettier
-        exclude: ^copier.yml$
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:
