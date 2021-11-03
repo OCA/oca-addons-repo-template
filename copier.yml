@@ -15,6 +15,11 @@ _tasks:
   # prettier-ignore
   - rm -f {% if ci != "Travis" %}.travis.yml{% endif %} {% if ci != "GitHub" %}.t2d.yml{% endif %}
 
+_migrations:
+  - version: v1.3.6
+    after:
+      - rm -f CONTRIBUTING.md
+
 odoo_version:
   type: float
   default: 15.0

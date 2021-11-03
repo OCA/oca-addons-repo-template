@@ -41,8 +41,6 @@ def test_bootstrap(tmp_path: Path, odoo_version: float, cloned_template: Path):
     assert "[settings]" in isort
     assert not (tmp_path / ".gitmodules").is_file()
     # Assert other files
-    contributing = tmp_path / "CONTRIBUTING.md"
-    assert contributing.is_file()
     license_ = (tmp_path / "LICENSE").read_text()
     assert "GNU AFFERO GENERAL PUBLIC LICENSE" in license_
     # Workflows for the subprojects are copied
