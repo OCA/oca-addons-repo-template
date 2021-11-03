@@ -18,7 +18,6 @@ _tasks:
 _migrations:
   - version: v1.3.6
     after:
-      # Ensure CONTRIBUTING.md is removed
       - rm -f CONTRIBUTING.md
 
 odoo_version:
