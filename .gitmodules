@@ -1,4 +1,0 @@
-[submodule "vendor/maintainer-tools"]
-	branch = master
-	path = vendor/maintainer-tools
-	url = https://github.com/OCA/maintainer-tools.git

@@ -51,7 +51,7 @@ def test_bootstrap(tmp_path: Path, odoo_version: float, cloned_template: Path):
     # Assert badges in readme; this is testing the repo_id macro
     readme = (tmp_path / "README.md").read_text()
     assert (
-        f"[![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/{REPO_ID}/{odoo_version}.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-{REPO_SLUG}-{REPO_ID})"  # noqa: B950
+        f"[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/{REPO_SLUG}&target_branch={odoo_version})"  # noqa: B950
         in readme
     )
     assert (

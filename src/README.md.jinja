@@ -1,17 +1,7 @@
-{%- macro repo_id(slug) -%}
-    {%- set repos_str -%}
-        {%- include "vendor/maintainer-tools/tools/repos_with_ids.txt" -%}
-    {%- endset -%}
-    {%- for repo in repos_str.split("\n") -%}
-        {%- if repo.endswith("/%s"|format(slug)) -%}
-            {{- repo.split("|")[0] -}}
-        {%- endif -%}
-    {%- endfor -%}
-{%- endmacro -%}
 {%- macro odoo_version_slug(version) -%}
     {{- version | replace(".","-") -}}
 {%- endmacro -%}
-[![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/{{ repo_id(repo_slug) }}/{{ odoo_version }}.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-{{ repo_slug }}-{{ repo_id(repo_slug) }})
+[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/{{ repo_slug }}&target_branch={{ odoo_version }})
 [![Build Status](https://travis-ci.com/OCA/{{ repo_slug }}.svg?branch={{ odoo_version }})](https://travis-ci.com/OCA/{{ repo_slug }})
 [![codecov](https://codecov.io/gh/OCA/{{ repo_slug }}/branch/{{ odoo_version }}/graph/badge.svg)](https://codecov.io/gh/OCA/{{ repo_slug }})
 [![Translation Status](https://translation.odoo-community.org/widgets/{{ repo_slug }}-{{ odoo_version_slug(odoo_version) }}/-/svg-badge.svg)](https://translation.odoo-community.org/engage/{{ repo_slug }}-{{ odoo_version_slug(odoo_version) }}/?utm_source=widget)
