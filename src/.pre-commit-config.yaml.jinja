@@ -78,8 +78,6 @@ repos:
       - id: oca-update-pre-commit-excluded-addons
       - id: oca-fix-manifest-website
         args: ["https://github.com/OCA/{{ repo_slug }}"]
-      - id: oca-gen-addon-readme
-        args: ["--repo-name", "{{ repo_slug }}", "--branch", "{{ odoo_version }}", "--no-commit"]
   - repo: https://github.com/myint/autoflake
     rev: {{ repo_rev.autoflake }}
     hooks:
