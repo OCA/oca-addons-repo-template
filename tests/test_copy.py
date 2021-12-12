@@ -50,18 +50,19 @@ def test_bootstrap(tmp_path: Path, odoo_version: float, cloned_template: Path):
     assert not (tmp_path / ".github" / "workflows" / "lint.yml").is_file()
     # Assert badges in readme; this is testing the repo_id macro
     readme = (tmp_path / "README.md").read_text()
-    assert (
-        f"[![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/{REPO_ID}/{odoo_version}.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-{REPO_SLUG}-{REPO_ID})"  # noqa: B950
-        in readme
-    )
-    assert (
-        f"[![Build Status](https://travis-ci.com/OCA/{REPO_SLUG}.svg?branch={odoo_version})](https://travis-ci.com/OCA/{REPO_SLUG})"  # noqa: B950
-        in readme
-    )
-    assert (
-        f"[![codecov](https://codecov.io/gh/OCA/{REPO_SLUG}/branch/{odoo_version}/graph/badge.svg)](https://codecov.io/gh/OCA/{REPO_SLUG})"  # noqa: B950
-        in readme
-    )
+    # TODO: Montar ambiente Escodoo
+    # assert (
+    #     f"[![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/{REPO_ID}/{odoo_version}.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-{REPO_SLUG}-{REPO_ID})"  # noqa: B950
+    #     in readme
+    # )
+    # assert (
+    #     f"[![Build Status](https://travis-ci.com/Escodoo/{REPO_SLUG}.svg?branch={odoo_version})](https://travis-ci.com/Escodoo/{REPO_SLUG})"  # noqa: B950
+    #     in readme
+    # )
+    # assert (
+    #     f"[![codecov](https://codecov.io/gh/Escodoo/{REPO_SLUG}/branch/{odoo_version}/graph/badge.svg)](https://codecov.io/gh/Escodoo/{REPO_SLUG})"  # noqa: B950
+    #     in readme
+    # )
     odoo_version_tr = str(odoo_version).replace(".", "-")
     assert (
         f"[![Translation Status](https://translation.odoo-community.org/widgets/{REPO_SLUG}-{odoo_version_tr}/-/svg-badge.svg)](https://translation.odoo-community.org/engage/{REPO_SLUG}-{odoo_version_tr}/?utm_source=widget)"  # noqa: B950
