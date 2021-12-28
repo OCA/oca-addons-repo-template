@@ -7,6 +7,10 @@ on:
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
+    env:
+      # https://github.com/pre-commit/pre-commit/issues/2178#issuecomment-1002163763
+      # https://github.com/pypa/setuptools/issues/2980
+      SETUPTOOLS_USE_DISTUTILS: stdlib
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
