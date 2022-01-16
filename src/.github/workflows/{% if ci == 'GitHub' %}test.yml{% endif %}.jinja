@@ -1,4 +1,4 @@
-name: test Odoo addons
+name: tests
 
 on:
   pull_request:
@@ -32,6 +32,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container: {% raw %}${{ matrix.container }}{% endraw %}
+    name: {% raw %}${{ matrix.name }}{% endraw %}
     strategy:
       fail-fast: false
       matrix:
@@ -41,20 +42,26 @@ jobs:
           - container: {{ IMAGES["odoo"][odoo_version] }}
             include: "{{ group }}"
             makepot: "true"
+            name: test with Odoo
           - container: {{ IMAGES["ocb"][odoo_version] }}
             include: "{{ group }}"
+            name: test with OCB
         {%- endfor %}
           - container: {{ IMAGES["odoo"][odoo_version] }}
             exclude: "{{ rebel_module_groups|join(',') }}"
             makepot: "true"
+            name: test with Odoo
           - container: {{ IMAGES["ocb"][odoo_version] }}
             exclude: "{{ rebel_module_groups|join(',') }}"
+            name: test with OCB
         {%- else %}
         {#- If all modules can get along, we test and generate .pot all at once #}
         include:
           - container: {{ IMAGES["odoo"][odoo_version] }}
             makepot: "true"
+            name: test with Odoo
           - container: {{ IMAGES["ocb"][odoo_version] }}
+            name: test with OCB
         {%- endif %}
     services:
       postgres:
