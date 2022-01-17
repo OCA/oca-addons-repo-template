@@ -2,7 +2,12 @@
     {{- version | replace(".","-") -}}
 {%- endmacro -%}
 [![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/{{ repo_slug }}&target_branch={{ odoo_version }})
+{%- if ci == "Travis" %}
 [![Build Status](https://travis-ci.com/OCA/{{ repo_slug }}.svg?branch={{ odoo_version }})](https://travis-ci.com/OCA/{{ repo_slug }})
+{%- else %}
+[![Pre-commit Status](https://github.com/OCA/{{ repo_slug }}/actions/workflows/pre-commit.yml/badge.svg?branch={{ odoo_version }})](https://github.com/OCA/{{ repo_slug }}/actions/workflows/pre-commit.yml?query=branch%3A{{ odoo_version }})
+[![Build Status](https://github.com/OCA/{{ repo_slug }}/actions/workflows/test.yml/badge.svg?branch={{ odoo_version }})](https://github.com/OCA/{{ repo_slug }}/actions/workflows/test.yml?query=branch%3A{{ odoo_version }})
+{%- endif %}
 [![codecov](https://codecov.io/gh/OCA/{{ repo_slug }}/branch/{{ odoo_version }}/graph/badge.svg)](https://codecov.io/gh/OCA/{{ repo_slug }})
 [![Translation Status](https://translation.odoo-community.org/widgets/{{ repo_slug }}-{{ odoo_version_slug(odoo_version) }}/-/svg-badge.svg)](https://translation.odoo-community.org/engage/{{ repo_slug }}-{{ odoo_version_slug(odoo_version) }}/?utm_source=widget)
 
