@@ -1,3 +1,6 @@
+{%- if odoo_version < 13 %}
+  {%- include "version-specific/mqt-compat/.pylintrc.jinja" %}
+{%- else %}
 {% extends "src/.pylintrc-mandatory.jinja" %}
 {% block note %}
 # This .pylintrc contains optional AND mandatory checks and is meant to be
@@ -25,3 +28,4 @@
     too-complex,
     unnecessary-utf8-coding-comment
 {% endblock %}
+{%- endif %}

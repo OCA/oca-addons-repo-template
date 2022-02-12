@@ -1,3 +1,6 @@
+{%- if odoo_version < 13 %}
+  {%- include "version-specific/mqt-compat/.pylintrc-mandatory.jinja" %}
+{%- else %}
 [MASTER]
 load-plugins=pylint_odoo
 score=n
@@ -97,3 +100,4 @@ enable=anomalous-backslash-in-string,
 msg-template={path}:{line}: [{msg_id}({symbol}), {obj}] {msg}
 output-format=colorized
 reports=no
+{%- endif %}
