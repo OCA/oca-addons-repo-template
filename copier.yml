@@ -11,9 +11,7 @@ _envops:
   variable_start_string: "{{"
 
 _tasks:
-  # HACK: https://github.com/copier-org/copier/issues/461
-  # prettier-ignore
-  - rm -f {% if ci != "Travis" %}.travis.yml{% endif %} {% if ci != "GitHub" %}.t2d.yml{% endif %}
+  - rm -f .t2d.yml
 
 _migrations:
   - version: v1.3.6
