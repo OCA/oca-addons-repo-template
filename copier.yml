@@ -11,7 +11,7 @@ _envops:
   variable_start_string: "{{"
 
 _tasks:
-  - rm -f .t2d.yml
+  - rm -f {% if ci != "Travis" %}.travis.yml{% endif %} .t2d.yml
 
 _migrations:
   - version: v1.3.6
