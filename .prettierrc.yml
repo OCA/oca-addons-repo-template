@@ -1,1 +1,1 @@
-./src/.prettierrc.yml
+./src/{% if odoo_version > 12 %}.prettierrc.yml{% endif %}
