@@ -29,6 +29,26 @@ set IMAGES = {
 }
 -%}
 jobs:
+  license:
+    runs-on: ubuntu-latest
+    name: Check licenses
+    container: {{ IMAGES["odoo"][odoo_version] }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install addons and dependencies
+        run: oca_install_addons
+      - name: Check licenses
+        run: manifestoo -d . check-licenses
+  dev-status:
+    runs-on: ubuntu-latest
+    name: Check development status
+    container: {{ IMAGES["odoo"][odoo_version] }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install addons and dependencies
+        run: oca_install_addons
+      - name: Check development status
+        run: manifestoo -d . check-dev-status --default-dev-status=Beta
   unreleased-deps:
     runs-on: ubuntu-latest
     name: Detect unreleased dependencies
@@ -100,10 +120,6 @@ jobs:
           persist-credentials: false
       - name: Install addons and dependencies
         run: oca_install_addons
-      - name: Check licenses
-        run: manifestoo -d . check-licenses
-      - name: Check development status
-        run: manifestoo -d . check-dev-status --default-dev-status=Beta
       - name: Initialize test db
         run: oca_init_test_database
       - name: Run tests
