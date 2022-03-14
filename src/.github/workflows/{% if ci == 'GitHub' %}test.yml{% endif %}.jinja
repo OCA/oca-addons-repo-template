@@ -6,7 +6,8 @@ on:
       - "{{ odoo_version }}*"
   push:
     branches:
-      - "{{ odoo_version }}*"
+      - "{{ odoo_version }}"
+      - "{{ odoo_version }}-ocabot-*"
 
 {%
 set IMAGES = {
