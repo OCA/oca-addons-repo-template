@@ -27,6 +27,20 @@ odoo_version:
     - 15.0
   help: Which Odoo version are we deploying in this branch?
 
+org_slug:
+  type: str
+  default: OCA
+  help:
+    What's the organization slug? If you are creating
+    https://github.com/OCA/server-tools, then write "OCA" here.
+
+org_name:
+  type: str
+  default: Odoo Community Association (OCA)
+  help:
+    Tell me the Organization name. It's supposed to be human-readable. It will be used
+    in the author key of the __manifest__ files.
+
 repo_slug:
   type: str
   help:
@@ -38,6 +52,13 @@ repo_name:
   help:
     Tell me the project name. It's supposed to be human-readable. So, server-tools
     project could be named like "Tools for server environment(s)"
+
+repo_website:
+  type: str
+  default: "https://github.com/{{ org_slug }}/{{ repo_slug }}"
+  help:
+    Tell me the project website. It will be used in the website key of the __manifest__
+    files.
 
 repo_description:
   type: str
