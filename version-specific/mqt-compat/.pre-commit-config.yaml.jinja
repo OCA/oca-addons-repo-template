@@ -23,7 +23,7 @@ repos:
       # update the NOT INSTALLABLE ADDONS section above
       - id: oca-update-pre-commit-excluded-addons
       - id: oca-fix-manifest-website
-        args: ["https://github.com/OCA/{{ repo_slug }}"]
+        args: ["{{ repo_website }}"]
   - repo: https://github.com/acsone/setuptools-odoo
     rev: 3.0.6
     hooks:
