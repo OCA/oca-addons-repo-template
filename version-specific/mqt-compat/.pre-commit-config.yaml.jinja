@@ -40,7 +40,7 @@ repos:
     rev: v3.4.1
     hooks:
       - id: flake8
-        language_version: python{% if odoo_version < 11 %}2{% else %}3{% endif %}
+        language_version: python{% if odoo_version < 11 %}2{% else %}3.6{% endif %}
         name: flake8 excluding __init__.py
         exclude: __init__\.py
   - repo: https://github.com/pre-commit/mirrors-pylint
