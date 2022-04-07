@@ -4,10 +4,10 @@ on:
   pull_request:
     branches:
       - "{{ odoo_version }}*"
-  push:
-    branches:
-      - "{{ odoo_version }}"
-      - "{{ odoo_version }}-ocabot-*"
+  # push:
+  #   branches:
+  #     - "{{ odoo_version }}"
+  #     - "{{ odoo_version }}-ocabot-*"
 
 jobs:
   pre-commit:

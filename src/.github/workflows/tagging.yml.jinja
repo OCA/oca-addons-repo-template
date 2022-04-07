@@ -1,0 +1,30 @@
+name: Tagging
+
+on:
+  push:
+    branches: ["{{ odoo_version }}"]
+
+jobs:
+  tagging:
+    name: Bump tag
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Create an incremental release
+      uses: aurestic/incremental-tag@master
+      with:
+        flag_branch: true
+        message: Bump version
+        prev_tag: 'v'
+        update_odoo_module_version: true
+      env:
+        GITHUB_TOKEN: ${ secrets.GITHUB_TOKEN }
+
+  notify:
+    needs: [tagging]
+    name: Notify new tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify new tag
+        uses: aurestic/gh_workflow_notify_release@master

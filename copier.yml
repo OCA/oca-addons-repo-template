@@ -20,7 +20,7 @@ _migrations:
 
 odoo_version:
   type: float
-  default: 15.0
+  default: 14.0
   choices:
     - 13.0
     - 14.0
@@ -29,14 +29,14 @@ odoo_version:
 
 org_slug:
   type: str
-  default: OCA
+  default: aurestic
   help:
     What's the organization slug? If you are creating
     https://github.com/OCA/server-tools, then write "OCA" here.
 
 org_name:
   type: str
-  default: Odoo Community Association (OCA)
+  default: Aures Tic
   help:
     Tell me the Organization name. It's supposed to be human-readable. It will be used
     in the author key of the __manifest__ files.
@@ -53,12 +53,12 @@ repo_name:
     Tell me the project name. It's supposed to be human-readable. So, server-tools
     project could be named like "Tools for server environment(s)"
 
-repo_website:
-  type: str
-  default: "https://github.com/{{ org_slug }}/{{ repo_slug }}"
-  help:
-    Tell me the project website. It will be used in the website key of the __manifest__
-    files.
+# repo_website:
+#   type: str
+#   default: "https://github.com/{{ org_slug }}/{{ repo_slug }}"
+#   help:
+#     Tell me the project website. It will be used in the website key of the __manifest__
+#     files.
 
 repo_description:
   type: str
@@ -66,29 +66,29 @@ repo_description:
 
 ci:
   type: str
-  default: Travis
+  default: GitHub
   choices:
     - Travis
     - GitHub
   help: Which CI system to use ?
 
-travis_apt_sources:
-  type: yaml
-  default: []
-  help: >
-    If you need to activate extra apt sources in Travis, this is the place. It must be a
-    YAML list with aliases listed here:
-    https://github.com/travis-ci/apt-source-safelist/blob/master/ubuntu.json.
+# travis_apt_sources:
+#   type: yaml
+#   default: []
+#   help: >
+#     If you need to activate extra apt sources in Travis, this is the place. It must be a
+#     YAML list with aliases listed here:
+#     https://github.com/travis-ci/apt-source-safelist/blob/master/ubuntu.json.
 
-    Example: [heroku, mono]
+#     Example: [heroku, mono]
 
-travis_apt_packages:
-  type: yaml
-  default: []
-  help: >
-    Do you need extra apt packages in Travis? Add them here as a YAML list.
+# travis_apt_packages:
+#   type: yaml
+#   default: []
+#   help: >
+#     Do you need extra apt packages in Travis? Add them here as a YAML list.
 
-    Example: [docker, vim]
+#     Example: [docker, vim]
 
 dependency_installation_mode:
   default: OCA

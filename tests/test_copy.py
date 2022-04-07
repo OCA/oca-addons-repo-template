@@ -44,6 +44,7 @@ def test_bootstrap(tmp_path: Path, odoo_version: float, cloned_template: Path):
     license_ = (tmp_path / "LICENSE").read_text()
     assert "GNU AFFERO GENERAL PUBLIC LICENSE" in license_
     # Workflows for the subprojects are copied
+    assert (tmp_path / ".github" / "workflows" / "tagging.yml").is_file()
     assert (tmp_path / ".github" / "workflows" / "pre-commit.yml").is_file()
     assert (tmp_path / ".github" / "workflows" / "stale.yml").is_file()
     # Workflows for the template itself are not copied
