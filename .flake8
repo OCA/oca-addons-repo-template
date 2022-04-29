@@ -1,1 +1,1 @@
-./src/.flake8
+./src/{% if odoo_version >= 13 %}.flake8{% endif %}

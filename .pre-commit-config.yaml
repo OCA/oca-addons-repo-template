@@ -7,6 +7,8 @@ repos:
     rev: v2.4.1
     hooks:
       - id: prettier
+        # https://github.com/prettier/prettier/issues/12143
+        exclude: "}$"
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:

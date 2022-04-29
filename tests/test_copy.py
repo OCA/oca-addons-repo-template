@@ -28,17 +28,20 @@ def test_bootstrap(tmp_path: Path, odoo_version: float, cloned_template: Path):
         assert answers[key] == value
     # Assert linter config files look like they were looking before
     pylintrc_mandatory = (tmp_path / ".pylintrc-mandatory").read_text()
-    assert "disable=all\n\nenable=" in pylintrc_mandatory
+    assert "disable=all\n" in pylintrc_mandatory
+    assert "enable=" in pylintrc_mandatory
     assert f"valid_odoo_versions={odoo_version}" in pylintrc_mandatory
     assert SOME_PYLINT_OPTIONAL_CHECK not in pylintrc_mandatory
     pylintrc_optional = (tmp_path / ".pylintrc").read_text()
-    assert "disable=all\n\n# This .pylintrc" in pylintrc_optional
+    assert "disable=all\n" in pylintrc_optional
+    assert "# This .pylintrc contains" in pylintrc_optional
     assert f"valid_odoo_versions={odoo_version}" in pylintrc_optional
     assert SOME_PYLINT_OPTIONAL_CHECK in pylintrc_optional
     flake8 = (tmp_path / ".flake8").read_text()
     assert "[flake8]" in flake8
-    isort = (tmp_path / ".isort.cfg").read_text()
-    assert "[settings]" in isort
+    if odoo_version > 12:
+        isort = (tmp_path / ".isort.cfg").read_text()
+        assert "[settings]" in isort
     assert not (tmp_path / ".gitmodules").is_file()
     # Assert other files
     license_ = (tmp_path / "LICENSE").read_text()
