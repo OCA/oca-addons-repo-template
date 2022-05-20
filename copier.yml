@@ -32,14 +32,14 @@ odoo_version:
 
 org_slug:
   type: str
-  default: OCA
+  default: cetmix
   help:
     What's the organization slug? If you are creating
-    https://github.com/OCA/server-tools, then write "OCA" here.
+    https://github.com/cetmix/server-tools, then write "cetmix" here.
 
 org_name:
   type: str
-  default: Odoo Community Association (OCA)
+  default: Cetmix
   help:
     Tell me the Organization name. It's supposed to be human-readable. It will be used
     in the author key of the __manifest__ files.
@@ -47,7 +47,7 @@ org_name:
 repo_slug:
   type: str
   help:
-    What's the repo slug? If you are creating https://github.com/OCA/server-tools, then
+    What's the repo slug? If you are creating https://github.com/cetmix/server-tools, then
     write "server-tools" here.
 
 repo_name:
