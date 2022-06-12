@@ -7,7 +7,7 @@ on:
   push:
     branches:
       - "{{ odoo_version }}"
-      - "{{ odoo_version }}-ocabot-*"
+      - "{{ odoo_version }}-dev"
 
 {%
 set IMAGES = {
@@ -110,6 +110,8 @@ jobs:
       - name: Run tests
         run: oca_run_tests
       - uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
       {% raw -%}
       - name: Update .pot files
         run: oca_export_and_push_pot https://x-access-token:${{ secrets.GIT_PUSH_TOKEN }}@github.com/${{ github.repository }}
