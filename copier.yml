@@ -9,6 +9,7 @@ _envops:
   keep_trailing_newline: true
   variable_end_string: "}}"
   variable_start_string: "{{"
+  cache_size: 0
 
 _tasks:
   - rm -f {% if ci != "Travis" %}.travis.yml{% endif %} .t2d.yml
@@ -58,7 +59,7 @@ repo_name:
 
 repo_website:
   type: str
-  default: "https://github.com/{{ org_slug }}/{{ repo_slug }}"
+  default: "https://cetmix.com"
   help:
     Tell me the project website. It will be used in the website key of the __manifest__
     files.
@@ -69,7 +70,7 @@ repo_description:
 
 ci:
   type: str
-  default: Travis
+  default: GitHub
   choices:
     - Travis
     - GitHub
