@@ -127,3 +127,32 @@ include_wkhtmltopdf:
   help:
     Do you need to install wkhtmltopdf? Usually only needed if you're going to test PDF
     report generation.
+
+github_enforce_dev_status_compatibility:
+  type: bool
+  default: yes
+  help: GitHub action checks the minimum development status?
+  when: &ci_is_github "{{ ci == 'GitHub' }}"
+
+github_check_license:
+  type: bool
+  default: yes
+  help: GitHub action checks the manifest license?
+  when: *ci_is_github
+
+github_enable_codecov:
+  type: bool
+  default: yes
+  help: GitHub action runs codecov/codecov-action?
+  when: *ci_is_github
+
+github_enable_makepot:
+  type: bool
+  default: yes
+  help: GitHub action updates .pot files?
+  when: *ci_is_github
+
+github_enable_stale_action:
+  type: bool
+  default: yes
+  help: Create GitHub 'stale' action?
