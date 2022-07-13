@@ -31,6 +31,7 @@ set IMAGES = {
   }
 }
 -%}
+
 jobs:
   unreleased-deps:
     runs-on: ubuntu-latest
@@ -53,6 +54,12 @@ jobs:
     runs-on: ubuntu-latest
     container: {% raw %}${{ matrix.container }}{% endraw %}
     name: {% raw %}${{ matrix.name }}{% endraw %}
+    {%- if github_ci_extra_env %}
+    env:
+      {%- for key, value in github_ci_extra_env.items() %}
+      {{ key }}: {{ value|tojson }}
+      {%- endfor %}
+    {%- endif %}
     strategy:
       fail-fast: false
       matrix:
