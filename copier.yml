@@ -84,6 +84,7 @@ travis_apt_sources:
     https://github.com/travis-ci/apt-source-safelist/blob/master/ubuntu.json.
 
     Example: [heroku, mono]
+  when: &ci_is_travis "{{ ci == 'Travis' }}"
 
 travis_apt_packages:
   type: yaml
@@ -92,6 +93,7 @@ travis_apt_packages:
     Do you need extra apt packages in Travis? Add them here as a YAML list.
 
     Example: [docker, vim]
+  when: *ci_is_travis
 
 dependency_installation_mode:
   default: OCA
@@ -101,6 +103,7 @@ dependency_installation_mode:
     - PIP
   help:
     Choose how to install module dependencies. Right now, "PIP" mode is experimental.
+  when: *ci_is_travis
 
 generate_requirements_txt:
   default: yes
