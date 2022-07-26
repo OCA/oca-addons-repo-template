@@ -117,14 +117,11 @@ jobs:
         run: oca_run_tests
       {%- if github_enable_codecov %}
       - uses: codecov/codecov-action@v1
-<<<<<<< HEAD
         {% raw -%}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-=======
       {%- endif %}
       {% raw -%}
->>>>>>> 70bf7af468d061bb09b064ebe72a506acdd52402
       - name: Update .pot files
         run: oca_export_and_push_pot https://x-access-token:${{ secrets.GIT_PUSH_TOKEN }}@github.com/${{ github.repository }}
       {%- endraw %}
