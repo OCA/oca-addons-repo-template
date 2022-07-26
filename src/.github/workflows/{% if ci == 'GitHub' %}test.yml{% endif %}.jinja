@@ -120,6 +120,7 @@ jobs:
         {% raw -%}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+        {%- endraw %}
       {%- endif %}
       {% raw -%}
       - name: Update .pot files
