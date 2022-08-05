@@ -59,7 +59,7 @@ jobs:
         {%- for group in rebel_module_groups %}
           - container: {{ IMAGES["odoo"][odoo_version] }}
             include: "{{ group }}"
-            makepot: "{{ github_enable_makepot | bool | lower }}"
+            makepot: "false"
             name: test with Odoo
           - container: {{ IMAGES["ocb"][odoo_version] }}
             include: "{{ group }}"
@@ -67,7 +67,7 @@ jobs:
         {%- endfor %}
           - container: {{ IMAGES["odoo"][odoo_version] }}
             exclude: "{{ rebel_module_groups|join(',') }}"
-            makepot: "{{ github_enable_makepot | bool | lower }}"
+            makepot: "false"
             name: test with Odoo
           - container: {{ IMAGES["ocb"][odoo_version] }}
             exclude: "{{ rebel_module_groups|join(',') }}"
@@ -76,7 +76,7 @@ jobs:
         {#- If all modules can get along, we test and generate .pot all at once #}
         include:
           - container: {{ IMAGES["odoo"][odoo_version] }}
-            makepot: "{{ github_enable_makepot | bool | lower }}"
+            makepot: "false"
             name: test with Odoo
           - container: {{ IMAGES["ocb"][odoo_version] }}
             name: test with OCB
