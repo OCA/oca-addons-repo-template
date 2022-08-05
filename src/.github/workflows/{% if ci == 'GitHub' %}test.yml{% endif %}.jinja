@@ -59,7 +59,7 @@ jobs:
         {%- for group in rebel_module_groups %}
           - container: {{ IMAGES["odoo"][odoo_version] }}
             include: "{{ group }}"
-            makepot: "true"
+            makepot: "false"
             name: test with Odoo
           - container: {{ IMAGES["ocb"][odoo_version] }}
             include: "{{ group }}"
@@ -67,7 +67,7 @@ jobs:
         {%- endfor %}
           - container: {{ IMAGES["odoo"][odoo_version] }}
             exclude: "{{ rebel_module_groups|join(',') }}"
-            makepot: "true"
+            makepot: "false"
             name: test with Odoo
           - container: {{ IMAGES["ocb"][odoo_version] }}
             exclude: "{{ rebel_module_groups|join(',') }}"
@@ -76,7 +76,7 @@ jobs:
         {#- If all modules can get along, we test and generate .pot all at once #}
         include:
           - container: {{ IMAGES["odoo"][odoo_version] }}
-            makepot: "true"
+            makepot: "false"
             name: test with Odoo
           - container: {{ IMAGES["ocb"][odoo_version] }}
             name: test with OCB
@@ -103,16 +103,26 @@ jobs:
         run: oca_install_addons
       - name: Check licenses
         run: manifestoo -d . check-licenses
+        {%- if not github_check_license %}
+        continue-on-error: true
+        {%- endif %}
       - name: Check development status
         run: manifestoo -d . check-dev-status --default-dev-status=Beta
+        {%- if not github_enforce_dev_status_compatibility %}
+        continue-on-error: true
+        {%- endif %}
       - name: Initialize test db
         run: oca_init_test_database
       - name: Run tests
         run: oca_run_tests
+      {%- if github_enable_codecov %}
       - uses: codecov/codecov-action@v1
         {% raw -%}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+        {%- endraw %}
+      {%- endif %}
+      {% raw -%}
       - name: Update .pot files
         run: oca_export_and_push_pot https://x-access-token:${{ secrets.GIT_PUSH_TOKEN }}@github.com/${{ github.repository }}
       {%- endraw %}
