@@ -46,8 +46,30 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+<<<<<<< HEAD
           cache: poetry
 
+=======
+      - name: Python Poetry Action
+        uses: abatilo/actions-poetry@v2.1.0
+      - name: generate cache key PY
+        run:
+          echo "PY=$((python -VV; pip freeze; poetry --version) | sha256sum | cut -d' '
+          -f1)" >> $GITHUB_ENV
+      - uses: actions/cache@v2.1.1
+        with:
+          path: .venv
+          # HACK https://github.com/actions/cache/issues/2#issuecomment-673493515
+          # If you need to "clear" cache, just update the `CACHE_DATE` secret,
+          # putting current date (and time, if needed)
+          key: >-
+            cache ${{ secrets.CACHE_DATE }} ${{ env.PY }} ${{ runner.os }} ${{
+            hashFiles('pyproject.toml') }} ${{ hashFiles('poetry.lock') }}
+      # HACK python-poetry/poetry#3010 and 3336 workaround for GitHub actions
+      # and poetry 1.1.2 throwing 'Incorrectly nested style tag found.'
+      - run: poetry config experimental.new-installer false
+      - run: poetry install
+>>>>>>> bc5ada9 (Dev cetmix (#8))
       # Let tests issue git commits
       - run: git config --global user.name CI
       - run: git config --global user.email CI@GITHUB
