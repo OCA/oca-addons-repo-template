@@ -69,7 +69,7 @@ repo_description:
 
 ci:
   type: str
-  default: Travis
+  default: GitHub
   choices:
     - Travis
     - GitHub
