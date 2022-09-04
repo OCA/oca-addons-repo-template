@@ -54,9 +54,6 @@ jobs:
           key: >-
             cache ${{ secrets.CACHE_DATE }} ${{ env.PY }} ${{ runner.os }} ${{
             hashFiles('pyproject.toml') }} ${{ hashFiles('poetry.lock') }}
-      # HACK python-poetry/poetry#3010 and 3336 workaround for GitHub actions
-      # and poetry 1.1.2 throwing 'Incorrectly nested style tag found.'
-      - run: poetry config experimental.new-installer false
       - run: poetry install
       # Let tests issue git commits
       - run: git config --global user.name CI
