@@ -13,7 +13,7 @@ def test_hooks_installable(tmp_path: Path, odoo_version: float, cloned_template:
         "repo_name": "Test repo",
         "repo_description": "Test repo description",
     }
-    copy(str(cloned_template), tmp_path, data=data, force=True)
+    copy(str(cloned_template), tmp_path, data=data, defaults=True)
     with local.cwd(tmp_path):
         git("init")
         pre_commit("install-hooks")
