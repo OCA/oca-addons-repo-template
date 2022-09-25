@@ -13,34 +13,37 @@ jobs:
     strategy:
       matrix:
         python-version:
-          - 3.6
-          - 3.8
+          - "3.8"
+          - "3.10"
         odoo-version:
+          - 10.0
           - 11.0
           - 12.0
           - 13.0
           - 14.0
           - 15.0
-        include:
-          - python-version: 2.7
-            odoo-version: 10.0
-        exclude:
-          - python-version: 3.8
-            odoo-version: 11.0
-          - python-version: 3.8
-            odoo-version: 12.0
     steps:
       # Prepare environment
       - uses: actions/checkout@v2.3.3
-      - name: Install python
+      - name: Install python 2 for Odoo 10 (used by .pre-commit-config.yaml)
+        uses: actions/setup-python@v2
+        with:
+          python-version: 2.7
+        if: ${{ matrix.odoo-version < 11 }}
+      - name: Install python 3.6 for Odoo 11 and 12 (used by .pre-commit-config.yaml)
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.6
+        if: ${{ matrix.odoo-version > 10 && matrix.odoo-version < 13 }}
+      - name: Install python ${{ matrix.python-version }} for running the tests
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - run: pip install -r test-requirements.txt
+      - run: python${{ matrix.python-version }} -m pip install -r test-requirements.txt
       # Let tests issue git commits
       - run: git config --global user.name CI
       - run: git config --global user.email CI@GITHUB
       # Run all tests
-      - run: pytest ./tests --color yes
+      - run: python${{ matrix.python-version }} -m pytest ./tests --color yes -v
         env:
           SELECTED_ODOO_VERSIONS: ${{ matrix.odoo-version }}
