@@ -1,0 +1,6 @@
+copier
+pre-commit
+
+plumbum
+pytest
+pytest-xdist

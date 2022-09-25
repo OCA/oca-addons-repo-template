@@ -80,8 +80,6 @@ def test_bootstrap(tmp_path: Path, odoo_version: float, cloned_template: Path):
         "version-specific",
         "copier.yml",
         ".gitmodules",
-        "poetry.lock",
-        "pyproject.toml",
     )
     for file_ in garbage:
         assert not (tmp_path / file_).exists()

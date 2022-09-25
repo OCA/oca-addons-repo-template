@@ -1,36 +1,26 @@
 # Contribution guideline
 
-## Set up a development environment
-
-To install CLI apps, you are encouraged to use
-[pipx](https://pipxproject.github.io/pipx/).
-
-To develop, you need [Poetry](https://python-poetry.org/).
-
-Poetry will install all other dependencies for you to start hacking right away:
+## Set up a virtual environment for development
 
 ```bash
-# Install tools
-pip install pipx
-pipx install poetry
-pipx ensurepath
 # Clone
 git clone https://github.com/OCA/oca-addons-repo-template
 cd oca-addons-repo-template
 # Install development environment
-poetry install
+python3 -m venv .venv
 ```
 
 From now on, whenever you want to enter this development environment shell, just:
 
 ```bash
-poetry shell
+source .venv/bin/activate
 ```
 
 Specifically, to run tests:
 
 ```bash
-poetry run pytest
+pip install -r test-requirements.txt
+pytest
 ```
 
 ## General OCA guidelines

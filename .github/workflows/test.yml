@@ -7,9 +7,6 @@ on:
   release:
     types: [created]
 
-env:
-  POETRY_VIRTUALENVS_IN_PROJECT: "true"
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -39,26 +36,11 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - name: generate cache key PY
-        run:
-          echo "PY=$((python -VV; pip freeze; poetry --version) | sha256sum | cut -d' '
-          -f1)" >> $GITHUB_ENV
-      - uses: actions/cache@v2.1.1
-        with:
-          path: .venv
-          # HACK https://github.com/actions/cache/issues/2#issuecomment-673493515
-          # If you need to "clear" cache, just update the `CACHE_DATE` secret,
-          # putting current date (and time, if needed)
-          key: >-
-            cache ${{ secrets.CACHE_DATE }} ${{ env.PY }} ${{ runner.os }} ${{
-            hashFiles('pyproject.toml') }} ${{ hashFiles('poetry.lock') }}
-      - run: pipx install poetry
-      - run: poetry install
+      - run: pip install -r test-requirements.txt
       # Let tests issue git commits
       - run: git config --global user.name CI
       - run: git config --global user.email CI@GITHUB
-
       # Run all tests
-      - run: poetry run pytest --color yes
+      - run: pytest ./tests --color yes
         env:
           SELECTED_ODOO_VERSIONS: ${{ matrix.odoo-version }}
