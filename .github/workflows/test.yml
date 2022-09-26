@@ -25,6 +25,8 @@ jobs:
             python-version: 3.8
           - odoo-version: 15.0
             python-version: 3.8
+          - odoo-version: 16.0
+            python-version: "3.10"
     steps:
       # Prepare environment
       - uses: actions/checkout@v3
