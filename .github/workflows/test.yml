@@ -7,58 +7,43 @@ on:
   release:
     types: [created]
 
-env:
-  POETRY_VIRTUALENVS_IN_PROJECT: "true"
-
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version:
-          - 3.6
-          - 3.8
-        odoo-version:
-          - 11.0
-          - 12.0
-          - 13.0
-          - 14.0
-          - 15.0
         include:
-          - python-version: 2.7
-            odoo-version: 10.0
-        exclude:
-          - python-version: 3.8
-            odoo-version: 11.0
-          - python-version: 3.8
-            odoo-version: 12.0
+          - odoo-version: 10.0
+            python-version: 2.7
+          - odoo-version: 11.0
+            python-version: 3.6
+          - odoo-version: 12.0
+            python-version: 3.6
+          - odoo-version: 13.0
+            python-version: 3.8
+          - odoo-version: 14.0
+            python-version: 3.8
+          - odoo-version: 15.0
+            python-version: 3.8
     steps:
       # Prepare environment
-      - uses: actions/checkout@v2.3.3
+      - uses: actions/checkout@v3
+      - name: Install poetry
+        run: pipx install poetry
+
+      # Install specific alternate python versions required by hooks
       - name: Install python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: generate cache key PY
-        run:
-          echo "PY=$((python -VV; pip freeze; poetry --version) | sha256sum | cut -d' '
-          -f1)" >> $GITHUB_ENV
-      - uses: actions/cache@v2.1.1
-        with:
-          path: .venv
-          # HACK https://github.com/actions/cache/issues/2#issuecomment-673493515
-          # If you need to "clear" cache, just update the `CACHE_DATE` secret,
-          # putting current date (and time, if needed)
-          key: >-
-            cache ${{ secrets.CACHE_DATE }} ${{ env.PY }} ${{ runner.os }} ${{
-            hashFiles('pyproject.toml') }} ${{ hashFiles('poetry.lock') }}
-      - run: pipx install poetry
-      - run: poetry install
+          cache: poetry
+
       # Let tests issue git commits
       - run: git config --global user.name CI
       - run: git config --global user.email CI@GITHUB
 
       # Run all tests
+      - run: poetry install
       - run: poetry run pytest --color yes
         env:
           SELECTED_ODOO_VERSIONS: ${{ matrix.odoo-version }}
