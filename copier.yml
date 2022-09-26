@@ -69,7 +69,7 @@ repo_description:
 
 ci:
   type: str
-  default: Travis
+  default: GitHub
   choices:
     - Travis
     - GitHub
@@ -96,13 +96,12 @@ travis_apt_packages:
   when: *ci_is_travis
 
 dependency_installation_mode:
-  default: OCA
+  default: PIP
   type: str
   choices:
     - OCA
     - PIP
-  help:
-    Choose how to install module dependencies. Right now, "PIP" mode is experimental.
+  help: Choose how to install module dependencies.
   when: *ci_is_travis
 
 generate_requirements_txt:
