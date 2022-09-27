@@ -85,7 +85,11 @@ jobs:
         {%- endif %}
     services:
       postgres:
+        {%- if odoo_version < 16 %}
         image: postgres:9.6
+        {%- else %}
+        image: postgres:12.0
+        {%- endif %}
         env:
           POSTGRES_USER: odoo
           POSTGRES_PASSWORD: odoo
