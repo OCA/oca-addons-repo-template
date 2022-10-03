@@ -94,6 +94,9 @@ enable=anomalous-backslash-in-string,
     xml-deprecated-qweb-directive,
     xml-deprecated-tree-attribute
 {%- endif %}
+{%- if odoo_version >= 16 %},
+    external-request-timeout
+{%- endif %}
 {%- block optional_checks %}{% endblock %}
 
 [REPORTS]
