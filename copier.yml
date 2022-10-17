@@ -21,7 +21,7 @@ _migrations:
 
 odoo_version:
   type: float
-  default: 15.0
+  default: 16.0
   choices:
     - 10.0
     - 11.0
@@ -29,6 +29,7 @@ odoo_version:
     - 13.0
     - 14.0
     - 15.0
+    - 16.0
   help: Which Odoo version are we deploying in this branch?
 
 org_slug:
@@ -97,13 +98,12 @@ travis_apt_packages:
   when: *ci_is_travis
 
 dependency_installation_mode:
-  default: OCA
+  default: PIP
   type: str
   choices:
     - OCA
     - PIP
-  help:
-    Choose how to install module dependencies. Right now, "PIP" mode is experimental.
+  help: Choose how to install module dependencies.
   when: *ci_is_travis
 
 generate_requirements_txt:
