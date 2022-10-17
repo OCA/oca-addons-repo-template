@@ -15,10 +15,10 @@
   {%- set repo_rev.prettier = "2.1.2" %}
   {%- set repo_rev.prettier_xml = "0.12.0" %}
   {%- set repo_rev.pylint = "v2.11.1" %}
-  {%- set repo_rev.pylint_odoo = "7.0.0" %}
+  {%- set repo_rev.pylint_odoo = "7.0.2" %}
   {%- set repo_rev.pyupgrade = "v2.7.2" %}
   {%- set repo_rev.setuptools_odoo = "2.6.0" %}
-{%- else %}
+{%- elif odoo_version < 16 %}
   {%- set repo_rev.autoflake = "v1.4" %}
   {%- set repo_rev.black = "22.3.0" %}
   {%- set repo_rev.eslint = "v7.32.0" %}
@@ -31,9 +31,24 @@
   {%- set repo_rev.prettier = "2.4.1" %}
   {%- set repo_rev.prettier_xml = "1.1.0" %}
   {%- set repo_rev.pylint = "v2.11.1" %}
-  {%- set repo_rev.pylint_odoo = "7.0.0" %}
+  {%- set repo_rev.pylint_odoo = "7.0.2" %}
   {%- set repo_rev.pyupgrade = "v2.29.0" %}
   {%- set repo_rev.setuptools_odoo = "3.0.3" %}
+{%- else %}
+  {%- set repo_rev.autoflake = "v1.6.1" %}
+  {%- set repo_rev.black = "22.8.0" %}
+  {%- set repo_rev.eslint = "v8.24.0" %}
+  {%- set repo_rev.flake8 = "3.9.2" %}
+  {%- set repo_rev.flake8_bugbear = "21.9.2" %}
+  {%- set repo_rev.isort = "5.10.1" %}
+  {%- set repo_rev.maintainer_tools = "4cd2b852214dead80822e93e6749b16f2785b2fe" %}
+  {%- set repo_rev.nodejs = "16.17.0" %}
+  {%- set repo_rev.pre_commit_hooks = "v4.3.0" %}
+  {%- set repo_rev.prettier = "2.7.1" %}
+  {%- set repo_rev.prettier_xml = "2.2.0" %}
+  {%- set repo_rev.pylint_odoo = "7.0.2" %}
+  {%- set repo_rev.pyupgrade = "v2.38.2" %}
+  {%- set repo_rev.setuptools_odoo = "3.1.5" %}
 {%- endif %}
 
 {#- Older versions that differ a lot have their own hardcoded templates for readability #}
@@ -41,7 +56,7 @@
   {%- include "version-specific/mqt-compat/.pre-commit-config.yaml.jinja" %}
 
 {%- elif odoo_version < 14 %}
-  {%- include "version-specific/%s/.pre-commit-config.yaml" % odoo_version %}
+  {%- include "version-specific/%s/.pre-commit-config.yaml.jinja" % odoo_version %}
 
 {#- Newer versions without hacks are rendered here directly #}
 {%- else %}
