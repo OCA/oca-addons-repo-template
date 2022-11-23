@@ -43,7 +43,7 @@ Quick answer to update a repo:
 ```bash
 # Update the repo
 cd some-repo
-copier update
+copier --vcs-ref=HEAD update
 # Reformat updated files
 pre-commit run
 # Commit update
