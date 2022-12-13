@@ -159,3 +159,12 @@ github_enable_stale_action:
   type: bool
   default: yes
   help: Create GitHub 'stale' action?
+
+github_ci_extra_env:
+  type: yaml
+  default: {}
+  help: |
+    Any extra environment variables to inject into the CI tests
+
+    Example: {"KEY": "VALUE"}
+  when: *ci_is_github
