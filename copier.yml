@@ -164,7 +164,7 @@ github_ci_extra_env:
   type: yaml
   default: {}
   help: |
-    Any extra environment variables to inject into the CI
+    Any extra environment variables to inject into the CI tests
 
     Example: {"KEY": "VALUE"}
   when: *ci_is_github

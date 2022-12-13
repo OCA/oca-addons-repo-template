@@ -31,7 +31,6 @@ set IMAGES = {
   }
 }
 -%}
-
 jobs:
   unreleased-deps:
     runs-on: ubuntu-latest
@@ -103,10 +102,15 @@ jobs:
           POSTGRES_DB: odoo
         ports:
           - 5432:5432
-    {%- if rebel_module_groups %}
+    {%- if rebel_module_groups or github_ci_extra_env %}
     env:
+      {%- if rebel_module_groups %}
       INCLUDE: "{% raw %}${{ matrix.include }}{% endraw %}"
       EXCLUDE: "{% raw %}${{ matrix.exclude }}{% endraw %}"
+      {%- endif %}
+      {%- for key, value in github_ci_extra_env.items() %}
+      {{ key }}: {{ value|to_json }}
+      {%- endfor %}
     {%- endif %}
     steps:
       - uses: actions/checkout@v2
