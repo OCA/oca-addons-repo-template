@@ -11,7 +11,11 @@ on:
 
 jobs:
   pre-commit:
-    runs-on: ubuntu-latest
+{%- if odoo_version < 14 %}
+    runs-on: ubuntu-20.04
+{%- else %}
+    runs-on: ubuntu-22.04
+{%- endif %}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
