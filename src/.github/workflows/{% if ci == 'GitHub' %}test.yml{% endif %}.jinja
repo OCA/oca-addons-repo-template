@@ -100,8 +100,8 @@ jobs:
           POSTGRES_DB: odoo
         ports:
           - 5432:5432
-    {%- if rebel_module_groups or github_ci_extra_env %}
     env:
+      RUNBOAT_GITHUB_TOKEN: {% raw %}${{ secrets.GIT_PUSH_TOKEN }}{% endraw %}
       {%- if rebel_module_groups %}
       INCLUDE: "{% raw %}${{ matrix.include }}{% endraw %}"
       EXCLUDE: "{% raw %}${{ matrix.exclude }}{% endraw %}"
@@ -109,7 +109,6 @@ jobs:
       {%- for key, value in github_ci_extra_env.items() %}
       {{ key }}: {{ value|to_json }}
       {%- endfor %}
-    {%- endif %}
     steps:
       - uses: actions/checkout@v2
         with:
