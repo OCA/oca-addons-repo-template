@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import yaml
-from copier import copy
+from copier.main import run_auto
 
 # Change this one in case it becomes a mandatory check
 SOME_PYLINT_OPTIONAL_CHECK = "too-complex"
@@ -21,7 +21,7 @@ def test_bootstrap(tmp_path: Path, odoo_version: float, cloned_template: Path):
         "repo_description": "Test repo description",
         "ci": "Travis",
     }
-    copy(str(cloned_template), tmp_path, data=data, defaults=True)
+    run_auto(str(cloned_template), tmp_path, data=data, defaults=True)
     # When loading YAML files, we are also testing their syntax is correct, which
     # can be a little bit tricky due to the way both Jinja and YAML handle whitespace
     answers = yaml.safe_load((tmp_path / ".copier-answers.yml").read_text())
