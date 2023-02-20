@@ -15,7 +15,7 @@ exclude: |
   # You don't usually want a bot to modify your legal texts
   (LICENSE.*|COPYING.*)
 default_language_version:
-  python: python3
+  python: python3.6
 repos:
   - repo: https://github.com/oca/maintainer-tools
     rev: ab1d7f6
@@ -40,7 +40,9 @@ repos:
     rev: v3.4.1
     hooks:
       - id: flake8
-        language_version: python{% if odoo_version < 11 %}2{% else %}3.6{% endif %}
+        {%- if odoo_version <= 10 %}
+        language_version: python2
+        {%- endif %}
         name: flake8 excluding __init__.py
         exclude: __init__\.py
   - repo: https://github.com/pre-commit/mirrors-pylint
