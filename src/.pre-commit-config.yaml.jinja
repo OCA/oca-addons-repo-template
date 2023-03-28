@@ -109,6 +109,11 @@ repos:
     hooks:
       - id: oca-checks-odoo-module
       - id: oca-checks-po
+      - id: oca-gen-addon-readme
+        args:
+          - --addons-dir=.
+          - --branch={{ "%.01f" | format(odoo_version) }}
+          - --repo-name={{ repo_slug }}
   - repo: https://github.com/myint/autoflake
     rev: {{ repo_rev.autoflake }}
     hooks:
