@@ -25,9 +25,12 @@ jobs:
 {%- elif odoo_version < 13 %}
         with:
           python-version: "3.6"
-{%- elif odoo_version < 14 %}
+{%- elif odoo_version < 15 %}
         with:
           python-version: "3.8"
+{%- elif odoo_version <= 16 %}
+        with:
+          python-version: "3.10"
 {%- endif %}
       - name: Get python version
         run: echo "PY=$(python -VV | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
