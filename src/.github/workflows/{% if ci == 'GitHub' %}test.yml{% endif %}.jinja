@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Detect unreleased dependencies
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: |
           for reqfile in requirements.txt test-requirements.txt ; do
               if [ -f ${reqfile} ] ; then
@@ -63,29 +63,44 @@ jobs:
         {%- if rebel_module_groups %}
         include:
         {%- for group in rebel_module_groups %}
+            {%- if odoo_test_flavor in ["Odoo", "Both"] %}
           - container: {{ IMAGES["odoo"][odoo_version] }}
             include: "{{ group }}"
             makepot: "false"
             name: test with Odoo
+            {%- endif %}
+            {%- if odoo_test_flavor in ["OCB", "Both"] %}
           - container: {{ IMAGES["ocb"][odoo_version] }}
             include: "{{ group }}"
             name: test with OCB
+            {%- endif %}
+            makepot: "{{ github_enable_makepot | bool | lower }}"
         {%- endfor %}
+            {%- if odoo_test_flavor in ["Odoo", "Both"] %}
           - container: {{ IMAGES["odoo"][odoo_version] }}
             exclude: "{{ rebel_module_groups|join(',') }}"
             makepot: "false"
             name: test with Odoo
+            {%- endif %}
+            {%- if odoo_test_flavor in ["OCB", "Both"] %}
           - container: {{ IMAGES["ocb"][odoo_version] }}
             exclude: "{{ rebel_module_groups|join(',') }}"
             name: test with OCB
+            {%- endif %}
+            makepot: "{{ github_enable_makepot | bool | lower }}"
         {%- else %}
         {#- If all modules can get along, we test and generate .pot all at once #}
         include:
+            {%- if odoo_test_flavor in ["Odoo", "Both"] %}
           - container: {{ IMAGES["odoo"][odoo_version] }}
             makepot: "false"
             name: test with Odoo
+            {%- endif %}
+            {%- if odoo_test_flavor in ["OCB", "Both"] %}
           - container: {{ IMAGES["ocb"][odoo_version] }}
             name: test with OCB
+            {%- endif %}
+            makepot: "{{ github_enable_makepot | bool | lower }}"
         {%- endif %}
     services:
       postgres:
@@ -110,7 +125,7 @@ jobs:
       {{ key }}: {{ value|to_json }}
       {%- endfor %}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           persist-credentials: false
       - name: Install addons and dependencies
