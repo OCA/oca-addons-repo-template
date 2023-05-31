@@ -77,6 +77,20 @@ ci:
     - GitHub
   help: Which CI system to use ?
 
+odoo_test_flavor:
+  type: str
+  default: |-
+    {% if odoo_version < 13.0 -%}
+        OCB
+    {%- else -%}
+        Both
+    {%- endif %}
+  choices:
+    - Odoo
+    - OCB
+    - Both
+  help: Which Odoo flavor should be used for CI tests ?
+
 travis_apt_sources:
   type: yaml
   default: []
