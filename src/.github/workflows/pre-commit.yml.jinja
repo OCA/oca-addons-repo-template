@@ -16,18 +16,21 @@ jobs:
 {%- else %}
     runs-on: ubuntu-22.04
 {%- endif %}
+{%- if odoo_version < 11 %}
+    container:
+      image: python:2.7.18-buster
+{%- endif %}
     steps:
       - uses: actions/checkout@v3
+{%- if odoo_version >= 11 %}
       - uses: actions/setup-python@v2
-{%- if odoo_version < 11 %}
-        with:
-          python-version: "2.7"
-{%- elif odoo_version < 13 %}
+{%- if odoo_version < 13 %}
         with:
           python-version: "3.6"
 {%- elif odoo_version < 14 %}
         with:
           python-version: "3.8"
+{%- endif %}
 {%- endif %}
       - name: Get python version
         run: echo "PY=$(python -VV | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
