@@ -11,6 +11,7 @@
   {%- set repo_rev.isort = "5.12.0" %}
   {%- set repo_rev.maintainer_tools = "ab1d7f6" %}
   {%- set repo_rev.nodejs = "14.13.0" %}
+  {%- set repo_rev.odoo_pre_commit_hooks = "v0.0.25" %}
   {%- set repo_rev.pre_commit_hooks = "v3.2.0" %}
   {%- set repo_rev.prettier = "2.1.2" %}
   {%- set repo_rev.prettier_xml = "0.12.0" %}
@@ -27,6 +28,7 @@
   {%- set repo_rev.isort = "5.12.0" %}
   {%- set repo_rev.maintainer_tools = "dfba427ba03900b69e0a7f2c65890dc48921d36a" %}
   {%- set repo_rev.nodejs = "14.18.0" %}
+  {%- set repo_rev.odoo_pre_commit_hooks = "v0.0.25" %}
   {%- set repo_rev.pre_commit_hooks = "v4.0.1" %}
   {%- set repo_rev.prettier = "2.4.1" %}
   {%- set repo_rev.prettier_xml = "1.1.0" %}
@@ -43,6 +45,7 @@
   {%- set repo_rev.isort = "5.12.0" %}
   {%- set repo_rev.maintainer_tools = "4cd2b852214dead80822e93e6749b16f2785b2fe" %}
   {%- set repo_rev.nodejs = "16.17.0" %}
+  {%- set repo_rev.odoo_pre_commit_hooks = "v0.0.25" %}
   {%- set repo_rev.pre_commit_hooks = "v4.3.0" %}
   {%- set repo_rev.prettier = "2.7.1" %}
   {%- set repo_rev.prettier_xml = "2.2.0" %}
@@ -101,6 +104,11 @@ repos:
       - id: oca-update-pre-commit-excluded-addons
       - id: oca-fix-manifest-website
         args: ["{{ repo_website }}"]
+  - repo: https://github.com/OCA/odoo-pre-commit-hooks
+    rev: {{ repo_rev.odoo_pre_commit_hooks }}
+    hooks:
+    - id: oca-checks-odoo-module
+    - id: oca-checks-po
   - repo: https://github.com/myint/autoflake
     rev: {{ repo_rev.autoflake }}
     hooks:
