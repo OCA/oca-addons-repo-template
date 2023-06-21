@@ -8,14 +8,41 @@ on:
     types: [created]
 
 jobs:
+  test_python27:
+    runs-on: ubuntu-20.04
+    container:
+      image: python:2.7.18-buster
+    steps:
+      # Prepare environment
+      - uses: actions/checkout@v3
+
+      # Make Python 3.6 also available when testing Python 2.7.
+      # It is required by `pipx`
+      - name: Install python3.6
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.6
+
+      - name: Install pipx
+        run: pip3 install pipx
+
+      - name: Install poetry
+        run: pipx install poetry
+
+      # Let tests issue git commits
+      - run: git config --global user.name CI
+      - run: git config --global user.email CI@GITHUB
+
+      # Run all tests
+      - run: poetry install
+      - run: poetry run pytest --color yes
+        env:
+          SELECTED_ODOO_VERSIONS: 10.0
   test:
     runs-on: ${{matrix.machine}}
     strategy:
       matrix:
         include:
-          - odoo-version: 10.0
-            python-version: 2.7
-            machine: ubuntu-20.04
           - odoo-version: 11.0
             python-version: 3.6
             machine: ubuntu-20.04
@@ -39,13 +66,6 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install poetry
         run: pipx install poetry
-
-      # Make Python 3.6 also available when testing Python 2.7.
-      - name: Install python3.6
-        if: ${{ matrix.python-version == 2.7 }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.6
 
       # Install specific alternate python versions required by hooks
       - name: Install python
