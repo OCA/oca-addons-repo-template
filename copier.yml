@@ -158,6 +158,12 @@ github_check_license:
   help: GitHub action checks the manifest license?
   when: *ci_is_github
 
+github_odoo_ee:
+  type: bool
+  default: yes
+  help: Test using Odoo EE modules?
+  when: *ci_is_github
+
 github_enable_codecov:
   type: bool
   default: yes
