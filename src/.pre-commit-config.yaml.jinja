@@ -107,8 +107,8 @@ repos:
   - repo: https://github.com/OCA/odoo-pre-commit-hooks
     rev: {{ repo_rev.odoo_pre_commit_hooks }}
     hooks:
-    - id: oca-checks-odoo-module
-    - id: oca-checks-po
+      - id: oca-checks-odoo-module
+      - id: oca-checks-po
   - repo: https://github.com/myint/autoflake
     rev: {{ repo_rev.autoflake }}
     hooks:
