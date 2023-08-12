@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import packaging.version
 import yaml
 from copier.main import run_auto
 
@@ -10,6 +11,16 @@ SOME_PYLINT_OPTIONAL_CHECK = "too-complex"
 # modify these variables to avoid failing tests
 REPO_SLUG = "server-tools"
 REPO_ID = 149
+
+
+def read_and_parse_precommit_rev(tmp_path: Path, repo: str):
+    # Attempt to find the rev of a pre-commit repo.
+    # If it found, return the actual version, if it's not return 0.0.0.
+    config = yaml.safe_load((tmp_path / ".pre-commit-config.yaml").read_text())
+    entry = next(
+        filter(lambda r: r.get("repo", "") == repo, config.get("repos", [])), {}
+    )
+    return packaging.version.parse(entry.get("rev", "0.0.0"))
 
 
 def test_bootstrap(tmp_path: Path, odoo_version: float, cloned_template: Path):
@@ -31,12 +42,20 @@ def test_bootstrap(tmp_path: Path, odoo_version: float, cloned_template: Path):
     pylintrc_mandatory = (tmp_path / ".pylintrc-mandatory").read_text()
     assert "disable=all\n" in pylintrc_mandatory
     assert "enable=" in pylintrc_mandatory
-    assert f"valid_odoo_versions={odoo_version}" in pylintrc_mandatory
+    pylint_odoo_version = read_and_parse_precommit_rev(
+        tmp_path, "https://github.com/OCA/pylint-odoo"
+    )
+    valid_odoo_versions = "valid_odoo_versions"
+    if pylint_odoo_version >= packaging.version.parse("v8.0.5"):
+        # versions of pylint-odoo >= 8.0.5 use dashes for keys, rather than
+        # underscores
+        valid_odoo_versions = "valid-odoo-versions"
+    assert f"{valid_odoo_versions}={odoo_version}" in pylintrc_mandatory
     assert SOME_PYLINT_OPTIONAL_CHECK not in pylintrc_mandatory
     pylintrc_optional = (tmp_path / ".pylintrc").read_text()
     assert "disable=all\n" in pylintrc_optional
     assert "# This .pylintrc contains" in pylintrc_optional
-    assert f"valid_odoo_versions={odoo_version}" in pylintrc_optional
+    assert f"{valid_odoo_versions}={odoo_version}" in pylintrc_optional
     assert SOME_PYLINT_OPTIONAL_CHECK in pylintrc_optional
     flake8 = (tmp_path / ".flake8").read_text()
     assert "[flake8]" in flake8
