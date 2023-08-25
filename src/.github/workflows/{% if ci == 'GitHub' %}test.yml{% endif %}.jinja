@@ -7,7 +7,7 @@ on:
   push:
     branches:
       - "{{ odoo_version }}"
-      - "{{ odoo_version }}-ocabot-*"
+      - "{{ odoo_version }}-dev"
 
 {%
 set IMAGES = {
@@ -66,6 +66,7 @@ jobs:
             {%- if odoo_test_flavor in ["Odoo", "Both"] %}
           - container: {{ IMAGES["odoo"][odoo_version] }}
             include: "{{ group }}"
+            makepot: "false"
             name: test with Odoo
             {%- endif %}
             {%- if odoo_test_flavor in ["OCB", "Both"] %}
@@ -78,6 +79,7 @@ jobs:
             {%- if odoo_test_flavor in ["Odoo", "Both"] %}
           - container: {{ IMAGES["odoo"][odoo_version] }}
             exclude: "{{ rebel_module_groups|join(',') }}"
+            makepot: "false"
             name: test with Odoo
             {%- endif %}
             {%- if odoo_test_flavor in ["OCB", "Both"] %}
@@ -91,6 +93,7 @@ jobs:
         include:
             {%- if odoo_test_flavor in ["Odoo", "Both"] %}
           - container: {{ IMAGES["odoo"][odoo_version] }}
+            makepot: "false"
             name: test with Odoo
             {%- endif %}
             {%- if odoo_test_flavor in ["OCB", "Both"] %}
@@ -112,8 +115,8 @@ jobs:
           POSTGRES_DB: odoo
         ports:
           - 5432:5432
-    {%- if rebel_module_groups or github_ci_extra_env %}
     env:
+      RUNBOAT_GITHUB_TOKEN: {% raw %}${{ secrets.GIT_PUSH_TOKEN }}{% endraw %}
       {%- if rebel_module_groups %}
       INCLUDE: "{% raw %}${{ matrix.include }}{% endraw %}"
       EXCLUDE: "{% raw %}${{ matrix.exclude }}{% endraw %}"
@@ -121,11 +124,16 @@ jobs:
       {%- for key, value in github_ci_extra_env.items() %}
       {{ key }}: {{ value|to_json }}
       {%- endfor %}
-    {%- endif %}
     steps:
       - uses: actions/checkout@v3
         with:
           persist-credentials: false
+      {%- if github_odoo_ee %}
+      - name: Clone EE repo
+        {% raw -%}
+        run: curl -sSL https://${{ secrets.GIT_PUSH_TOKEN }}@github.com/cetmix/enterprise/tarball/$ODOO_VERSION | tar zxf - --strip-components=1 -C $ADDONS_PATH
+        {%- endraw %}
+      {%- endif %}
       - name: Install addons and dependencies
         run: oca_install_addons
       - name: Check licenses
@@ -144,6 +152,10 @@ jobs:
         run: oca_run_tests
       {%- if github_enable_codecov %}
       - uses: codecov/codecov-action@v1
+        {% raw -%}
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+        {%- endraw %}
       {%- endif %}
       {% raw -%}
       - name: Update .pot files

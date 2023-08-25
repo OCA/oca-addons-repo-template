@@ -9,6 +9,7 @@ _envops:
   keep_trailing_newline: true
   variable_end_string: "}}"
   variable_start_string: "{{"
+  cache_size: 0
 
 _tasks:
   - rm -f {% if ci != "Travis" %}.travis.yml{% endif %} .t2d.yml
@@ -33,14 +34,14 @@ odoo_version:
 
 org_slug:
   type: str
-  default: OCA
+  default: cetmix
   help:
     What's the organization slug? If you are creating
-    https://github.com/OCA/server-tools, then write "OCA" here.
+    https://github.com/cetmix/server-tools, then write "cetmix" here.
 
 org_name:
   type: str
-  default: Odoo Community Association (OCA)
+  default: Cetmix
   help:
     Tell me the Organization name. It's supposed to be human-readable. It will be used
     in the author key of the __manifest__ files.
@@ -48,7 +49,7 @@ org_name:
 repo_slug:
   type: str
   help:
-    What's the repo slug? If you are creating https://github.com/OCA/server-tools, then
+    What's the repo slug? If you are creating https://github.com/cetmix/server-tools, then
     write "server-tools" here.
 
 repo_name:
@@ -59,7 +60,7 @@ repo_name:
 
 repo_website:
   type: str
-  default: "https://github.com/{{ org_slug }}/{{ repo_slug }}"
+  default: "https://cetmix.com"
   help:
     Tell me the project website. It will be used in the website key of the __manifest__
     files.
@@ -155,6 +156,12 @@ github_check_license:
   type: bool
   default: yes
   help: GitHub action checks the manifest license?
+  when: *ci_is_github
+
+github_odoo_ee:
+  type: bool
+  default: yes
+  help: Test using Odoo EE modules?
   when: *ci_is_github
 
 github_enable_codecov:
