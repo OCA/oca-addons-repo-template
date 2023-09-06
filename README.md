@@ -26,7 +26,7 @@ pipx install copier
 pipx install pre-commit
 pipx ensurepath
 # Clone this template and answer its questions
-copier copy https://github.com/OCA/oca-addons-repo-template.git some-repo
+copier copy --UNSAFE https://github.com/OCA/oca-addons-repo-template.git some-repo
 # Commit that
 cd some-repo
 git add .
@@ -40,7 +40,7 @@ Quick answer to update a repo:
 ```bash
 # Update the repo
 cd some-repo
-copier update
+copier update --UNSAFE
 # Reformat updated files
 pre-commit run
 # Commit update
