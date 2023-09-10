@@ -110,6 +110,7 @@ repos:
           - --branch={{ "%.01f" | format(odoo_version) }}
           - --repo-name={{ repo_slug }}
           - --if-source-changed
+          - --org-name={{ org_slug }}
   - repo: https://github.com/OCA/odoo-pre-commit-hooks
     rev: {{ repo_rev.odoo_pre_commit_hooks }}
     hooks:
