@@ -126,6 +126,18 @@ generate_requirements_txt:
     Generate requirements.txt from addons manifests and optional overrides in setup.py
     files.
 
+use_ruff:
+  default: no
+  type: bool
+  help: Use ruff and ruff-format instead of flake8, autoflake, pyupgrade, isort, black.
+  when: "{{ odoo_version >= 14.0 }}"
+
+additional_ruff_rules:
+  type: yaml
+  default: []
+  help: List of additional ruff rules to enable.
+  when: "{{ use_ruff }}"
+
 rebel_module_groups:
   type: yaml
   default: []
