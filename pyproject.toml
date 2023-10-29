@@ -17,3 +17,14 @@ pytest-xdist = "*"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+# ruff
+
+[tool.ruff]
+fix = true
+
+[tool.ruff.lint]
+extend-select = [
+    "UP",  # pyupgrade
+    "I",  # isort
+]
