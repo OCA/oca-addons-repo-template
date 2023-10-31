@@ -1,0 +1,37 @@
+{%- if odoo_version >= 16.0 %}
+target-version = "py310"
+{%- elif odoo_version >= 15.0 %}
+target-version = "py38"
+{%- endif %}
+fix = true
+
+[lint]
+extend-select = [
+    "B",
+    "C90",
+    "I",  # isort
+    {%- if odoo_version >= 15.0 %}
+    "UP",  # pyupgrade
+    {%- endif %}
+    {%- for rule in additional_ruff_rules %}
+    "{{ rule }}",
+    {%- endfor %}
+]
+exclude = ["setup/*"]
+
+[format]
+exclude = ["setup/*"]
+
+[per-file-ignores]
+"__init__.py" = ["F401", "I001"]  # ignore unused and unsorted imports in __init__.py
+"__manifest__.py" = ["B018"]  # useless expression
+
+[isort]
+section-order = ["future", "standard-library", "third-party", "odoo", "odoo-addons", "first-party", "local-folder"]
+
+[isort.sections]
+"odoo" = ["odoo"]
+"odoo-addons" = ["odoo.addons"]
+
+[mccabe]
+max-complexity = 16
