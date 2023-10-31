@@ -1,15 +1,7 @@
 # Configure jinja2 defaults to make syntax highlighters happy
 _templates_suffix: .jinja
 _subdirectory: src
-_envops:
-  block_end_string: "%}"
-  block_start_string: "{%"
-  comment_end_string: "#}"
-  comment_start_string: "{#"
-  keep_trailing_newline: true
-  variable_end_string: "}}"
-  variable_start_string: "{{"
-  cache_size: 0
+_min_copier_version: "9"
 
 _tasks:
   - rm -f {% if ci != "Travis" %}.travis.yml{% endif %} .t2d.yml
@@ -126,6 +118,18 @@ generate_requirements_txt:
   help:
     Generate requirements.txt from addons manifests and optional overrides in setup.py
     files.
+
+use_ruff:
+  default: "{% if odoo_version < 17.0 -%}no{% else %}yes{% endif %}"
+  type: bool
+  help: Use ruff and ruff-format instead of flake8, autoflake, pyupgrade, isort, black.
+  when: "{{ odoo_version >= 14.0 }}"
+
+additional_ruff_rules:
+  type: yaml
+  default: []
+  help: List of additional ruff rules to enable.
+  when: "{{ use_ruff }}"
 
 rebel_module_groups:
   type: yaml
