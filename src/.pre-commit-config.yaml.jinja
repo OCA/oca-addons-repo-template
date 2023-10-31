@@ -107,20 +107,14 @@ repos:
     hooks:
       - id: whool-init
   {%- endif %}
-  - repo: https://github.com/oca/maintainer-tools
+  - &maintainer_tools
+    repo: https://github.com/oca/maintainer-tools
     rev: {{ repo_rev.maintainer_tools }}
     hooks:
       # update the NOT INSTALLABLE ADDONS section above
       - id: oca-update-pre-commit-excluded-addons
       - id: oca-fix-manifest-website
         args: ["{{ repo_website }}"]
-      - id: oca-gen-addon-readme
-        args:
-          - --addons-dir=.
-          - --branch={{ "%.01f" | format(odoo_version) }}
-          - --org-name={{ org_slug }}
-          - --repo-name={{ repo_slug }}
-          - --if-source-changed
       {%- if use_pyproject_toml and generate_requirements_txt %}
       - id: oca-gen-external-dependencies
       {%- endif %}
@@ -245,4 +239,13 @@ repos:
       - id: pylint_odoo
         args:
           - --rcfile=.pylintrc-mandatory
+  - <<: *maintainer_tools
+    hooks:
+      - id: oca-gen-addon-readme
+        args:
+          - --addons-dir=.
+          - --branch={{ "%.01f" | format(odoo_version) }}
+          - --org-name={{ org_slug }}
+          - --repo-name={{ repo_slug }}
+          - --if-source-changed
 {%- endif %}
