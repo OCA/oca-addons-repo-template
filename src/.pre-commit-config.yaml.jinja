@@ -120,6 +120,7 @@ repos:
     hooks:
       - id: oca-checks-odoo-module
       - id: oca-checks-po
+        files: '/i18n/[a-zA-Z0-9_]*\.(po|pot)$'
   {%- if not use_ruff %}
   - repo: https://github.com/myint/autoflake
     rev: {{ repo_rev.autoflake }}
