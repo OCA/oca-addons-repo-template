@@ -120,7 +120,7 @@ generate_requirements_txt:
     files.
 
 use_ruff:
-  default: "{% if odoo_version < 17.0 -%}no{% else %}yes{% endif %}"
+  default: yes
   type: bool
   help: Use ruff and ruff-format instead of flake8, autoflake, pyupgrade, isort, black.
   when: "{{ odoo_version >= 14.0 }}"
