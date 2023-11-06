@@ -112,6 +112,12 @@ dependency_installation_mode:
   help: Choose how to install module dependencies.
   when: *ci_is_travis
 
+use_pyproject_toml:
+  default: no
+  type: bool
+  help: Use pyproject.toml instead of setup.py.
+  when: "{{ odoo_version >= 14.0 }}"
+
 generate_requirements_txt:
   default: yes
   type: bool
