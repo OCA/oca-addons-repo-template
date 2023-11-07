@@ -114,7 +114,7 @@ dependency_installation_mode:
   when: *ci_is_travis
 
 use_pyproject_toml:
-  default: no
+  default: "{% if odoo_version < 17.0 -%}no{% else %}yes{% endif %}"
   type: bool
   help: Use pyproject.toml instead of setup.py.
   when: "{{ odoo_version >= 14.0 }}"
