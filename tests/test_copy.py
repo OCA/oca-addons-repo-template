@@ -57,9 +57,13 @@ def test_bootstrap(tmp_path: Path, odoo_version: float, cloned_template: Path):
     assert "# This .pylintrc contains" in pylintrc_optional
     assert f"{valid_odoo_versions}={odoo_version}" in pylintrc_optional
     assert SOME_PYLINT_OPTIONAL_CHECK in pylintrc_optional
-    flake8 = (tmp_path / ".flake8").read_text()
-    assert "[flake8]" in flake8
-    if odoo_version > 12:
+    if odoo_version < 17:
+        flake8 = (tmp_path / ".flake8").read_text()
+        assert "[flake8]" in flake8
+    else:
+        ruff = (tmp_path / ".ruff.toml").read_text()
+        assert "[lint]" in ruff
+    if odoo_version > 12 and odoo_version < 17:
         isort = (tmp_path / ".isort.cfg").read_text()
         assert "[settings]" in isort
     assert not (tmp_path / ".gitmodules").is_file()
