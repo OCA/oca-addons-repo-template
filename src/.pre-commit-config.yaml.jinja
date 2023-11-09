@@ -121,6 +121,9 @@ repos:
           - --org-name={{ org_slug }}
           - --repo-name={{ repo_slug }}
           - --if-source-changed
+          {%- if convert_readme_fragments_to_markdown %}
+          - --convert-fragments-to-markdown
+          {%- endif %}
       {%- if use_pyproject_toml and generate_requirements_txt %}
       - id: oca-gen-external-dependencies
       {%- endif %}

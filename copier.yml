@@ -194,3 +194,7 @@ github_ci_extra_env:
 
     Example: {"KEY": "VALUE"}
   when: *ci_is_github
+
+convert_readme_fragments_to_markdown:
+  default: "{% if odoo_version < 17.0 -%}no{% else %}yes{% endif %}"
+  type: bool
