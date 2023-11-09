@@ -9,32 +9,9 @@ on:
 
 jobs:
   test:
-    runs-on: ${{matrix.machine}}
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - odoo-version: 11.0
-            python-version: 3.6
-            machine: ubuntu-20.04
-          - odoo-version: 12.0
-            python-version: 3.6
-            machine: ubuntu-20.04
-          - odoo-version: 13.0
-            python-version: 3.8
-            machine: ubuntu-22.04
-          - odoo-version: 14.0
-            python-version: 3.8
-            machine: ubuntu-22.04
-          - odoo-version: 15.0
-            python-version: 3.8
-            machine: ubuntu-22.04
-          - odoo-version: 16.0
-            python-version: "3.10"
-            machine: ubuntu-22.04
-          - odoo-version: 17.0
-            python-version: "3.10"
-            machine: ubuntu-22.04
     steps:
       # Prepare environment
       - uses: actions/checkout@v3
@@ -45,8 +22,13 @@ jobs:
       - name: Install python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
           cache: poetry
+          python-version: |
+            3.6
+            3.7
+            3.8
+            3.10
+            3.11
 
       # Let tests issue git commits
       - run: git config --global user.name CI
@@ -55,5 +37,3 @@ jobs:
       # Run all tests
       - run: poetry install
       - run: poetry run pytest --color yes
-        env:
-          SELECTED_ODOO_VERSIONS: ${{ matrix.odoo-version }}
