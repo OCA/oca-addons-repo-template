@@ -18,6 +18,17 @@ jobs:
       - name: Install poetry
         run: pipx install poetry
 
+      # Some tests exercise pre-commit; all use poetry; cache that
+      - name: Restore poetry and pre-commit cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pre-commit
+            ~/.cache/pypoetry/virtualenvs
+          key:
+            test-${{ runner.os }}-${{ hashFiles('poetry.lock',
+            '**/.pre-commit-config.yaml.jinja') }}
+
       # Install specific alternate python versions required by hooks
       - name: Install python
         uses: actions/setup-python@v4
