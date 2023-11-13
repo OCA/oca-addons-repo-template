@@ -191,7 +191,8 @@ repos:
       - id: check-xml
       - id: mixed-line-ending
         args: ["--fix=lf"]
-  {%- if not use_ruff or odoo_version < 15.0 %}  # ruff doesn't support python 3.6
+  {#- ruff doesn't support python 3.6 #}
+  {%- if not use_ruff or odoo_version < 15.0 %}
   - repo: https://github.com/asottile/pyupgrade
     rev: {{ repo_rev.pyupgrade }}
     hooks:
