@@ -9,6 +9,7 @@ fix = true
 extend-select = [
     "B",
     "C90",
+    "E501",  # line too long (default 88)
     "I",  # isort
     {%- if odoo_version >= 15.0 %}
     "UP",  # pyupgrade

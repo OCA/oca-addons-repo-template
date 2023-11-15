@@ -13,7 +13,7 @@ _migrations:
 
 odoo_version:
   type: float
-  default: 16.0
+  default: 17.0
   choices:
     - 10.0
     - 11.0
@@ -22,6 +22,7 @@ odoo_version:
     - 14.0
     - 15.0
     - 16.0
+    - 17.0
   help: Which Odoo version are we deploying in this branch?
 
 org_slug:
@@ -112,6 +113,12 @@ dependency_installation_mode:
   help: Choose how to install module dependencies.
   when: *ci_is_travis
 
+use_pyproject_toml:
+  default: "{% if odoo_version < 17.0 -%}no{% else %}yes{% endif %}"
+  type: bool
+  help: Use pyproject.toml instead of setup.py.
+  when: "{{ odoo_version >= 14.0 }}"
+
 generate_requirements_txt:
   default: yes
   type: bool
@@ -193,3 +200,7 @@ github_ci_extra_env:
 
     Example: {"KEY": "VALUE"}
   when: *ci_is_github
+
+convert_readme_fragments_to_markdown:
+  default: "{% if odoo_version < 17.0 -%}no{% else %}yes{% endif %}"
+  type: bool
