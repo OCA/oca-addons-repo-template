@@ -54,6 +54,10 @@
   {%- set repo_rev.setuptools_odoo = "3.1.8" %}
 {%- endif %}
 
+{%- if odoo_version > 16 %}
+  {%- set repo_rev.pylint_odoo = "v9.0.4" %}
+{%- endif %}
+
 {#- Older versions that differ a lot have their own hardcoded templates for readability #}
 {%- if odoo_version < 13 %}
   {%- include "version-specific/mqt-compat/.pre-commit-config.yaml.jinja" %}
