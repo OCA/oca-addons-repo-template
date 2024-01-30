@@ -76,7 +76,7 @@ odoo_test_flavor:
     {% if odoo_version < 13.0 -%}
         OCB
     {%- else -%}
-        Both
+        Odoo
     {%- endif %}
   choices:
     - Odoo
