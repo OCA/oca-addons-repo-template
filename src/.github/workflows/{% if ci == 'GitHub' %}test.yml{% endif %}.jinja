@@ -147,7 +147,7 @@ jobs:
       {%- if github_enable_codecov %}
       - uses: codecov/codecov-action@v4
         with:
-+          token: {{"${{ secrets.CODECOV_TOKEN }}"}}
+          token: {{"${{ secrets.CODECOV_TOKEN }}"}}
       {%- endif %}
       {% raw -%}
       - name: Update .pot files
