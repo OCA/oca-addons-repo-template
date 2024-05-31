@@ -3,6 +3,7 @@
 {%- endmacro -%}
 {%- if org_slug == "OCA" %}
 [![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo={{ org_slug }}/{{ repo_slug }}&target_branch={{ odoo_version }})
+[![Find PSC team](https://img.shields.io/badge/PSC-Find%20team-875A7B.png)](https://www.google.com/search?q=site%3Ahttps%3A%2F%2Fodoo%2Dcommunity.org%2Fpsc%2Dteams%20%22{{ repo_slug | urlencode }}%22)
 {%- else %}
 <!-- /!\ Non OCA Context : Set here the badge of your runbot / runboat instance. -->
 {%- endif %}
