@@ -4,7 +4,7 @@ env:
 
 # See https://github.com/OCA/odoo-community.org/issues/37#issuecomment-470686449
 parserOptions:
-  ecmaVersion: 2019
+  ecmaVersion: {% if odoo_version < 17 %}2019{% else %}2022{% endif %}
 
 overrides:
   - files:
