@@ -157,6 +157,11 @@ include_wkhtmltopdf:
     Do you need to install wkhtmltopdf? Usually only needed if you're going to test PDF
     report generation.
 
+enable_checklog_odoo:
+  type: bool
+  default: "{% if odoo_version < 18.0 -%}no{% else %}yes{% endif %}"
+  help: Do you want to make tests fail on warnings?
+
 github_enforce_dev_status_compatibility:
   type: bool
   default: yes

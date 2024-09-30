@@ -120,6 +120,9 @@ jobs:
       INCLUDE: "{% raw %}${{ matrix.include }}{% endraw %}"
       EXCLUDE: "{% raw %}${{ matrix.exclude }}{% endraw %}"
       {%- endif %}
+      {%- if enable_checklog_odoo %}
+      OCA_ENABLE_CHECKLOG_ODOO: "1"
+      {%- endif %}
       {%- for key, value in github_ci_extra_env.items() %}
       {{ key }}: {{ value|to_json }}
       {%- endfor %}
