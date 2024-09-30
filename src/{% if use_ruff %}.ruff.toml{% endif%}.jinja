@@ -23,16 +23,16 @@ exclude = ["setup/*"]
 [format]
 exclude = ["setup/*"]
 
-[per-file-ignores]
+[{% if odoo_version >= 18 %}lint.{% endif %}per-file-ignores]
 "__init__.py" = ["F401", "I001"]  # ignore unused and unsorted imports in __init__.py
 "__manifest__.py" = ["B018"]  # useless expression
 
-[isort]
+[{% if odoo_version >= 18 %}lint.{% endif %}isort]
 section-order = ["future", "standard-library", "third-party", "odoo", "odoo-addons", "first-party", "local-folder"]
 
-[isort.sections]
+[{% if odoo_version >= 18 %}lint.{% endif %}isort.sections]
 "odoo" = ["odoo"]
 "odoo-addons" = ["odoo.addons"]
 
-[mccabe]
+[{% if odoo_version >= 18 %}lint.{% endif %}mccabe]
 max-complexity = 16
