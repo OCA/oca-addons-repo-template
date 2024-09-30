@@ -6,7 +6,8 @@ authors = ["Odoo Community Association (OCA)"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.8.0"
+python = "^3.9.0"
+pyyaml = ">=6.0.2"
 
 [tool.poetry.dev-dependencies]
 copier = ">=9"
