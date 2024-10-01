@@ -159,6 +159,8 @@ repos:
     hooks:
       - id: oca-checks-odoo-module
       - id: oca-checks-po
+        args:
+          - --disable=po-pretty-format
   {%- if not use_ruff %}
   - repo: https://github.com/myint/autoflake
     rev: {{ repo_rev.autoflake }}
