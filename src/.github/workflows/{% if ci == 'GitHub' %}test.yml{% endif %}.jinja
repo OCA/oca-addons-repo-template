@@ -35,6 +35,24 @@ set IMAGES = {
   }
 }
 -%}
+{%- set env = dict() -%}
+
+{%- if rebel_module_groups -%}
+{%- set _ = env.update({
+        "INCLUDE": "${{ matrix.include }}",
+        "EXCLUDE": "${{ matrix.exclude }}"
+    })
+-%}
+{%- endif -%}
+
+{%- if enable_checklog_odoo -%}
+{% set _ = env.update({"OCA_ENABLE_CHECKLOG_ODOO": "1"}) -%}
+{%- endif -%}
+
+{%- if github_ci_extra_env -%}
+{% set _ = env.update(github_ci_extra_env) -%}
+{%- endif -%}
+
 jobs:
   unreleased-deps:
     runs-on: ubuntu-latest
@@ -116,16 +134,9 @@ jobs:
           POSTGRES_DB: odoo
         ports:
           - 5432:5432
-    {%- if rebel_module_groups or github_ci_extra_env %}
+    {%- if env %}
     env:
-      {%- if rebel_module_groups %}
-      INCLUDE: "{% raw %}${{ matrix.include }}{% endraw %}"
-      EXCLUDE: "{% raw %}${{ matrix.exclude }}{% endraw %}"
-      {%- endif %}
-      {%- if enable_checklog_odoo %}
-      OCA_ENABLE_CHECKLOG_ODOO: "1"
-      {%- endif %}
-      {%- for key, value in github_ci_extra_env.items() %}
+      {%- for key, value in env.items() %}
       {{ key }}: {{ value|to_json }}
       {%- endfor %}
     {%- endif %}
