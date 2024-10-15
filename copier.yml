@@ -5,7 +5,7 @@ _min_copier_version: "9"
 
 _tasks:
   - rm -f {% if ci != "Travis" %}.travis.yml{% endif %} .t2d.yml
-  - rm -f .prettierrc.yml .eslintrc.yml
+  - "{% if odoo_version >= 18 %}rm -f .prettierrc.yml .eslintrc.yml{% endif %}"
 
 _migrations:
   - version: v1.3.6
