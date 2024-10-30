@@ -88,7 +88,6 @@ jobs:
             {%- if odoo_test_flavor in ["Odoo", "Both"] %}
           - container: {{ IMAGES["odoo"][odoo_version] }}
             include: "{{ group }}"
-            makepot: "false"
             name: test with Odoo
             {%- endif %}
             {%- if odoo_test_flavor in ["OCB", "Both"] %}
@@ -101,7 +100,6 @@ jobs:
             {%- if odoo_test_flavor in ["Odoo", "Both"] %}
           - container: {{ IMAGES["odoo"][odoo_version] }}
             exclude: "{{ rebel_module_groups|join(',') }}"
-            makepot: "false"
             name: test with Odoo
             {%- endif %}
             {%- if odoo_test_flavor in ["OCB", "Both"] %}
@@ -115,7 +113,6 @@ jobs:
         include:
             {%- if odoo_test_flavor in ["Odoo", "Both"] %}
           - container: {{ IMAGES["odoo"][odoo_version] }}
-            makepot: "false"
             name: test with Odoo
             {%- endif %}
             {%- if odoo_test_flavor in ["OCB", "Both"] %}
@@ -142,6 +139,7 @@ jobs:
       {%- for key, value in env.items() %}
       {{ key }}: {{ value|to_json }}
       {%- endfor %}
+    {%- endif %}
     steps:
       - uses: actions/checkout@v3
         with:
