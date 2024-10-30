@@ -5,6 +5,7 @@ _min_copier_version: "9"
 
 _tasks:
   - rm -f {% if ci != "Travis" %}.travis.yml{% endif %} .t2d.yml
+  - "{% if odoo_version >= 18 %}rm -f .prettierrc.yml .eslintrc.yml{% endif %}"
 
 _migrations:
   - version: v1.3.6
@@ -13,7 +14,7 @@ _migrations:
 
 odoo_version:
   type: float
-  default: 17.0
+  default: 18.0
   choices:
     - 10.0
     - 11.0
@@ -23,6 +24,7 @@ odoo_version:
     - 15.0
     - 16.0
     - 17.0
+    - 18.0
   help: Which Odoo version are we deploying in this branch?
 
 org_slug:
@@ -156,6 +158,11 @@ include_wkhtmltopdf:
   help:
     Do you need to install wkhtmltopdf? Usually only needed if you're going to test PDF
     report generation.
+
+enable_checklog_odoo:
+  type: bool
+  default: "{% if odoo_version < 18.0 -%}no{% else %}yes{% endif %}"
+  help: Do you want to make tests fail on warnings?
 
 github_enforce_dev_status_compatibility:
   type: bool
