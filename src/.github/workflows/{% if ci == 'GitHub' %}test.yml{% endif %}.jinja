@@ -12,6 +12,7 @@ on:
 {%
 set IMAGES = {
   "odoo": {
+    18.0: "ghcr.io/oca/oca-ci/py3.10-odoo18.0:latest",
     17.0: "ghcr.io/oca/oca-ci/py3.10-odoo17.0:latest",
     16.0: "ghcr.io/oca/oca-ci/py3.10-odoo16.0:latest",
     15.0: "ghcr.io/oca/oca-ci/py3.8-odoo15.0:latest",
@@ -22,6 +23,7 @@ set IMAGES = {
     10.0: "ghcr.io/oca/oca-ci/py2.7-odoo10.0:latest",
   },
   "ocb": {
+    18.0: "ghcr.io/oca/oca-ci/py3.10-ocb18.0:latest",
     17.0: "ghcr.io/oca/oca-ci/py3.10-ocb17.0:latest",
     16.0: "ghcr.io/oca/oca-ci/py3.10-ocb16.0:latest",
     15.0: "ghcr.io/oca/oca-ci/py3.8-ocb15.0:latest",
@@ -33,6 +35,24 @@ set IMAGES = {
   }
 }
 -%}
+{%- set env = dict() -%}
+
+{%- if rebel_module_groups -%}
+{%- set _ = env.update({
+        "INCLUDE": "${{ matrix.include }}",
+        "EXCLUDE": "${{ matrix.exclude }}"
+    })
+-%}
+{%- endif -%}
+
+{%- if enable_checklog_odoo -%}
+{% set _ = env.update({"OCA_ENABLE_CHECKLOG_ODOO": "1"}) -%}
+{%- endif -%}
+
+{%- if github_ci_extra_env -%}
+{% set _ = env.update(github_ci_extra_env) -%}
+{%- endif -%}
+
 jobs:
   unreleased-deps:
     runs-on: ubuntu-latest
@@ -117,13 +137,9 @@ jobs:
           POSTGRES_DB: odoo
         ports:
           - 5432:5432
+    {%- if env %}
     env:
-      RUNBOAT_GITHUB_TOKEN: {% raw %}${{ secrets.GIT_PUSH_TOKEN }}{% endraw %}
-      {%- if rebel_module_groups %}
-      INCLUDE: "{% raw %}${{ matrix.include }}{% endraw %}"
-      EXCLUDE: "{% raw %}${{ matrix.exclude }}{% endraw %}"
-      {%- endif %}
-      {%- for key, value in github_ci_extra_env.items() %}
+      {%- for key, value in env.items() %}
       {{ key }}: {{ value|to_json }}
       {%- endfor %}
     steps:
