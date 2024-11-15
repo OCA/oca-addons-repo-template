@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-22.04
 {%- endif %}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v2
 {%- if odoo_version < 11 %}
         with:
