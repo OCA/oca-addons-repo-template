@@ -18,7 +18,7 @@ jobs:
 {%- endif %}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v5
 {%- if odoo_version < 11 %}
         with:
           python-version: "2.7"
