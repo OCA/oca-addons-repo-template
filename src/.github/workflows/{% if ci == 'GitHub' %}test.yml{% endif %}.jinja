@@ -58,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Detect unreleased dependencies
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: |
           for reqfile in requirements.txt test-requirements.txt ; do
               if [ -f ${reqfile} ] ; then
@@ -141,7 +141,7 @@ jobs:
       {%- endfor %}
     {%- endif %}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           persist-credentials: false
       {%- if github_odoo_ee %}
