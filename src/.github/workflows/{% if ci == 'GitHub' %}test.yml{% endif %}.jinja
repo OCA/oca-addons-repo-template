@@ -134,12 +134,13 @@ jobs:
           POSTGRES_DB: odoo
         ports:
           - 5432:5432
-    {%- if env %}
     env:
+      {%- if env %}
       {%- for key, value in env.items() %}
       {{ key }}: {{ value|to_json }}
       {%- endfor %}
-    {%- endif %}
+      {%- endif %}
+      RUNBOAT_GITHUB_TOKEN: {{"${{ secrets.GIT_PUSH_TOKEN }}""}}
     steps:
       - uses: actions/checkout@v4
         with:
