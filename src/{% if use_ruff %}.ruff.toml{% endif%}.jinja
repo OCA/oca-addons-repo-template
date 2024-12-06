@@ -18,6 +18,9 @@ extend-select = [
     "{{ rule }}",
     {%- endfor %}
 ]
+{%- if odoo_version >= 11.0 %}
+extend-safe-fixes = ["UP008"]
+{%- endif %}
 exclude = ["setup/*"]
 
 [format]
