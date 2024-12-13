@@ -27,5 +27,14 @@
     redefined-builtin,
     too-complex,
     unnecessary-utf8-coding-comment
+{%- if enable_pylint_check_translation %},
+    translation-format-interpolation,
+    translation-format-truncated,
+    translation-fstring-interpolation,
+    translation-not-lazy,
+    translation-too-few-args,
+    translation-too-many-args,
+    translation-unsupported-format
+{%- endif %}
 {% endblock %}
 {%- endif %}
