@@ -4,6 +4,7 @@ version = "0.0.0" # Just a placeholder; the real version is the git tag
 description = "Template for OCA addon repos"
 authors = ["Odoo Community Association (OCA)"]
 license = "MIT"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.9.0"
