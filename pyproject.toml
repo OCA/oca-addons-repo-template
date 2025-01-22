@@ -3,7 +3,8 @@ name = "cetmix-addons-repo-template"
 version = "0.0.0" # Just a placeholder; the real version is the git tag
 description = "Template for Cetmix addon repos"
 authors = ["Cetmix"]
-license = "GPL-3"
+license = "MIT"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.9.0"
