@@ -178,17 +178,17 @@ jobs:
           oca_export_and_commit_pot
           mkdir oca-ci-po-patch && touch oca-ci-po-patch/keep
           git format-patch --output-directory=oca-ci-po-patch --keep-subject @{u}..@
-        if: {{ "${{" }} matrix.makepot == 'true' && github.event_name == 'push' && github.repository_owner == '{{ org_slug }}' {{ "}}" }}
+        if: matrix.makepot == 'true' && github.event_name == 'push' && github.repository_owner == '{{ org_slug }}'
       - uses: actions/upload-artifact@v4
         with:
           name: oca-ci-po-patch
           path: oca-ci-po-patch
           retention-days: 7
-        if: {{ "${{" }} matrix.makepot == 'true' && github.event_name == 'push' && github.repository_owner == '{{ org_slug }}' {{ "}}" }}
+        if: matrix.makepot == 'true' && github.event_name == 'push' && github.repository_owner == '{{ org_slug }}'
   push-pot:
     needs: [test]
     runs-on: ubuntu-latest
-    if: {{ "${{" }} github.event_name == 'push' && github.repository_owner == '{{ org_slug }}' {{ "}}" }}
+    if: github.event_name == 'push' && github.repository_owner == '{{ org_slug }}'
     permissions:
       contents: write
     steps:
