@@ -172,12 +172,12 @@ jobs:
         with:
           token: {{"${{ secrets.CODECOV_TOKEN }}"}}
       {%- endif %}
-      - name: Update .pot files
+      - name: Prepare .pot files update
         run: |
           git reset --hard {% raw %}${{ github.sha }}{% endraw %}
           oca_export_and_commit_pot
           mkdir oca-ci-po-patch && touch oca-ci-po-patch/keep
-          git format-patch --output-directory=oca-ci-po-patch --keep-subject @{u}..@
+          git format-patch --output-directory=oca-ci-po-patch --keep-subject @{u}..@ */i18n/*.po*
         if: matrix.makepot == 'true' && github.event_name == 'push' && github.repository_owner == '{{ org_slug }}'
       - uses: actions/upload-artifact@v4
         with:
