@@ -104,7 +104,7 @@ travis_apt_packages:
     Do you need extra apt packages in Travis? Add them here as a YAML list.
 
     Example: [docker, vim]
-  when: *ci_is_travis
+  when: false
 
 dependency_installation_mode:
   default: PIP
@@ -113,7 +113,7 @@ dependency_installation_mode:
     - OCA
     - PIP
   help: Choose how to install module dependencies.
-  when: *ci_is_travis
+  when: false
 
 use_pyproject_toml:
   default: "{% if odoo_version < 17.0 -%}no{% else %}yes{% endif %}"
@@ -130,7 +130,6 @@ generate_requirements_txt:
 
 use_ruff:
   default: yes
-  default: "{% if odoo_version < 17.0 -%}no{% else %}yes{% endif %}"
   type: bool
   help: Use ruff and ruff-format instead of flake8, autoflake, pyupgrade, isort, black.
   when: false
@@ -168,9 +167,9 @@ enable_checklog_odoo:
 
 github_enforce_dev_status_compatibility:
   type: bool
-  default: yes
+  default: no
   help: GitHub action checks the minimum development status?
-  when: false
+  when: &ci_is_github "{{ ci == 'GitHub' }}"
 
 github_check_license:
   type: bool
