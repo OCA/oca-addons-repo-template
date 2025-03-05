@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "oca-addons-repo-template"
-version = "0.0.0" # Just a placeholder; the real version is the git tag
-description = "Template for OCA addon repos"
-authors = ["Odoo Community Association (OCA)"]
+version = "0.0.0"                            # Just a placeholder; the real version is the git tag
+description = "Template for OBS addon repos"
+authors = ["OBS Solutions B.V."]
 license = "MIT"
 package-mode = false
 
@@ -27,6 +27,6 @@ fix = true
 
 [tool.ruff.lint]
 extend-select = [
-    "UP",  # pyupgrade
+    "UP", # pyupgrade
     "I",  # isort
 ]

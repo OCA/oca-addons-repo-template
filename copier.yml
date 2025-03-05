@@ -29,29 +29,32 @@ odoo_version:
 
 org_slug:
   type: str
-  default: OCA
+  default: OBSNL
   help:
     What's the organization slug? If you are creating
     https://github.com/OCA/server-tools, then write "OCA" here.
+  when: false
 
 org_name:
   type: str
-  default: Odoo Community Association (OCA)
+  default: OBS Solutions B.V.
   help:
     Tell me the Organization name. It's supposed to be human-readable. It will be used
     in the author key of the __manifest__ files.
+  when: false
 
 repo_slug:
   type: str
   help:
-    What's the repo slug? If you are creating https://github.com/OCA/server-tools, then
-    write "server-tools" here.
+    What's the repo slug? If you are creating https://github.com/OBSNL/customer, then
+    write "customer" here.
 
 repo_name:
   type: str
+  default: "Customizations for {{ repo_slug }}"
   help:
-    Tell me the project name. It's supposed to be human-readable. So, server-tools
-    project could be named like "Tools for server environment(s)"
+    Tell me the project name. It's supposed to be human-readable. So, customer project
+    could be named like "Customizatons for Customer"
 
 repo_website:
   type: str
@@ -59,27 +62,24 @@ repo_website:
   help:
     Tell me the project website. It will be used in the website key of the __manifest__
     files.
+  when: false
 
 repo_description:
   type: str
+  default: "Customizations for {{ repo_slug }}"
   help: Please write a short description about what this repo is about.
+  when: false
 
 ci:
   type: str
   default: GitHub
   choices:
-    - Travis
     - GitHub
   help: Which CI system to use ?
 
 odoo_test_flavor:
   type: str
-  default: |-
-    {% if odoo_version < 13.0 -%}
-        OCB
-    {%- else -%}
-        Both
-    {%- endif %}
+  default: Odoo
   choices:
     - Odoo
     - OCB
@@ -95,7 +95,7 @@ travis_apt_sources:
     https://github.com/travis-ci/apt-source-safelist/blob/master/ubuntu.json.
 
     Example: [heroku, mono]
-  when: &ci_is_travis "{{ ci == 'Travis' }}"
+  when: false
 
 travis_apt_packages:
   type: yaml
@@ -129,16 +129,17 @@ generate_requirements_txt:
     files.
 
 use_ruff:
+  default: yes
   default: "{% if odoo_version < 17.0 -%}no{% else %}yes{% endif %}"
   type: bool
   help: Use ruff and ruff-format instead of flake8, autoflake, pyupgrade, isort, black.
-  when: "{{ odoo_version >= 14.0 }}"
+  when: false
 
 additional_ruff_rules:
   type: yaml
   default: []
   help: List of additional ruff rules to enable.
-  when: "{{ use_ruff }}"
+  when: false
 
 rebel_module_groups:
   type: yaml
@@ -151,6 +152,7 @@ rebel_module_groups:
     commas, which could be misinterpreted by YAML.
 
     Example: ["rebel_module_1,rebel_module_2", even_more_rebel_module]
+  when: false
 
 include_wkhtmltopdf:
   type: bool
@@ -168,11 +170,11 @@ github_enforce_dev_status_compatibility:
   type: bool
   default: yes
   help: GitHub action checks the minimum development status?
-  when: &ci_is_github "{{ ci == 'GitHub' }}"
+  when: false
 
 github_check_license:
   type: bool
-  default: yes
+  default: no
   help: GitHub action checks the manifest license?
   when: *ci_is_github
 
@@ -190,7 +192,7 @@ github_enable_makepot:
 
 github_enable_stale_action:
   type: bool
-  default: yes
+  default: no
   help: Create GitHub 'stale' action?
 
 github_ci_extra_env:
@@ -205,3 +207,4 @@ github_ci_extra_env:
 convert_readme_fragments_to_markdown:
   default: "{% if odoo_version < 17.0 -%}no{% else %}yes{% endif %}"
   type: bool
+  when: false
