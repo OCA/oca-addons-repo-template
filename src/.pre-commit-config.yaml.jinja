@@ -261,7 +261,7 @@ repos:
           - --settings=.
         exclude: /__init__\.py$
   {%- endif %}
-  {%- if not use_pyproject_toml %}
+  {%- if not use_pyproject_toml and false %}
   - repo: https://github.com/acsone/setuptools-odoo
     rev: {{ repo_rev.setuptools_odoo }}
     hooks:
