@@ -79,6 +79,7 @@
   {%- set repo_rev.eslint_jsdoc = "50.3.1" %}
   {%- set repo_rev.flake8 = "3.9.2" %}
   {%- set repo_rev.flake8_bugbear = "21.9.2" %}
+  {%- set repo_rev.globals = "16.0.0" %}
   {%- set repo_rev.isort = "5.12.0" %}
   {%- set repo_rev.maintainer_tools = "bf9ecb9938b6a5deca0ff3d870fbd3f33341fded" %}
   {%- set repo_rev.nodejs = "22.9.0" %}
@@ -221,6 +222,7 @@ repos:
         additional_dependencies:
           - "eslint@{{ repo_rev.eslint }}"
           - "eslint-plugin-jsdoc@{{ repo_rev.eslint_jsdoc }}"
+          - "globals@{{ repo_rev.globals }}"
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: {{ repo_rev.pre_commit_hooks }}
     hooks:
