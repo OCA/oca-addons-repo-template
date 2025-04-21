@@ -165,8 +165,40 @@ jobs:
         with:
           token: {{"${{ secrets.CODECOV_TOKEN }}"}}
       {%- endif %}
-      {% raw -%}
-      - name: Update .pot files
-        run: oca_export_and_push_pot https://x-access-token:${{ secrets.GIT_PUSH_TOKEN }}@github.com/${{ github.repository }}
-      {%- endraw %}
-        if: {{ "${{" }} matrix.makepot == 'true' && github.event_name == 'push' && github.repository_owner == '{{ org_slug }}' {{ "}}" }}
+      - name: Prepare .pot files update
+        run: |
+          git reset --hard {% raw %}${{ github.sha }}{% endraw %}
+          oca_export_and_commit_pot
+          mkdir oca-ci-po-patch && touch oca-ci-po-patch/keep
+          git format-patch --output-directory=oca-ci-po-patch --keep-subject @{u}..@ */i18n/*.po*
+        if: matrix.makepot == 'true' && github.event_name == 'push' && github.repository_owner == '{{ org_slug }}'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: oca-ci-po-patch
+          path: oca-ci-po-patch
+          retention-days: 7
+        if: matrix.makepot == 'true' && github.event_name == 'push' && github.repository_owner == '{{ org_slug }}'
+  push-pot:
+    needs: [test]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.repository_owner == '{{ org_slug }}'
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: oca-ci-po-patch
+          path: oca-ci-po-patch
+      - name: Configure git user
+        run: |
+          git config user.name "oca-ci"
+          git config user.email "oca-ci@odoo-community.org"
+      - name: Apply .pot files changes
+        run: git am --keep oca-ci-po-patch/*.patch
+        if: {% raw %}${{ hashFiles('oca-ci-po-patch/*.patch') != '' }}{% endraw %}
+      - name: Push .pot file changes
+        run: git push
+        if: {% raw %}${{ hashFiles('oca-ci-po-patch/*.patch') != '' }}{% endraw %}
+        # Don't fail in case something has changed upstream in the meantime
+        continue-on-error: true
