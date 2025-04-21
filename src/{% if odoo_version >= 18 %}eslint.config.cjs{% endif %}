@@ -1,3 +1,4 @@
+var globals = require('globals');
 jsdoc = require("eslint-plugin-jsdoc");
 
 const config = [{
@@ -16,6 +17,8 @@ const config = [{
             openerp: "readonly",
             owl: "readonly",
             luxon: "readonly",
+            QUnit: "readonly",
+            ...globals.browser,
         },
 
         ecmaVersion: 2024,
