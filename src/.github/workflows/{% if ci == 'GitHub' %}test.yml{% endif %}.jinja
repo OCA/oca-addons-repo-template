@@ -74,11 +74,7 @@ jobs:
               fi
           done
   test:
-{%- if odoo_version < 14 %}
-    runs-on: ubuntu-20.04
-{%- else %}
     runs-on: ubuntu-22.04
-{%- endif %}
     container: {% raw %}${{ matrix.container }}{% endraw %}
     name: {% raw %}${{ matrix.name }}{% endraw %}
     strategy:
