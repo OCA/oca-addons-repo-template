@@ -205,3 +205,8 @@ github_ci_extra_env:
 convert_readme_fragments_to_markdown:
   default: "{% if odoo_version < 17.0 -%}no{% else %}yes{% endif %}"
   type: bool
+
+enable_pylint_check_translation:
+  type: bool
+  default: "{% if odoo_version < 19.0 -%}no{% else %}yes{% endif %}"
+  help: Enable pylint checks for translation?
