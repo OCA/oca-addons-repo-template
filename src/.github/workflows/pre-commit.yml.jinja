@@ -18,9 +18,6 @@ jobs:
 {%- if odoo_version < 11 %}
         with:
           python-version: "2.7"
-{%- elif odoo_version < 13 %}
-        with:
-          python-version: "3.6"
 {%- elif odoo_version < 14 %}
         with:
           python-version: "3.8"
