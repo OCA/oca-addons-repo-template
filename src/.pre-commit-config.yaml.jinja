@@ -9,7 +9,7 @@
   {%- set repo_rev.flake8 = "5.0.0" %}
   {%- set repo_rev.flake8_bugbear = "20.1.4" %}
   {%- set repo_rev.isort = "5.12.0" %}
-  {%- set repo_rev.maintainer_tools = "f9b919b9868143135a9c9cb03021089cabba8223" %}
+  {%- set repo_rev.maintainer_tools = "7f6de8cf26662e506ffe2c532ad385e5979d0f3c" %}
   {%- set repo_rev.nodejs = "14.13.0" %}
   {%- set repo_rev.odoo_pre_commit_hooks = "v0.0.25" %}
   {%- set repo_rev.pre_commit_hooks = "v3.2.0" %}
@@ -27,7 +27,7 @@
   {%- set repo_rev.flake8 = "5.0.0" %}
   {%- set repo_rev.flake8_bugbear = "21.9.2" %}
   {%- set repo_rev.isort = "5.12.0" %}
-  {%- set repo_rev.maintainer_tools = "f9b919b9868143135a9c9cb03021089cabba8223" %}
+  {%- set repo_rev.maintainer_tools = "7f6de8cf26662e506ffe2c532ad385e5979d0f3c" %}
   {%- set repo_rev.nodejs = "14.18.0" %}
   {%- set repo_rev.odoo_pre_commit_hooks = "v0.0.25" %}
   {%- set repo_rev.pre_commit_hooks = "v4.0.1" %}
@@ -45,7 +45,7 @@
   {%- set repo_rev.flake8 = "5.0.0" %}
   {%- set repo_rev.flake8_bugbear = "21.9.2" %}
   {%- set repo_rev.isort = "5.12.0" %}
-  {%- set repo_rev.maintainer_tools = "f9b919b9868143135a9c9cb03021089cabba8223" %}
+  {%- set repo_rev.maintainer_tools = "7f6de8cf26662e506ffe2c532ad385e5979d0f3c" %}
   {%- set repo_rev.nodejs = "16.17.0" %}
   {%- set repo_rev.odoo_pre_commit_hooks = "v0.0.25" %}
   {%- set repo_rev.pre_commit_hooks = "v4.3.0" %}
@@ -62,7 +62,7 @@
   {%- set repo_rev.flake8 = "3.9.2" %}
   {%- set repo_rev.flake8_bugbear = "21.9.2" %}
   {%- set repo_rev.isort = "5.12.0" %}
-  {%- set repo_rev.maintainer_tools = "f9b919b9868143135a9c9cb03021089cabba8223" %}
+  {%- set repo_rev.maintainer_tools = "7f6de8cf26662e506ffe2c532ad385e5979d0f3c" %}
   {%- set repo_rev.nodejs = "16.17.0" %}
   {%- set repo_rev.odoo_pre_commit_hooks = "v0.0.25" %}
   {%- set repo_rev.pre_commit_hooks = "v4.3.0" %}
@@ -148,7 +148,7 @@ repos:
     hooks:
       - id: whool-init
   {%- endif %}
-  - repo: https://github.com/oca/maintainer-tools
+  - repo: https://github.com/cetmix/cetmix-maintainer-tools
     rev: {{ repo_rev.maintainer_tools }}
     hooks:
       # update the NOT INSTALLABLE ADDONS section above
