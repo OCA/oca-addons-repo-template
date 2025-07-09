@@ -12,10 +12,12 @@ exclude: |
   /static/(src/)?lib/|
   # Repos using Sphinx to generate docs don't need prettying
   ^docs/_templates/.*\.html$|
+  # Ignore build and dist directories in addons
+  /build/|/dist/|
   # You don't usually want a bot to modify your legal texts
   (LICENSE.*|COPYING.*)
 default_language_version:
-  python: python3.6
+  python: python3.8
 repos:
   - repo: https://github.com/oca/maintainer-tools
     rev: ab1d7f6
@@ -36,8 +38,8 @@ repos:
           - --header
           - "# generated from manifests external_dependencies"
       {%- endif %}
-  - repo: https://github.com/OCA/mirrors-flake8
-    rev: v3.4.1
+  - repo: https://github.com/PyCQA/flake8
+    rev: 3.7.9
     hooks:
       - id: flake8
         {%- if odoo_version <= 10 %}
