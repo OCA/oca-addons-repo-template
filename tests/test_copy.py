@@ -78,15 +78,15 @@ def test_bootstrap(tmp_path: Path, odoo_version: float, cloned_template: Path):
     # Assert badges in readme; this is testing the repo_id macro
     readme = (tmp_path / "README.md").read_text()
     assert (
-        f"[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/{REPO_SLUG}&target_branch={odoo_version})"  # noqa: B950
+        f"[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=xxp-odoo-erp/{REPO_SLUG}&target_branch={odoo_version})"  # noqa: B950
         in readme
     )
     assert (
-        f"[![Build Status](https://travis-ci.com/OCA/{REPO_SLUG}.svg?branch={odoo_version})](https://travis-ci.com/OCA/{REPO_SLUG})"  # noqa: B950
+        f"[![Build Status](https://travis-ci.com/xxp-odoo-erp/{REPO_SLUG}.svg?branch={odoo_version})](https://travis-ci.com/xxp-odoo-erp/{REPO_SLUG})"  # noqa: B950
         in readme
     )
     assert (
-        f"[![codecov](https://codecov.io/gh/OCA/{REPO_SLUG}/branch/{odoo_version}/graph/badge.svg)](https://codecov.io/gh/OCA/{REPO_SLUG})"  # noqa: B950
+        f"[![codecov](https://codecov.io/gh/xxp-odoo-erp/{REPO_SLUG}/branch/{odoo_version}/graph/badge.svg)](https://codecov.io/gh/xxp-odoo-erp/{REPO_SLUG})"  # noqa: B950
         in readme
     )
     odoo_version_tr = str(odoo_version).replace(".", "-")

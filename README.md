@@ -1,6 +1,6 @@
-# OCA Addons Repo Template
+# XXP Addons Repo Template
 
-This is a template created to make easier the task of maintaining OCA addon
+This is a template created to make easier the task of maintaining XXP addon
 repositories.
 
 ## Why?
@@ -26,7 +26,7 @@ pipx install copier
 pipx install pre-commit
 pipx ensurepath
 # Clone this template and answer its questions
-copier copy --UNSAFE https://github.com/OCA/oca-addons-repo-template.git some-repo
+copier copy --UNSAFE https://github.com/xxp-odoo-erp/xxp-addons-repo-template.git some-repo
 # Commit that
 cd some-repo
 git add .

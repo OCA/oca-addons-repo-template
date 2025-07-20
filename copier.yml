@@ -29,14 +29,14 @@ odoo_version:
 
 org_slug:
   type: str
-  default: OCA
+  default: xxp-odoo-erp
   help:
     What's the organization slug? If you are creating
-    https://github.com/OCA/server-tools, then write "OCA" here.
+    https://github.com/xxp-odoo-erp/server-tools, then write "xxp-odoo-erp" here.
 
 org_name:
   type: str
-  default: Odoo Community Association (OCA)
+  default: XXP
   help:
     Tell me the Organization name. It's supposed to be human-readable. It will be used
     in the author key of the __manifest__ files.
@@ -44,8 +44,8 @@ org_name:
 repo_slug:
   type: str
   help:
-    What's the repo slug? If you are creating https://github.com/OCA/server-tools, then
-    write "server-tools" here.
+    What's the repo slug? If you are creating
+    https://github.com/xxp-odoo-erp/server-tools, then write "server-tools" here.
 
 repo_name:
   type: str
@@ -55,7 +55,7 @@ repo_name:
 
 repo_website:
   type: str
-  default: "https://github.com/{{ org_slug }}/{{ repo_slug }}"
+  default: "https://xxp-odoo.com"
   help:
     Tell me the project website. It will be used in the website key of the __manifest__
     files.
@@ -174,6 +174,12 @@ github_check_license:
   type: bool
   default: yes
   help: GitHub action checks the manifest license?
+  when: *ci_is_github
+
+github_odoo_ee:
+  type: bool
+  default: yes
+  help: Test using Odoo EE modules?
   when: *ci_is_github
 
 github_enable_codecov:

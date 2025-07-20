@@ -1,8 +1,8 @@
 [tool.poetry]
-name = "oca-addons-repo-template"
+name = "xxp-addons-repo-template"
 version = "0.0.0" # Just a placeholder; the real version is the git tag
-description = "Template for OCA addon repos"
-authors = ["Odoo Community Association (OCA)"]
+description = "Template for XXP addon repos"
+authors = ["XXP"]
 license = "MIT"
 package-mode = false
 

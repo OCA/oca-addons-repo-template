@@ -15,8 +15,8 @@ pip install pipx
 pipx install poetry
 pipx ensurepath
 # Clone
-git clone https://github.com/OCA/oca-addons-repo-template
-cd oca-addons-repo-template
+git clone https://github.com/xxp-odoo-erp/xxp-addons-repo-template
+cd xxp-addons-repo-template
 # Install development environment
 poetry install
 ```
@@ -33,7 +33,7 @@ Specifically, to run tests:
 poetry run pytest
 ```
 
-## General OCA guidelines
+## General XXP guidelines
 
 Please follow the official guide from the
 [OCA Guidelines page](https://odoo-community.org/page/contributing) where applicable
