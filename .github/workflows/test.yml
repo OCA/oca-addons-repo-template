@@ -32,6 +32,9 @@ jobs:
           - odoo-version: 18.0
             python-version: "3.12"
             machine: ubuntu-24.04
+          - odoo-version: 19.0
+            python-version: "3.12"
+            machine: ubuntu-24.04
     steps:
       # Prepare environment
       - uses: actions/checkout@v4
