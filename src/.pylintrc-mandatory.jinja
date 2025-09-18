@@ -106,6 +106,31 @@ enable=anomalous-backslash-in-string,
 {%- if odoo_version >= 16 %},
     external-request-timeout
 {%- endif %}
+{%- if odoo_version >= 19 %},
+    bad-builtin-groupby,
+    category-allowed,
+    deprecated-name-get,
+    deprecated-odoo-model-method,
+    inheritable-method-lambda,
+    inheritable-method-string,
+    invalid-email,
+    manifest-behind-migrations,
+    manifest-data-duplicated,
+    missing-odoo-file,
+    no-raise-unlink,
+    no-search-all,
+    no-wizard-in-models,
+    prohibited-method-override,
+    prefer-env-translation,
+    translation-format-interpolation,
+    translation-format-truncated,
+    translation-fstring-interpolation,
+    translation-not-lazy,
+    translation-too-few-args,
+    translation-too-many-args,
+    translation-unsupported-format,
+    no-write-in-compute
+{%- endif %}
 {%- block optional_checks %}{% endblock %}
 
 [REPORTS]
