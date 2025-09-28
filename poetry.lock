@@ -16,6 +16,7 @@ files = [
 name = "cfgv"
 version = "3.4.0"
 description = "Validate configuration and produce human readable error messages."
+category = "dev"
 optional = false
 python-versions = ">=3.8"
 groups = ["dev"]
@@ -28,6 +29,7 @@ files = [
 name = "colorama"
 version = "0.4.6"
 description = "Cross-platform colored terminal text."
+category = "dev"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7"
 groups = ["dev"]
@@ -40,6 +42,7 @@ files = [
 name = "copier"
 version = "9.9.1"
 description = "A library for rendering project templates."
+category = "dev"
 optional = false
 python-versions = ">=3.9"
 groups = ["dev"]
@@ -69,6 +72,7 @@ typing-extensions = {version = ">=4.0.0,<5.0.0", markers = "python_version < \"3
 name = "distlib"
 version = "0.3.8"
 description = "Distribution utilities"
+category = "dev"
 optional = false
 python-versions = "*"
 groups = ["dev"]
@@ -81,6 +85,7 @@ files = [
 name = "dunamai"
 version = "1.22.0"
 description = "Dynamic version generation"
+category = "dev"
 optional = false
 python-versions = ">=3.5"
 groups = ["dev"]
@@ -112,6 +117,7 @@ tests = ["pytest"]
 name = "exceptiongroup"
 version = "1.2.2"
 description = "Backport of PEP 654 (exception groups)"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 groups = ["dev"]
@@ -128,6 +134,7 @@ test = ["pytest (>=6)"]
 name = "execnet"
 version = "2.1.1"
 description = "execnet: rapid multi-Python deployment"
+category = "dev"
 optional = false
 python-versions = ">=3.8"
 groups = ["dev"]
@@ -143,6 +150,7 @@ testing = ["hatch", "pre-commit", "pytest", "tox"]
 name = "filelock"
 version = "3.16.1"
 description = "A platform independent file lock."
+category = "dev"
 optional = false
 python-versions = ">=3.8"
 groups = ["dev"]
@@ -172,6 +180,7 @@ files = [
 name = "identify"
 version = "2.6.1"
 description = "File identification library for Python"
+category = "dev"
 optional = false
 python-versions = ">=3.8"
 groups = ["dev"]
@@ -199,6 +208,7 @@ files = [
 name = "jinja2"
 version = "3.1.6"
 description = "A very fast and expressive template engine."
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 groups = ["dev"]
@@ -217,6 +227,7 @@ i18n = ["Babel (>=2.7)"]
 name = "jinja2-ansible-filters"
 version = "1.3.2"
 description = "A port of Ansible's jinja2 filters without requiring ansible core."
+category = "dev"
 optional = false
 python-versions = "*"
 groups = ["dev"]
@@ -236,6 +247,7 @@ test = ["pytest", "pytest-cov"]
 name = "markupsafe"
 version = "2.1.5"
 description = "Safely add untrusted strings to HTML/XML markup."
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 groups = ["dev"]
@@ -306,6 +318,7 @@ files = [
 name = "nodeenv"
 version = "1.9.1"
 description = "Node.js virtual environment builder"
+category = "dev"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7"
 groups = ["dev"]
@@ -318,6 +331,7 @@ files = [
 name = "packaging"
 version = "24.1"
 description = "Core utilities for Python packages"
+category = "dev"
 optional = false
 python-versions = ">=3.8"
 groups = ["dev"]
@@ -330,6 +344,7 @@ files = [
 name = "pathspec"
 version = "0.12.1"
 description = "Utility library for gitignore style pattern matching of file paths."
+category = "dev"
 optional = false
 python-versions = ">=3.8"
 groups = ["dev"]
@@ -359,6 +374,7 @@ type = ["mypy (>=1.11.2)"]
 name = "pluggy"
 version = "1.5.0"
 description = "plugin and hook calling mechanisms for python"
+category = "dev"
 optional = false
 python-versions = ">=3.8"
 groups = ["dev"]
@@ -375,6 +391,7 @@ testing = ["pytest", "pytest-benchmark"]
 name = "plumbum"
 version = "1.8.3"
 description = "Plumbum: shell combinators library"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 groups = ["dev"]
@@ -395,6 +412,7 @@ ssh = ["paramiko"]
 name = "pre-commit"
 version = "3.8.0"
 description = "A framework for managing and maintaining multi-language pre-commit hooks."
+category = "dev"
 optional = false
 python-versions = ">=3.9"
 groups = ["dev"]
@@ -414,6 +432,7 @@ virtualenv = ">=20.10.0"
 name = "prompt-toolkit"
 version = "3.0.36"
 description = "Library for building powerful interactive command lines in Python"
+category = "dev"
 optional = false
 python-versions = ">=3.6.2"
 groups = ["dev"]
@@ -555,6 +574,7 @@ typing-extensions = ">=4.6.0,<4.7.0 || >4.7.0"
 name = "pygments"
 version = "2.18.0"
 description = "Pygments is a syntax highlighting package written in Python."
+category = "dev"
 optional = false
 python-versions = ">=3.8"
 groups = ["dev"]
@@ -570,6 +590,7 @@ windows-terminal = ["colorama (>=0.4.6)"]
 name = "pytest"
 version = "8.3.3"
 description = "pytest: simple powerful testing with Python"
+category = "dev"
 optional = false
 python-versions = ">=3.8"
 groups = ["dev"]
@@ -614,6 +635,7 @@ testing = ["filelock"]
 name = "pywin32"
 version = "306"
 description = "Python for Window Extensions"
+category = "dev"
 optional = false
 python-versions = "*"
 groups = ["dev"]
@@ -639,6 +661,7 @@ files = [
 name = "pyyaml"
 version = "6.0.2"
 description = "YAML parser and emitter for Python"
+category = "dev"
 optional = false
 python-versions = ">=3.8"
 groups = ["main", "dev"]
@@ -717,6 +740,7 @@ prompt_toolkit = ">=2.0,<=3.0.36"
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 groups = ["dev"]
@@ -742,6 +766,7 @@ files = [
 name = "virtualenv"
 version = "20.26.6"
 description = "Virtual Python Environment builder"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 groups = ["dev"]
@@ -763,6 +788,7 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 name = "wcwidth"
 version = "0.2.13"
 description = "Measures the displayed width of unicode strings in a terminal"
+category = "dev"
 optional = false
 python-versions = "*"
 groups = ["dev"]
