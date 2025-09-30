@@ -7,7 +7,7 @@ on:
   push:
     branches:
       - "{{ odoo_version }}"
-      - "{{ odoo_version }}-dev"
+      - "{{ odoo_version }}-ocabot-*"
 
 {%
 set IMAGES = {
@@ -138,23 +138,16 @@ jobs:
           POSTGRES_DB: odoo
         ports:
           - 5432:5432
+    {%- if env %}
     env:
-      {%- if env %}
       {%- for key, value in env.items() %}
       {{ key }}: {{ value|to_json }}
       {%- endfor %}
-      {%- endif %}
-      RUNBOAT_GITHUB_TOKEN: {% raw %}${{ secrets.GIT_PUSH_TOKEN }}{% endraw %}
+    {%- endif %}
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      {%- if github_odoo_ee %}
-      - name: Clone EE repo
-        {% raw -%}
-        run: curl -sSL https://${{ secrets.GIT_PUSH_TOKEN }}@github.com/cetmix/enterprise/tarball/$ODOO_VERSION | tar zxf - --strip-components=1 -C $ADDONS_PATH
-        {%- endraw %}
-      {%- endif %}
       - name: Install addons and dependencies
         run: oca_install_addons
       - name: Check licenses
@@ -180,6 +173,4 @@ jobs:
       - name: Update .pot files
         run: oca_export_and_push_pot https://x-access-token:${{ secrets.GIT_PUSH_TOKEN }}@github.com/${{ github.repository }}
       {%- endraw %}
-        {% raw %}
-        if: ${{ matrix.makepot == 'true' && github.event_name == 'push' }}
-        {% endraw %}
+        if: {{ "${{" }} matrix.makepot == 'true' && github.event_name == 'push' && github.repository_owner == '{{ org_slug }}' {{ "}}" }}

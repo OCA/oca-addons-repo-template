@@ -1,10 +1,7 @@
-# Cetmix Addons Repo Template
+# OCA Addons Repo Template
 
-This is a template created to make easier the task of maintaining addon
+This is a template created to make easier the task of maintaining OCA addon
 repositories.
-Based on Odoo Community Association (OCA) Repo template
-
-
 
 ## Why?
 
@@ -29,7 +26,7 @@ pipx install copier
 pipx install pre-commit
 pipx ensurepath
 # Clone this template and answer its questions
-copier copy --UNSAFE -r HEAD https://github.com/cetmix/cetmix-addons-repo-template.git some-repo
+copier copy --UNSAFE https://github.com/OCA/oca-addons-repo-template.git some-repo
 # Commit that
 cd some-repo
 git add .
@@ -43,7 +40,7 @@ Quick answer to update a repo:
 ```bash
 # Update the repo
 cd some-repo
-copier update --UNSAFE -r HEAD
+copier update --UNSAFE
 # Reformat updated files
 pre-commit run
 # Commit update
