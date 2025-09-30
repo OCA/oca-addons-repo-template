@@ -5,7 +5,7 @@ import yaml
 from copier.main import run_copy
 
 # Change this one in case it becomes a mandatory check
-SOME_PYLINT_OPTIONAL_CHECK = "too-complex"
+SOME_PYLINT_OPTIONAL_CHECK = "redefined-builtin"
 
 # These are arbitrarily picked, but in case anything changes (very unlikely),
 # modify these variables to avoid failing tests
