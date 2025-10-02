@@ -206,3 +206,11 @@ github_ci_extra_env:
 convert_readme_fragments_to_markdown:
   default: "{% if odoo_version < 17.0 -%}no{% else %}yes{% endif %}"
   type: bool
+
+gitignore_uninstallable_addons:
+  type: bool
+  default: false
+  help: |
+    Add uninstallable addons to .gitignore, so they will be ignored by many
+    search tools and search results will not be "polluted" by code that is not
+    installable.
