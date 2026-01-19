@@ -28,6 +28,7 @@ jobs:
         with:
           python-version: "3.11"
 {%- endif %}
+          cache: 'pip'
       - name: Get python version
         run: echo "PY=$(python -VV | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
       - uses: actions/cache@v4
