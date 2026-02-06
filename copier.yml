@@ -141,6 +141,14 @@ additional_ruff_rules:
   help: List of additional ruff rules to enable.
   when: "{{ use_ruff }}"
 
+use_refurb:
+  default: "{% if odoo_version < 20.0 -%}no{% else %}yes{% endif %}"
+  type: bool
+  help:
+    Use refurb (https://github.com/dosisod/refurb) for refurbishing and modernizing
+    Python codebase.
+  when: "{{ odoo_version >= 14.0 }}"
+
 rebel_module_groups:
   type: yaml
   default: []
