@@ -20,6 +20,7 @@
   {%- set repo_rev.pyupgrade = "v2.7.2" %}
   {%- set repo_rev.ruff = "v0.1.3" %}
   {%- set repo_rev.setuptools_odoo = "3.1.8" %}
+  {%- set repo_rev.python = "python3.8" %}
 {%- elif odoo_version < 16 %}
   {%- set repo_rev.autoflake = "v1.5.3" %}
   {%- set repo_rev.black = "22.3.0" %}
@@ -38,6 +39,7 @@
   {%- set repo_rev.pyupgrade = "v2.29.0" %}
   {%- set repo_rev.ruff = "v0.1.3" %}
   {%- set repo_rev.setuptools_odoo = "3.1.8" %}
+  {%- set repo_rev.python = "python3.8" %}
 {%- elif odoo_version < 17 %}
   {%- set repo_rev.autoflake = "v1.6.1" %}
   {%- set repo_rev.black = "22.8.0" %}
@@ -55,6 +57,7 @@
   {%- set repo_rev.pyupgrade = "v2.38.2" %}
   {%- set repo_rev.ruff = "v0.1.3" %}
   {%- set repo_rev.setuptools_odoo = "3.1.8" %}
+  {%- set repo_rev.python = "python3.10" %}
 {%- elif odoo_version < 18 %}
   {%- set repo_rev.autoflake = "v1.6.1" %}
   {%- set repo_rev.black = "22.8.0" %}
@@ -72,6 +75,7 @@
   {%- set repo_rev.pyupgrade = "v2.38.2" %}
   {%- set repo_rev.ruff = "v0.1.3" %}
   {%- set repo_rev.setuptools_odoo = "3.1.8" %}
+  {%- set repo_rev.python = "python3.10" %}
 {%- elif odoo_version < 19 %}
   {%- set repo_rev.autoflake = "v1.6.1" %}
   {%- set repo_rev.black = "22.8.0" %}
@@ -91,6 +95,7 @@
   {%- set repo_rev.pyupgrade = "v2.38.2" %}
   {%- set repo_rev.ruff = "v0.6.8" %}
   {%- set repo_rev.setuptools_odoo = "3.1.8" %}
+  {%- set repo_rev.python = "python3.12" %}
 {%- else %}
   {%- set repo_rev.autoflake = "v2.3.1" %}
   {%- set repo_rev.black = "25.1.0" %}
@@ -110,6 +115,7 @@
   {%- set repo_rev.pyupgrade = "v3.20.0" %}
   {%- set repo_rev.ruff = "v0.13.0" %}
   {%- set repo_rev.setuptools_odoo = "3.1.8" %}
+  {%- set repo_rev.python = "python3.12" %}
 {%- endif %}
 
 {#- Older versions that differ a lot have their own hardcoded templates for readability #}
@@ -144,7 +150,7 @@ exclude: |
   # You don't usually want a bot to modify your legal texts
   (LICENSE.*|COPYING.*)
 default_language_version:
-  python: python3
+  python: {{ repo_rev.python }}
   node: "{{ repo_rev.nodejs }}"
 repos:
   - repo: local
