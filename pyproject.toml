@@ -30,3 +30,8 @@ extend-select = [
     "UP",  # pyupgrade
     "I",  # isort
 ]
+
+# pytest
+
+[tool.pytest.ini_options]
+addopts = "-n auto -ra tests"
