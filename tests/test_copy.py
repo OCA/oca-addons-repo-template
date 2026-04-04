@@ -30,7 +30,6 @@ def test_bootstrap(tmp_path: Path, odoo_version: float, cloned_template: Path):
         "repo_slug": REPO_SLUG,
         "repo_name": "Test repo",
         "repo_description": "Test repo description",
-        "ci": "Travis",
     }
     run_copy(str(cloned_template), tmp_path, data=data, defaults=True, unsafe=True)
     # When loading YAML files, we are also testing their syntax is correct, which
@@ -79,10 +78,6 @@ def test_bootstrap(tmp_path: Path, odoo_version: float, cloned_template: Path):
     readme = (tmp_path / "README.md").read_text()
     assert (
         f"[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/{REPO_SLUG}&target_branch={odoo_version})"  # noqa: B950
-        in readme
-    )
-    assert (
-        f"[![Build Status](https://travis-ci.com/OCA/{REPO_SLUG}.svg?branch={odoo_version})](https://travis-ci.com/OCA/{REPO_SLUG})"  # noqa: B950
         in readme
     )
     assert (
