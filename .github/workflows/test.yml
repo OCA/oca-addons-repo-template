@@ -52,6 +52,6 @@ jobs:
       - run: git config --global user.email CI@GITHUB
 
       # Run all tests
-      - run: uv run pytest --color yes
+      - run: uv run pytest --color yes -v
         env:
           SELECTED_ODOO_VERSIONS: ${{ matrix.odoo-version }}
