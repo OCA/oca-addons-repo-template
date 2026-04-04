@@ -4,7 +4,7 @@ _subdirectory: src
 _min_copier_version: "9"
 
 _tasks:
-  - rm -f {% if ci != "Travis" %}.travis.yml{% endif %} .t2d.yml
+  - rm -f .travis.yml .t2d.yml
   - "{% if odoo_version >= 18 %}rm -f .prettierrc.yml .eslintrc.yml{% endif %}"
 
 _migrations:
@@ -65,14 +65,6 @@ repo_description:
   type: str
   help: Please write a short description about what this repo is about.
 
-ci:
-  type: str
-  default: GitHub
-  choices:
-    - Travis
-    - GitHub
-  help: Which CI system to use ?
-
 odoo_test_flavor:
   type: str
   default: |-
@@ -86,35 +78,6 @@ odoo_test_flavor:
     - OCB
     - Both
   help: Which Odoo flavor should be used for CI tests ?
-
-travis_apt_sources:
-  type: yaml
-  default: []
-  help: >
-    If you need to activate extra apt sources in Travis, this is the place. It must be a
-    YAML list with aliases listed here:
-    https://github.com/travis-ci/apt-source-safelist/blob/master/ubuntu.json.
-
-    Example: [heroku, mono]
-  when: &ci_is_travis "{{ ci == 'Travis' }}"
-
-travis_apt_packages:
-  type: yaml
-  default: []
-  help: >
-    Do you need extra apt packages in Travis? Add them here as a YAML list.
-
-    Example: [docker, vim]
-  when: *ci_is_travis
-
-dependency_installation_mode:
-  default: PIP
-  type: str
-  choices:
-    - OCA
-    - PIP
-  help: Choose how to install module dependencies.
-  when: *ci_is_travis
 
 use_pyproject_toml:
   default: "{% if odoo_version < 17.0 -%}no{% else %}yes{% endif %}"
@@ -169,25 +132,21 @@ github_enforce_dev_status_compatibility:
   type: bool
   default: yes
   help: GitHub action checks the minimum development status?
-  when: &ci_is_github "{{ ci == 'GitHub' }}"
 
 github_check_license:
   type: bool
   default: yes
   help: GitHub action checks the manifest license?
-  when: *ci_is_github
 
 github_enable_codecov:
   type: bool
   default: yes
   help: GitHub action runs codecov/codecov-action?
-  when: *ci_is_github
 
 github_enable_makepot:
   type: bool
   default: yes
   help: GitHub action updates .pot files?
-  when: *ci_is_github
 
 github_enable_stale_action:
   type: bool
@@ -201,7 +160,6 @@ github_ci_extra_env:
     Any extra environment variables to inject into the CI tests
 
     Example: {"KEY": "VALUE"}
-  when: *ci_is_github
 
 convert_readme_fragments_to_markdown:
   default: "{% if odoo_version < 17.0 -%}no{% else %}yes{% endif %}"
