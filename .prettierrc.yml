@@ -1,1 +1,0 @@
-src/{% if 12 < odoo_version < 18 %}.prettierrc.yml{% endif %}
