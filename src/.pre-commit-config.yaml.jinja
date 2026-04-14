@@ -161,6 +161,11 @@ repos:
         entry: found a en.po file
         language: fail
         files: '[a-zA-Z0-9_]*/i18n/en\.po$'
+      - id: obsolete dotfiles
+        name: obsolete dotfiles
+        entry: found obsolete files; remove them
+        files: '^(\.travis\.yml|\.t2d\.yml|CONTRIBUTING\.md{% if odoo_version >= 18 %}|\.prettierrc\.yml|\.eslintrc\.yml{% endif %})$'
+        language: fail
   {%- if use_pyproject_toml %}
   - repo: https://github.com/sbidoul/whool
     rev: v1.3
