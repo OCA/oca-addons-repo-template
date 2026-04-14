@@ -1,6 +1,3 @@
-# ignore uv.lock as we want to test with the latest versions
-uv.lock
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
