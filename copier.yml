@@ -3,15 +3,6 @@ _templates_suffix: .jinja
 _subdirectory: src
 _min_copier_version: "9"
 
-_tasks:
-  - rm -f .travis.yml .t2d.yml
-  - "{% if odoo_version >= 18 %}rm -f .prettierrc.yml .eslintrc.yml{% endif %}"
-
-_migrations:
-  - version: v1.3.6
-    after:
-      - rm -f CONTRIBUTING.md
-
 odoo_version:
   type: float
   default: 19.0
