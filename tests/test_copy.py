@@ -2,7 +2,7 @@ from pathlib import Path
 
 import packaging.version
 import yaml
-from copier.main import run_copy
+from copier import run_copy
 
 # Change this one in case it becomes a mandatory check
 SOME_PYLINT_OPTIONAL_CHECK = "redefined-builtin"

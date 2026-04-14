@@ -35,19 +35,19 @@ def cloned_template(tmp_path_factory):
     It returns the local `Path` to the clone.
     """
     patches = [git("diff", "--cached"), git("diff")]
-    with tmp_path_factory.mktemp("cloned_template_") as dirty_template_clone:
-        git("clone", PROJECT_ROOT, dirty_template_clone)
-        with local.cwd(dirty_template_clone):
-            for patch in patches:
-                if patch:
-                    (git["apply", "--reject"] << patch)()
-                    git("add", ".")
-                    git(
-                        "commit",
-                        "--author=Test<test@test>",
-                        "--message=dirty changes",
-                        "--no-gpg-sign",
-                        "--no-verify",
-                    )
-            git("tag", "--force", "v999999999.999999999.999999999")
-        yield dirty_template_clone
+    dirty_template_clone = tmp_path_factory.mktemp("cloned_template_")
+    git("clone", PROJECT_ROOT, dirty_template_clone)
+    with local.cwd(dirty_template_clone):
+        for patch in patches:
+            if patch:
+                (git["apply", "--reject"] << patch)()
+                git("add", ".")
+                git(
+                    "commit",
+                    "--author=Test<test@test>",
+                    "--message=dirty changes",
+                    "--no-gpg-sign",
+                    "--no-verify",
+                )
+        git("tag", "--force", "v999999999.999999999.999999999")
+    yield dirty_template_clone
