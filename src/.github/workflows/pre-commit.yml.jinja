@@ -1,3 +1,4 @@
+{% from 'src/.pre-commit-config.yaml.jinja' import repo_rev with context %}
 name: pre-commit
 
 on:
@@ -26,7 +27,7 @@ jobs:
           python-version: "3.8"
 {%- else %}
         with:
-          python-version: "3.11"
+          python-version: "{{ repo_rev.python |replace('python','') }}"
 {%- endif %}
           cache: 'pip'
           cache-dependency-path: '.pre-commit-config.yaml'
