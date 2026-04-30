@@ -1,6 +1,6 @@
 [dependency-groups]
 dev = [
-    "copier >=9",
+    "copier>=9.14.3",
     "pytest",
     "pre-commit",
     "pytest-xdist",
