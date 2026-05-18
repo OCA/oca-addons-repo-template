@@ -114,6 +114,18 @@ include_wkhtmltopdf:
     Do you need to install wkhtmltopdf? Usually only needed if you're going to test PDF
     report generation.
 
+postgis_extension:
+  type: bool
+  default: no
+  when: "{{ odoo_version >= 16 }}"
+  help:
+    Does this repo install Odoo modules that require the PostGIS extension
+    (geo_* field types, wkb_geometry columns, base_geoengine, etc.)?
+    When yes, the CI postgres service uses a postgis/postgis:<pg>-<postgis>
+    image so pre_init_hook CREATE EXTENSION postgis succeeds. Recommended
+    for OCA/geospatial and any repo with geo fields. Available for
+    odoo_version >= 16.0 (postgis/postgis:9.6-* tags are EOL).
+
 enable_checklog_odoo:
   type: bool
   default: "{% if odoo_version < 18.0 -%}no{% else %}yes{% endif %}"

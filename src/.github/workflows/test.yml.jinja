@@ -121,12 +121,30 @@ jobs:
         {%- endif %}
     services:
       postgres:
+        {%- if postgis_extension and odoo_version >= 16 %}
+        # PostGIS image variants ship the spatial extension preinstalled so
+        # modules with geo_* fields can `CREATE EXTENSION postgis` in their
+        # pre_init_hook. Image tags chosen to match the OCA/geospatial
+        # baseline on each Odoo series:
+        #   16-18  -> postgis/postgis:13-3.4 (already ships on OCA/geospatial
+        #            17.0 + 18.0 branches)
+        #   >= 19  -> postgis/postgis:14-3.5 (matches OCA/geospatial PR #446)
+        # Both PG versions are within Odoo's documented PG support window.
+        # Flag is gated to odoo_version >= 16 because postgis/postgis:9.6-*
+        # tags are EOL and not maintained.
+        {%- if odoo_version < 19 %}
+        image: postgis/postgis:13-3.4
+        {%- else %}
+        image: postgis/postgis:14-3.5
+        {%- endif %}
+        {%- else %}
         {%- if odoo_version < 16 %}
         image: postgres:9.6
         {%- elif odoo_version < 19 %}
         image: postgres:12
         {%- else %}
         image: postgres:13
+        {%- endif %}
         {%- endif %}
         env:
           POSTGRES_USER: odoo
