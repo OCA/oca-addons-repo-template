@@ -9,6 +9,10 @@ on:
       - "{{ odoo_version }}"
       - "{{ odoo_version }}-ocabot-*"
 
+concurrency:
+  group: {% raw %}${{ github.workflow }}-${{ github.ref }}{% endraw %}
+  cancel-in-progress: true
+
 {%
 set IMAGES = {
   "odoo": {
