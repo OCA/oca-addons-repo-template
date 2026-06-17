@@ -10,6 +10,10 @@ on:
       - "{{ odoo_version }}"
       - "{{ odoo_version }}-ocabot-*"
 
+concurrency:
+  group: {% raw %}${{ github.workflow }}-${{ github.ref }}{% endraw %}
+  cancel-in-progress: true
+
 jobs:
   pre-commit:
     runs-on: ubuntu-22.04
