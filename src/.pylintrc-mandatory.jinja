@@ -5,6 +5,9 @@
 load-plugins=pylint_odoo
 score=n
 
+[IMPORTS]
+deprecated-modules=pdb,pudb,ipdb,bs4{%- if odoo_version >= 20 %},pytz{%- endif %}
+
 [ODOOLINT]
 {%- if odoo_version < 16 %}
 readme_template_url="https://github.com/OCA/maintainer-tools/blob/master/template/module/README.rst"
@@ -46,6 +49,7 @@ enable=anomalous-backslash-in-string,
     assignment-from-none,
     attribute-deprecated,
     dangerous-default-value,
+    deprecated-module,
     development-status-allowed,
     duplicate-key,
     eval-used,

@@ -50,11 +50,21 @@ def test_bootstrap(tmp_path: Path, odoo_version: float, cloned_template: Path):
         # underscores
         valid_odoo_versions = "valid-odoo-versions"
     assert f"{valid_odoo_versions}={odoo_version}" in pylintrc_mandatory
+    if odoo_version >= 13:
+        expected_deprecated_modules = "pdb,pudb,ipdb,bs4"
+        if odoo_version >= 20:
+            expected_deprecated_modules += ",pytz"
+        assert "[IMPORTS]" in pylintrc_mandatory
+        assert f"deprecated-modules={expected_deprecated_modules}" in pylintrc_mandatory
+        assert "deprecated-module," in pylintrc_mandatory
     assert SOME_PYLINT_OPTIONAL_CHECK not in pylintrc_mandatory
     pylintrc_optional = (tmp_path / ".pylintrc").read_text()
     assert "disable=all\n" in pylintrc_optional
     assert "# This .pylintrc contains" in pylintrc_optional
     assert f"{valid_odoo_versions}={odoo_version}" in pylintrc_optional
+    if odoo_version >= 13:
+        assert f"deprecated-modules={expected_deprecated_modules}" in pylintrc_optional
+        assert "deprecated-module," in pylintrc_optional
     assert SOME_PYLINT_OPTIONAL_CHECK in pylintrc_optional
     if odoo_version < 17:
         flake8 = (tmp_path / ".flake8").read_text()
