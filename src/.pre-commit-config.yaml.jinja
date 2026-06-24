@@ -227,8 +227,20 @@ repos:
     hooks:
       - id: prettier
         name: prettier (with plugin-xml)
+        {%- if odoo_version >= 18 %}
+        # hack: prettier version 3.x doesn't auto search for plugins, we need to pass
+        # them explicitly
+        entry:
+          bash -c "prettier --plugin=$NODE_PATH/@prettier/plugin-xml/src/plugin.js $0
+          $*"
+        {%- else %}
         entry: prettier
+        {%- endif %}
         args:
+        {%- if odoo_version < 18 %}
+          - --plugin=@prettier/plugin-xml
+        {%- endif %}
+          - --xml-whitespace-sensitivity=strict
           - --write
           - --list-different
           - --ignore-unknown

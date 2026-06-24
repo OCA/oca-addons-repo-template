@@ -17,3 +17,14 @@ def test_hooks_installable(tmp_path: Path, odoo_version: float, cloned_template:
     with local.cwd(tmp_path):
         git("init")
         pre_commit("install-hooks")
+        Path("test.xml").write_text(
+            '<?xml version="1.0" encoding="utf-8" ?>\n'
+            '<root><should    be="formatted" /></root>'
+        )
+        git("add", "test.xml")
+        pre_commit("run", "prettier", retcode=1)
+        formatted = (
+            '<?xml version="1.0" encoding="utf-8" ?>\n'
+            '<root><should be="formatted" /></root>\n'
+        )
+        assert Path("test.xml").read_text() == formatted
