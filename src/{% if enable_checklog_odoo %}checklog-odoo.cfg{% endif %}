@@ -3,3 +3,4 @@ ignore=
     WARNING.* 0 failed, 0 error\(s\).*
     WARNING .* Killing chrome descendants-or-self .*
     WARNING.* Missing widget: res_partner_many2one for field of type many2one.*
+    WARNING.* Unknown directives or unused attributes: {'t-key'} in website.list_hybrid.*
