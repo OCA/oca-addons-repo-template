@@ -1,0 +1,6 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", ":disableDependencyDashboard"],
+  "baseBranchPatterns": ["{{ odoo_version + 1 }}", "{{ odoo_version }}", "{{ odoo_version - 1 }}", "{{ odoo_version - 2 }}", "{{ odoo_version - 3 }}"],
+  "enabledManagers": ["copier"]
+}
