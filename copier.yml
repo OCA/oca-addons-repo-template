@@ -160,3 +160,11 @@ github_ci_extra_env:
 convert_readme_fragments_to_markdown:
   default: "{% if odoo_version < 17.0 -%}no{% else %}yes{% endif %}"
   type: bool
+
+use_check_vendor_libs:
+  default: "{% if odoo_version < 18.0 -%}disabled{% elif odoo_version < 20.0 %}optional{% else %}mandatory{% endif %}"
+  choices:
+    - disabled
+    - optional
+    - mandatory
+  help: Verify vendored javascript code
