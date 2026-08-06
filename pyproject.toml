@@ -1,11 +1,11 @@
 [project]
 name = "oca-addons-repo-template"
 version = "1.0"
-requires-python = ">=3.8"
+requires-python = ">=3.11"
 
 [dependency-groups]
 dev = [
-    "copier >=9",
+    "copier>=9",
     "pytest",
     "pre-commit",
     "pytest-xdist",
