@@ -9,6 +9,12 @@ dev = [
     "pytest",
     "pre-commit",
     "pytest-xdist",
+    # Pre-commit installs per-hook virtualenvs for the rendered template, which
+    # still supports Odoo versions running on Python 3.8/3.10. Recent virtualenv
+    # no longer bundles pip/setuptools wheels for EOL Pythons, so pin an older
+    # release that can still seed those environments. Used only in this repo's
+    # test suite.
+    "virtualenv<20.27",
 ]
 
 # ruff
