@@ -13,6 +13,9 @@ concurrency:
   group: {% raw %}${{ github.workflow }}-${{ github.ref }}{% endraw %}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 {%
 set IMAGES = {
   "odoo": {
@@ -67,6 +70,8 @@ jobs:
     name: Detect unreleased dependencies
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - run: |
           for reqfile in requirements.txt test-requirements.txt ; do
               if [ -f ${reqfile} ] ; then
@@ -81,7 +86,7 @@ jobs:
           done
   test:
     runs-on: ubuntu-22.04
-    container: {% raw %}${{ matrix.container }}{% endraw %}
+    container: {% raw %}${{ matrix.container }}{% endraw %} # zizmor: ignore[unpinned-images]
     name: {% raw %}${{ matrix.name }}{% endraw %}
     strategy:
       fail-fast: false
@@ -91,24 +96,24 @@ jobs:
         {%- for group in rebel_module_groups %}
             {%- if odoo_test_flavor in ["Odoo", "Both"] %}
           - container: {{ IMAGES["odoo"][odoo_version] }}
-            include: "{{ group }}"
+            include: {{ group | to_json }}
             name: test with Odoo
             {%- endif %}
             {%- if odoo_test_flavor in ["OCB", "Both"] %}
           - container: {{ IMAGES["ocb"][odoo_version] }}
-            include: "{{ group }}"
+            include: {{ group | to_json }}
             name: test with OCB
             {%- endif %}
             makepot: "{{ github_enable_makepot | bool | lower }}"
         {%- endfor %}
             {%- if odoo_test_flavor in ["Odoo", "Both"] %}
           - container: {{ IMAGES["odoo"][odoo_version] }}
-            exclude: "{{ rebel_module_groups|join(',') }}"
+            exclude: {{ rebel_module_groups | join(',') | to_json }}
             name: test with Odoo
             {%- endif %}
             {%- if odoo_test_flavor in ["OCB", "Both"] %}
           - container: {{ IMAGES["ocb"][odoo_version] }}
-            exclude: "{{ rebel_module_groups|join(',') }}"
+            exclude: {{ rebel_module_groups | join(',') | to_json }}
             name: test with OCB
             {%- endif %}
             makepot: "{{ github_enable_makepot | bool | lower }}"
@@ -128,7 +133,7 @@ jobs:
     services:
       postgres:
         {%- if postgres_image %}
-        image: {{ postgres_image }}
+        image: {{ postgres_image | to_json }}
         {%- elif odoo_version < 16 %}
         image: postgres:9.6
         {%- elif odoo_version < 19 %}
@@ -147,7 +152,7 @@ jobs:
     {%- if env %}
     env:
       {%- for key, value in env.items() %}
-      {{ key }}: {{ value|to_json }}
+      {{ key|to_json }}: {{ value|to_json }}
       {%- endfor %}
     {%- endif %}
     steps:
@@ -184,6 +189,12 @@ jobs:
       {%- endif %}
       {% raw -%}
       - name: Update .pot files
-        run: oca_export_and_push_pot https://x-access-token:${{ secrets.GIT_PUSH_TOKEN }}@github.com/${{ github.repository }}
+        run: oca_export_and_push_pot "https://x-access-token:${GIT_PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}"
+        env:
+          GIT_PUSH_TOKEN: ${{ secrets.GIT_PUSH_TOKEN }}
       {%- endraw %}
-        if: {{ "${{" }} matrix.makepot == 'true' && github.event_name == 'push' && github.repository_owner == '{{ org_slug }}' {{ "}}" }}
+      {%- set makepot_if -%}
+        matrix.makepot == 'true' && github.event_name == 'push' && github.repository_owner == '{{ org_slug|replace("'", "''") }}'
+      {%- endset %}
+        if: {{ makepot_if }}
+
