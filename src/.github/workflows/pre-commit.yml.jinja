@@ -14,12 +14,19 @@ concurrency:
   group: {% raw %}${{ github.workflow }}-${{ github.ref }}{% endraw %}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   pre-commit:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      # Actions are pinned to a commit SHA to avoid supply chain attacks through
+      # a moved tag. The trailing comment documents the human-readable version.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
 {%- if odoo_version < 11 %}
         with:
           python-version: "2.7"
@@ -37,7 +44,7 @@ jobs:
           cache-dependency-path: '.pre-commit-config.yaml'
       - name: Get python version
         run: echo "PY=$(python -VV | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
-      - uses: actions/cache@v4
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: ~/.cache/pre-commit
           key: {% raw %}pre-commit|${{ env.PY }}|${{ hashFiles('.pre-commit-config.yaml') }}{% endraw %}
