@@ -5,3 +5,11 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+
+  # Keep the commit SHA pins of this repo's own workflows up to date.
+  # The pins inside src/.github/workflows/*.jinja are templates, so they are
+  # invisible to Dependabot and must be bumped manually.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"

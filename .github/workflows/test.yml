@@ -7,6 +7,9 @@ on:
   release:
     types: [created]
 
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ${{matrix.machine}}
@@ -37,7 +40,11 @@ jobs:
             machine: ubuntu-24.04
     steps:
       # Prepare environment
-      - uses: actions/checkout@v4
+      # Actions are pinned to a commit SHA to avoid supply chain attacks through
+      # a moved tag. The trailing comment documents the human-readable version.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
 
       # On python>=3.9, we can use pip install --group=dev,
       # but the latest pip that supports python 3.8 does not have
