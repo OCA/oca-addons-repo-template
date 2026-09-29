@@ -40,7 +40,7 @@ jobs:
             machine: ubuntu-26.04
     steps:
       # Prepare environment
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
       # On python>=3.9, we can use pip install --group=dev,
       # but the latest pip that supports python 3.8 does not have
