@@ -6,10 +6,16 @@ target-version = "py38"
 fix = true
 
 [lint]
+# Pin the base rule set instead of inheriting ruff's default, which widens
+# between releases and would otherwise enable rules not chosen here.
+select = ["E4", "E7", "E9", "F"]
 extend-select = [
     "B",
     "C90",
     "E501",  # line too long (default 88)
+    {%- if odoo_version >= 20.0 %}
+    "G004",  # logging statement uses f-string
+    {%- endif %}
     "I",  # isort
     {%- if odoo_version >= 15.0 %}
     "UP",  # pyupgrade
