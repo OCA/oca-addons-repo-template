@@ -228,8 +228,10 @@ repos:
     rev: {{ repo_rev.odoo_pre_commit_hooks }}
     hooks:
       - id: oca-checks-odoo-module
+      {%- if odoo_version >= 20 %}
         args:
           - --fix
+      {%- endif %}
       - id: oca-checks-po
         args:
           - --disable=po-pretty-format
