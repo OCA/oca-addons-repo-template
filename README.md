@@ -21,17 +21,17 @@ to read its docs to know how it works.
 Quick answer to bootstrap a new repo:
 
 ```bash
-# Install copier and pre-commit if missing
+# Install copier and prek if missing
 pipx install copier
-pipx install pre-commit
+pipx install prek
 pipx ensurepath
 # Clone this template and answer its questions
 copier copy https://github.com/OCA/oca-addons-repo-template.git some-repo
 # Commit that
 cd some-repo
 git add .
-pre-commit install
-pre-commit run -a
+prek install
+prek run -a
 git commit -am 'Hello world 🖖'
 ```
 
@@ -42,12 +42,18 @@ Quick answer to update a repo:
 cd some-repo
 copier update
 # Reformat updated files
-pre-commit run
+prek run
 # Commit update
 git commit -am 'Updated from template'
 # Reformat all other files, in case some pre-commit configuration was updated
-pre-commit run -a || git commit -am 'Reformatted after template update'
+prek run -a || git commit -am 'Reformatted after template update'
 ```
+
+The generated `.pre-commit-config.yaml` works with both
+[pre-commit](https://pre-commit.com/) and [prek](https://prek.j178.dev/), a drop-in,
+much faster Rust reimplementation that also runs independent hooks concurrently. We
+recommend prek, but pre-commit remains fully supported if you prefer it (it will print a
+harmless warning per hook about the unknown `priority` key, which it ignores).
 
 ## How to contribute?
 
