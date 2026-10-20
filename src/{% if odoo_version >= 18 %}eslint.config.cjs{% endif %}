@@ -1,5 +1,5 @@
-var globals = require('globals');
-jsdoc = require("eslint-plugin-jsdoc");
+let globals = require('globals');
+let jsdoc = require("eslint-plugin-jsdoc");
 
 const config = [{
     plugins: {
