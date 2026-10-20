@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import pytest
 from copier import run_copy
 from plumbum import local
 from plumbum.cmd import git, pre_commit, prek
@@ -7,6 +8,13 @@ from plumbum.cmd import git, pre_commit, prek
 
 def test_hooks_installable(tmp_path: Path, odoo_version: float, cloned_template: Path):
     """Test that pre-commit hooks are installable through prek."""
+    if odoo_version < 14:
+        # These old versions use their own hardcoded, pre-commit-only
+        # templates (see version-specific/), which don't carry any of this
+        # PR's prek-specific changes. Their pinned nodejs/eslint combo also
+        # hits a prek bug packing a git+file:// node hook (npm ENOLOCAL), so
+        # there's nothing to gain from testing prek against them here.
+        pytest.skip("pre-14.0 templates are pre-commit-only, untouched by prek support")
     data = {
         "odoo_version": odoo_version,
         "repo_slug": "website",
