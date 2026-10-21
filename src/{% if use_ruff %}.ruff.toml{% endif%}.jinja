@@ -19,6 +19,11 @@ extend-select = [
     {%- endfor %}
 ]
 extend-safe-fixes = ["UP008"]
+{%- if odoo_version >= 20.0 %}
+extend-ignore = [
+    "RUF012",  # mutable-class-default
+]
+{%- endif %}
 exclude = ["setup/*"]
 
 [format]
