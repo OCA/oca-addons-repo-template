@@ -7,6 +7,9 @@ on:
   release:
     types: [created]
 
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ${{matrix.machine}}
@@ -41,6 +44,8 @@ jobs:
     steps:
       # Prepare environment
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       # On python>=3.9, we can use pip install --group=dev,
       # but the latest pip that supports python 3.8 does not have
