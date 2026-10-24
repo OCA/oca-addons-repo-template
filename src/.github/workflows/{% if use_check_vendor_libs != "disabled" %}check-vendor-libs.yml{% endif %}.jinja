@@ -1,0 +1,29 @@
+name: Verify vendored javascript code
+
+on:
+  pull_request:
+    branches:
+      - "{{ odoo_version }}*"
+    paths:
+      - "*/static/lib/**"
+  push:
+    branches:
+      - "{{ odoo_version }}"
+      - "{{ odoo_version }}-ocabot-*"
+
+concurrency:
+  group: {% raw %}${{ github.workflow }}-${{ github.ref }}{% endraw %}
+  cancel-in-progress: true
+
+jobs:
+  check_vendor_libs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Check vendor libs
+        uses: hbrunn/check-vendor-libs@v1
+        with:
+          directories: "*/static/lib"
+          {%- if use_check_vendor_libs == 'optional' %}
+          no_fail: true
+          {%- endif %}
