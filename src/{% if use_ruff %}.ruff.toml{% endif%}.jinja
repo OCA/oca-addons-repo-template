@@ -22,6 +22,7 @@ extend-safe-fixes = ["UP008"]
 {%- if odoo_version >= 20.0 %}
 extend-ignore = [
     "RUF012",  # mutable-class-default
+    "PLW0642",  # self-or-cls-assignment
 ]
 {%- endif %}
 exclude = ["setup/*"]
