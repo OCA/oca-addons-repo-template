@@ -8,6 +8,7 @@ dev = [
     "copier >=9",
     "pytest",
     "pre-commit",
+    "prek",
     "pytest-xdist",
 ]
 
