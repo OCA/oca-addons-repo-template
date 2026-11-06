@@ -223,6 +223,11 @@ repos:
           {%- endif %}
       {%- if use_pyproject_toml and generate_requirements_txt %}
       - id: oca-gen-external-dependencies
+      {%- if odoo_version >= 20 %}
+        additional_dependencies:
+          # Odoo 20 is supported since manifestoo-core v1.16.0
+          - manifestoo-core>=v1.16.1
+      {%- endif %}
       {%- endif %}
   - repo: https://github.com/OCA/odoo-pre-commit-hooks
     rev: {{ repo_rev.odoo_pre_commit_hooks }}
