@@ -44,7 +44,7 @@ copier update
 # Reformat updated files
 pre-commit run
 # Commit update
-git commit -am 'Updated from template'
+git commit -am '[IMP] update dotfiles'
 # Reformat all other files, in case some pre-commit configuration was updated
 pre-commit run -a || git commit -am 'Reformatted after template update'
 ```
