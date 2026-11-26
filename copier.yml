@@ -125,6 +125,15 @@ enable_checklog_odoo:
   default: "{% if odoo_version < 18.0 -%}no{% else %}yes{% endif %}"
   help: Do you want to make tests fail on warnings?
 
+odoo_test_failure_retries:
+  type: int
+  default: "{% if odoo_version < 16.0 -%}0{% else %}1{% endif %}"
+  help: >
+    How many times should a failed test be retried before reporting it? It absorbs
+    transient failures, such as a browser timeout in a JS test. Retries are silent: only
+    a test that keeps failing on its last attempt makes the CI fail.
+  when: "{{ odoo_version >= 16.0 }}"
+
 github_enforce_dev_status_compatibility:
   type: bool
   default: yes

@@ -7,3 +7,6 @@ ignore=
 {%- if odoo_version >= 19.0 %}
     WARNING .* odoo.tools.config: option addons_path, invalid addons directory .*, skipped
 {%- endif %}
+{%- if odoo_version >= 16.0 and odoo_test_failure_retries %}
+    RUNBOT .* Retrying a failed test: .*
+{%- endif %}
