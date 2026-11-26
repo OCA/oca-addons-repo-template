@@ -60,6 +60,10 @@ set IMAGES = {
 {% set _ = env.update({"OCA_ENABLE_CHECKLOG_ODOO": "1"}) -%}
 {%- endif -%}
 
+{%- if odoo_version >= 16 and odoo_test_failure_retries -%}
+{% set _ = env.update({"ODOO_TEST_FAILURE_RETRIES": odoo_test_failure_retries|string}) -%}
+{%- endif -%}
+
 {%- if github_ci_extra_env -%}
 {% set _ = env.update(github_ci_extra_env) -%}
 {%- endif -%}
